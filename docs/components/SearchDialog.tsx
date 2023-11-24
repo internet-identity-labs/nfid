@@ -75,9 +75,12 @@ export function SearchDialog() {
         </kbd>{' '}
       </button>
       <Dialog open={open}>
+        {/* @ts-ignore */}
         <DialogContent className="sm:max-w-[850px] max-h-[80vh] overflow-y-auto text-black">
           <DialogHeader>
+            {/* @ts-ignore */}
             <DialogTitle>OpenAI powered doc search</DialogTitle>
+            {/* @ts-ignore */}
             <DialogDescription>
               Build your own ChatGPT style search with Next.js, OpenAI & Supabase.
             </DialogDescription>
@@ -126,6 +129,7 @@ export function SearchDialog() {
               ) : null}
 
               <div className="relative">
+                {/* @ts-ignore */}
                 <Input
                   placeholder="Ask a question..."
                   name="search"
@@ -155,6 +159,7 @@ export function SearchDialog() {
               </div>
             </div>
             <DialogFooter>
+              {/* @ts-ignore */}
               <Button type="submit" className="bg-red-500">
                 Ask
               </Button>

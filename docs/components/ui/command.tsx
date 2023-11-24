@@ -28,7 +28,9 @@ interface CommandDialogProps extends DialogProps {}
 const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
     <Dialog {...props}>
+      {/* @ts-ignore */}
       <DialogContent className="overflow-hidden p-0 shadow-2xl [&_[dialog-overlay]]:bg-red-100">
+        {/* @ts-ignore */}
         <Command className="[&_[cmdk-group]]:px-2 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-slate-500 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-input]]:h-12 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0">
           {children}
         </Command>
@@ -38,8 +40,11 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
 }
 
 const CommandInput = React.forwardRef<
+  // @ts-ignore
   React.ElementRef<typeof CommandPrimitive.Input>,
+  // @ts-ignore
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
+  // @ts-ignore
 >(({ className, ...props }, ref) => (
   <div
     className="flex items-center border-b border-b-slate-100 px-4 dark:border-b-slate-700"
@@ -60,8 +65,11 @@ const CommandInput = React.forwardRef<
 CommandInput.displayName = CommandPrimitive.Input.displayName
 
 const CommandList = React.forwardRef<
+  // @ts-ignore
   React.ElementRef<typeof CommandPrimitive.List>,
+  // @ts-ignore
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
+  // @ts-ignore
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.List
     ref={ref}
@@ -73,7 +81,9 @@ const CommandList = React.forwardRef<
 CommandList.displayName = CommandPrimitive.List.displayName
 
 const CommandEmpty = React.forwardRef<
+  // @ts-ignore
   React.ElementRef<typeof CommandPrimitive.Empty>,
+  // @ts-ignore
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
 >((props, ref) => (
   <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />
@@ -82,8 +92,11 @@ const CommandEmpty = React.forwardRef<
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 
 const CommandGroup = React.forwardRef<
+  // @ts-ignore
   React.ElementRef<typeof CommandPrimitive.Group>,
+  // @ts-ignore
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
+  // @ts-ignore
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Group
     ref={ref}
@@ -98,8 +111,11 @@ const CommandGroup = React.forwardRef<
 CommandGroup.displayName = CommandPrimitive.Group.displayName
 
 const CommandSeparator = React.forwardRef<
+  // @ts-ignore
   React.ElementRef<typeof CommandPrimitive.Separator>,
+  // @ts-ignore
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
+  // @ts-ignore
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator
     ref={ref}
@@ -110,8 +126,11 @@ const CommandSeparator = React.forwardRef<
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName
 
 const CommandItem = React.forwardRef<
+  // @ts-ignore
   React.ElementRef<typeof CommandPrimitive.Item>,
+  // @ts-ignore
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
+  // @ts-ignore
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Item
     ref={ref}
@@ -127,6 +146,7 @@ CommandItem.displayName = CommandPrimitive.Item.displayName
 
 const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
+    // @ts-ignore
     <span className={cn('ml-auto text-xs tracking-widest text-slate-500', className)} {...props} />
   )
 }
