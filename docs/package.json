@@ -42,6 +42,8 @@
     "mdast-util-to-string": "^3.1.1",
     "micromark-extension-mdxjs": "^1.0.0",
     "next": "13.2.4",
+    "nextra": "^2.13.2",
+    "nextra-theme-docs": "^2.13.2",
     "openai": "^3.3.0",
     "openai-edge": "^1.1.0",
     "react": "18.2.0",
