@@ -13,10 +13,7 @@ const theme = {
     text: (
       <span>
         © {new Date().getFullYear() + ' '}
-        <a href="https://nfid.one" target="_blank">
-          Internet Identity Labs
-        </a>
-        .
+        Internet Identity Labs.
       </span>
     ),
   },

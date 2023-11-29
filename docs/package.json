@@ -4,12 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm run embeddings && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\"",
-    "embeddings": "tsx lib/generate-embeddings.ts",
-    "embeddings:refresh": "tsx lib/generate-embeddings.ts --refresh"
+    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\""
   },
   "prettier": {
     "trailingComma": "es5",
