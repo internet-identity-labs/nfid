@@ -1,1 +1,1 @@
-# NFID Identity Kit Documentation
+# NFID Open Source Documentation
