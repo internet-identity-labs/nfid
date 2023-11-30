@@ -17,6 +17,7 @@
   "packageManager": "npm@9.8.0",
   "workspaces": [
     "docs",
-    "packages/*"
+    "packages/*",
+    "config/*"
   ]
 }
