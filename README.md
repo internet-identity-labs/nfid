@@ -18,12 +18,12 @@ This repo includes the following packages/apps:
 
 ### Config
 
-#### `packages/eslint-config-custom`: `eslint` configurations
+#### `config/eslint-config-custom`: `eslint` configurations
 
 - **`eslint-config-next`** - Next.js configuration
 - **`eslint-config-prettier`** - Prettier configuration
 
-#### `packages/tsconfig`: Shared TypeScript configuration files
+#### `config/tsconfig`: Shared TypeScript configuration files
 
 - **`base.json`** - Base TypeScript configuration
 - **`nextjs.json`** - Next.js TypeScript configuration
