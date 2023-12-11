@@ -1,0 +1,79 @@
+name: Dispatch NPM release
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        type: choice
+        description: "Package to release"
+        required: true
+        options:
+          - "identity-kit"
+
+      level:
+        type: choice
+        description: Select the release update level
+        options:
+          - major
+          - minor
+          - patch
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
+      preid:
+        type: choice
+        required: false
+        description: Select pre-id (alpha | beta)
+        default: "none"
+        options:
+          - alpha
+          - beta
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: 🔧 Git
+        run: |
+          git config user.email "github@indentitylabs.ooo"
+          git config user.name "Github InternetIdentityLabs"
+      - name: 🔧 Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+
+      - name: 🔧 Yarn
+        run: |
+          yarn config set version-git-message "chore(${{ github.event.inputs.package }}): release v%s"
+          yarn config set version-tag-prefix "@nfid/${{ github.event.inputs.package }}-v"
+
+      - name: 🤖 Install
+        run: yarn
+
+      - name: 🤖 Increment package version
+        working-directory: packages/${{ github.event.inputs.package }}
+        run: |
+          if [[ ${{ github.event.inputs.level }} == "pre"* ]]; then
+            yarn version --${{ github.event.inputs.level }} --preid ${{ github.event.inputs.preid }}
+          else
+            yarn version --${{ github.event.inputs.level }}
+          fi
+
+      - name: 🤖 Build
+        run: npx nx build ${{ github.event.inputs.package }}
+
+      - name: 📦 Publish package on NPM
+        working-directory: packages/${{ github.event.inputs.package }}/dist
+        run: yarn publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.IL_GH_NPM_TOKEN }}
+
+      - name: 🎉 Push tags
+        run: |
+          git push
+          git push --tags
