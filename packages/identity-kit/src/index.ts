@@ -1,1 +1,1 @@
-export { IdentityKit } from "./lib/identity-kit";
+export { IdentityKit } from "./lib/identity-kit"
