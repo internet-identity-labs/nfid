@@ -1,4 +1,4 @@
-const REPO_BASE = 'https://github.com/internet-identity-labs/nfid'
+const REPO_BASE = "https://github.com/internet-identity-labs/nfid"
 const theme = {
   logo: (
     <div>
@@ -12,7 +12,7 @@ const theme = {
   footer: {
     text: (
       <span>
-        © {new Date().getFullYear() + ' '}
+        © {new Date().getFullYear() + " "}
         Internet Identity Labs.
       </span>
     ),

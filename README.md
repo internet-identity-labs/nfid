@@ -2,7 +2,8 @@
 
 ## Overview
 
-This monorepo is managed with [Turborepo](https://turbo.build/repo/docs/). It hosts identity related open source software developed by Internet Identity Labs.
+This monorepo is managed with [Turborepo](https://turbo.build/repo/docs/). It hosts identity related
+open source software developed by Internet Identity Labs.
 
 ## What's inside?
 
@@ -10,7 +11,8 @@ This repo includes the following packages/apps:
 
 ### Docs
 
-`docs`: [Next.js Docs site](https://docs-dev.nfid.one/) hosted on [vercel](https://vercel.com/internet-identity-labs/nfid-identity-kit-docs)
+`docs`: [Next.js Docs site](https://docs-dev.nfid.one/) hosted on
+[vercel](https://vercel.com/internet-identity-labs/nfid-identity-kit-docs)
 
 ### Packages
 

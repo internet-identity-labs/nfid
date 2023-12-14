@@ -1,7 +1,7 @@
 export const StackBlitz = (props: {
   name: string
   height?: number
-  view?: 'preview' | 'editor'
+  view?: "preview" | "editor"
   openFile?: string
   hideExplorer?: boolean
   showDevtools?: boolean
@@ -11,10 +11,14 @@ export const StackBlitz = (props: {
       src={`https://stackblitz.com/edit/${props.name}?embed=1&hideExplorer=${
         props.hideExplorer ? 1 : 0
       }&file=${props.openFile}&view=${props.view}&devToolsHeight=${
-        props.showDevtools ? '50' : '0'
+        props.showDevtools ? "50" : "0"
       }`}
       height={props.height || 600}
-      style={{ width: '100%', borderRadius: '7px', margin: '2em 0' }}
+      style={{
+        width: "100%",
+        borderRadius: "7px",
+        margin: "2em 0",
+      }}
     />
   )
 }
