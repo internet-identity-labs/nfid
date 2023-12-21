@@ -103,11 +103,16 @@ const connection = await IdentityKit.connect({
 
 #### Exploring available standards on a given signer:
 
+To understand what standards are supported on a user selected signer, you will be able to call
+`connection.getSupportedStandards()` which returns the list of strings representing the standard
+references.
+
 ```typescript
 type Response = string[]
 
-const supported: SupportedStandards = await connection.supportedStandards()
-// ["ICRC-31", "ICRC-32"]
+const supported: SupportedStandards = await connection.getSupportedStandards()
+// ["ICRC-25", "ICRC-31", "ICRC-32"]
+//   ^^^^^^^ has to be supported!
 ```
 
 ### ICRC-31 Get Principals
