@@ -36,20 +36,91 @@ The NFID team is poised to release the IdentityKit package, an open-source tool 
 
 This standard outlines a foundational protocol for communication between decentralized apps (dapps) and signers. It specifies a set of messages to facilitate this interaction, ensuring a seamless and secure exchange of information. The ICRC-25 aims to create a uniform language for dapps and signers, enhancing interoperability and simplifying the development process.
 
+#### Establish a Signer Connection:
+
+```typescript
+import * as IdentityKit from '@nfid/identity-kit'
+import { NFID, II } from '@nfid/identity-kit/adapter'
+
+const nfid = NFID.config({
+  providerUrl: 'https://nfid.one',
+})
+const ii = II.config({
+  providerUrl: 'https://identity.ic0.app',
+})
+
+IdentityKit.config({
+  derivationOrigin: 'https://<canisterId>.ic0.app',
+  appMeta: {
+    name: 'My App',
+    logo: 'https://domain.com/path/to/logo.png',
+  },
+})
+
+// Establish a connection with the Signer the user has selected:
+const connection = await IdentityKit.connect({
+  signer: nfid,
+})
+```
+
+#### Exploring available standards on a given signer:
+
+```typescript
+type Response = string[]
+
+const supported: SupportedStandards = await connection.supportedStandards()
+// ["ICRC-31", "ICRC-32"]
+```
+
 ### ICRC-31 Get Principals
 
 The `icrc31_get_principals` message plays a crucial role in identity management. It allows applications to retrieve information about the identities managed by a signer, streamlining the authentication process. This standard is pivotal in ensuring that users can manage their digital identities efficiently and securely.
+
+```typescript
+type Response = {
+  version: string // "1"
+  principals: string[] // ["gyu2j-2ni7o-o6yjt-n7lyh-x3sxq-zh7hp-sjvqe-t7oul-4eehb-2gvtt-Jae"]
+}
+
+const response: Response = await connection.getPrincipals()
+```
 
 ### ICRC-32 Sign Challenge
 
 The `icrc32_sign_challenge` method provides a secure mechanism for verifying ownership of user identities. By facilitating cryptographic proofs, this standard strengthens the security framework of applications, ensuring that user identities are protected and authenticated reliably.
 
+```typescript
+type Response = {
+  version: string // "1"
+  principals: string[] // ["gyu2j-2ni7o-o6yjt-n7lyh-x3sxq-zh7hp-sjvqe-t7oul-4eehb-2gvtt-Jae"]
+}
+
+const response: Response = await connection.getPrincipals()
+```
+
 ### ICRC-33 Call Canister
 
 This standard allows applications to request the execution of calls to third-party canisters by the signer. By using the `icrc33_call_canister` method, applications can interact with a broader range of services and functionalities, enhancing the versatility and reach of ICP-based applications.
 
+```typescript
+type Response = {
+  version: string
+  signedChallenge: {
+    publicKey: string
+    signature: string
+  }
+}
+const response: Response = await connection.signChallange({
+  challenge: 'UjwgsORvEzp98TmB1cAIseNOoD9+GLyN/1DzJ5+jxZM=',
+})
+```
+
 ### ICRC-34 Get Delegation
 
 The `icrc34_get_delegation` method is designed to facilitate the delegation of identity management. This process allows users to securely manage their identities and permissions, providing a flexible and secure framework for identity delegation within the ICP ecosystem.
+
+```typescript
+const response = await connection.getDelegation({...})
+```
 
 In conclusion, the introduction of ICP wallet standards is a significant stride towards a more unified and user-friendly Web3 environment. These standards not only alleviate the developmental challenges but also enrich the user experience, paving the way for a more interconnected and secure digital future.
