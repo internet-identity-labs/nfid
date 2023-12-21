@@ -60,15 +60,31 @@ enhancing interoperability and simplifying the development process.
 
 #### Establish a Signer Connection:
 
+We invite the community to contribute adapters for other signers to `@nfid/identity-kit`. But
+obviously, you can also use custom adapters from your own or other external packages.
+
 ```typescript
 import * as IdentityKit from "@nfid/identity-kit"
+
+// adapter contributed to this open source package
 import { NFID, II } from "@nfid/identity-kit/adapter"
 
+// bring your own adapter
+import { CUSTOM } from "@your-package/icrc-25-compatible-signer"
+
+// NFID Signer
 const nfid = NFID.config({
   providerUrl: "https://nfid.one",
 })
+
+// Internet Identity Signer
 const ii = II.config({
   providerUrl: "https://identity.ic0.app",
+})
+
+// You're free to build your custom signer by complying to the specs.
+const custom = CUSTOM.config({
+  providerUrl: "https://your.signer.app",
 })
 
 IdentityKit.config({
@@ -81,7 +97,7 @@ IdentityKit.config({
 
 // Establish a connection with the Signer the user has selected:
 const connection = await IdentityKit.connect({
-  signer: nfid,
+  signer: custom,
 })
 ```
 
