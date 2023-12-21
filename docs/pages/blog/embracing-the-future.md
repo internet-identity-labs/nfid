@@ -123,4 +123,6 @@ The `icrc34_get_delegation` method is designed to facilitate the delegation of i
 const response = await connection.getDelegation({...})
 ```
 
+## Conclusion
+
 In conclusion, the introduction of ICP wallet standards is a significant stride towards a more unified and user-friendly Web3 environment. These standards not only alleviate the developmental challenges but also enrich the user experience, paving the way for a more interconnected and secure digital future.
