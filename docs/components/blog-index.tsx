@@ -1,30 +1,30 @@
-import { getPagesUnderRoute } from 'nextra/context'
-import filterRouteLocale from 'nextra/filter-route-locale'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { getPagesUnderRoute } from "nextra/context"
+import filterRouteLocale from "nextra/filter-route-locale"
+import Link from "next/link"
+import { useRouter } from "next/router"
 
-export default function BlogIndex({ more = 'Read more' }) {
-  const { locale = '', defaultLocale = '' } = useRouter()
-  return filterRouteLocale(getPagesUnderRoute('/blog'), locale, defaultLocale).map((page: any) => {
+export default function BlogIndex({ more = "Read more" }) {
+  const { locale = "", defaultLocale = "" } = useRouter()
+  return filterRouteLocale(getPagesUnderRoute("/blog"), locale, defaultLocale).map((page: any) => {
     return (
       <div key={page.route} className="mb-10">
         <h3>
           <Link
             href={page.route}
-            style={{ color: 'inherit', textDecoration: 'none' }}
+            style={{ color: "inherit", textDecoration: "none" }}
             className="block mt-8 text-2xl font-semibold "
           >
             {page.meta?.title || page.frontMatter?.title || page.name}
           </Link>
         </h3>
         <p className="mt-6 leading-7 opacity-80">
-          {page.frontMatter?.description}{' '}
+          {page.frontMatter?.description}{" "}
           <span className="inline-block">
             <Link
               href={page.route}
               className="text-[color:hsl(var(--nextra-primary-hue),100%,50%)] underline underline-offset-2 decoration-from-font"
             >
-              {more + ' →'}
+              {more + " →"}
             </Link>
           </span>
         </p>
