@@ -8,7 +8,7 @@ authors:
 
 import { StandardCard } from "../../components/standard.tsx"
 import { Stack } from "../../components/stack.tsx"
-import { Cards, Card } from "nextra/components"
+import { Cards, Card, Tabs, Tab } from "nextra/components"
 import { CardStackPlusIcon } from "@radix-ui/react-icons"
 
 # Revolutionize Web3 dApp Interactions - Part I
@@ -28,12 +28,50 @@ discussion. These ideas represent the [@IdentityMaxis](https://twitter.com/Ident
 Team) vision and perspective on the potential benefits of this collaborative effort to enhance the
 ICP ecosystem.
 
+### NFID's Role in Facilitating Adoption
+
+The NFID team is poised to release the `@nfid/identity-kit` package, as an open-source tool designed
+to simplify the integration of these new standards. This package will enable developers to
+effortlessly incorporate a broad spectrum of functionalities, paving the way for a more
+interconnected and efficient application environment.
+
 ## Why ICP Wallet Standards are Important
 
 In the ever-evolving landscape of Web3, one principle stands paramount: user choice. But how can we
 enable this principle? We firmly believe that standardization is the key, not only in terms of
 cryptography, but also in providing seamless access and interactions with crypto keys. In this
 document, we will explore how the following standards will empower users and expand their options.
+
+
+### Empowering User Choice in Web3
+
+The ethos of user choice not only advocates for freedom in wallet selection but also demands
+flexibility in interaction with various applications. The current state of ICP application
+development, however, presents a significant hurdle. The need for individual wallet integrations
+consumes vast amounts of time and resources, diverting attention from enhancing application
+functionality.
+
+Recognizing this, the ICP Community demanded a decentralized process of standardization. As a
+result, standardization working groups were established to fulfill this need. The NFID Wallet team
+highly appreciates this development and is pleased to contribute and lead the initiative of
+standardizing the interaction between decentralized applications and wallets (referred to as
+"signers" in this document). This will expand user options and enhance the developer experience.
+
+### Streamlining the Development Process
+
+By introducing standard wallet protocols, developers can bypass the cumbersome process of individual
+wallet integrations. This standardization not only accelerates the development cycle but also opens
+the door for a wider range of wallet options for users. The outcome is a more robust and
+user-friendly ecosystem, where developers can focus on innovation rather than integration.
+
+### Enhancing User Experience with Seamless Integration
+
+Post-implementation of these standards, the most noticeable change for users will be the increased
+compatibility between applications and a variety of wallets. This means users can manage assets more
+efficiently and engage with applications in more dynamic ways. Features like secure data sharing
+across applications without compromising privacy will become a norm.
+
+## Exploring the Different ICP Wallet Standards
 
 <Cards>
   <Card
@@ -75,7 +113,7 @@ enhancing interoperability and simplifying the development process.
 We invite the community to contribute adapters for other signers to `@nfid/identity-kit`. But
 obviously, you can also use custom adapters from your own or other external packages.
 
-```typescript
+```typescript filename="Import and configure Signer"
 import * as IdentityKit from "@nfid/identity-kit"
 
 // adapter contributed to this open source package
@@ -98,7 +136,9 @@ const ii = II.config({
 const custom = CUSTOM.config({
   providerUrl: "https://your.signer.app",
 })
+```
 
+```typescript filename="Initialize Identity Kit"
 IdentityKit.config({
   derivationOrigin: "https://<canisterId>.ic0.app",
 })
@@ -115,13 +155,26 @@ To understand what standards are supported on a user selected signer, you will b
 `connection.getSupportedStandards()` which returns the list of strings representing the standard
 references.
 
-```typescript
+<Tabs items={['Method Call', 'Response Type']} defaultIndex="0">
+<Tabs.Tab>
+
+```typescript filename="Method Call"
+const supported: SupportedStandards = await connection.getSupportedStandards()
+
+```
+
+```json filename="response data"
+["ICRC-25", "ICRC-31", "ICRC-32"]
+//^^^^^^^ has to be supported by all signers!
+```
+</Tabs.Tab>
+<Tabs.Tab>
+```typescript filename="Responst Type"
 type Response = string[]
 
-const supported: SupportedStandards = await connection.getSupportedStandards()
-// ["ICRC-25", "ICRC-31", "ICRC-32"]
-//   ^^^^^^^ has to be supported!
 ```
+</Tabs.Tab>
+</Tabs>
 
 ### ICRC-31 Get Principals
 
@@ -138,14 +191,30 @@ applications to retrieve information about the identities managed by a signer, s
 authentication process. This standard is pivotal in ensuring that users can manage their digital
 identities efficiently and securely.
 
-```typescript
-type Response = {
-  version: string // "1"
-  principals: string[] // ["gyu2j-2ni7o-o6yjt-n7lyh-x3sxq-zh7hp-sjvqe-t7oul-4eehb-2gvtt-Jae"]
-}
-
+<Tabs items={['Method Call', 'Response Type']} defaultIndex="0">
+<Tabs.Tab>
+```typescript filename="Method Call"
 const response: Response = await connection.getPrincipals()
 ```
+
+```json filename="response data"
+{
+  "version": "1",
+  "principals": ["gyu2j-2ni7o-o6yjt-n7lyh-x3sxq-zh7hp-sjvqe-t7oul-4eehb-2gvtt-Jae"]
+}
+```
+</Tabs.Tab>
+<Tabs.Tab>
+```typescript filename="Response Type"
+type Response = {
+  version: string
+  principals: string[]
+}
+
+```
+</Tabs.Tab>
+</Tabs>
+
 
 ### ICRC-32 Sign Challenge
 
@@ -162,14 +231,51 @@ The `icrc32_sign_challenge` method provides a secure mechanism for verifying own
 identities. By facilitating cryptographic proofs, this standard strengthens the security framework
 of applications, ensuring that user identities are protected and authenticated reliably.
 
-```typescript
-type Response = {
-  version: string // "1"
-  principals: string[] // ["gyu2j-2ni7o-o6yjt-n7lyh-x3sxq-zh7hp-sjvqe-t7oul-4eehb-2gvtt-Jae"]
+
+<Tabs items={['Method Call', 'Request Type', 'Response Type']} defaultIndex="0"><Tabs.Tab>
+
+```typescript filename="Method Call"
+const response: Response = await connection.signChallange({
+  principal: "rwlgt-iiaaa-aaaaa-aaaaa-cai", // optinal filter for identity that should sign 
+  challenge: "UjwgsORvEzp98TmB1cAIseNOoD9+GLyN/1DzJ5+jxZM="
+})
+```
+
+```json filename="response data"
+{
+  "version": "1",
+  "signedChallenge": {
+    "publicKey": "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEOTdHYwpFTr/oPXOfLQcteymk8AQE41VwPQ1W7Xpm0Zt1AY4+5aOnMAbAIjXEchxPuGbPWqPqwntXMPs3w4rOaA==",
+    "signature": "bldf7qn7DC5NzTyX5kp4GpZHaEncE5/6n/Y8av3xjEwIVFAwmhyW0uM+WBXRTj4QbScot04dfaBXUOcSWF0IjQ=="
+  }
+}
+```
+
+</Tabs.Tab><Tabs.Tab>
+
+```typescript filename="Request Type"
+type Request = {
+  version?: string
+  principal?: string
+  challenge: string
 }
 
-const response: Response = await connection.getPrincipals()
 ```
+
+</Tabs.Tab><Tabs.Tab>
+
+```typescript filename="Response Type"
+type Response = {
+  version: string
+  signedChallenge: {
+    publicKey: string
+    signature: string
+  }
+}
+
+```
+</Tabs.Tab></Tabs>
+
 
 ### ICRC-33 Call Canister
 
@@ -186,18 +292,50 @@ This standard allows applications to request the execution of calls to third-par
 signer. By using the `icrc33_call_canister` method, applications can interact with a broader range
 of services and functionalities, enhancing the versatility and reach of ICP-based applications.
 
-```typescript
-type Response = {
-  version: string
-  signedChallenge: {
-    publicKey: string
-    signature: string
-  }
-}
-const response: Response = await connection.signChallange({
-  challenge: "UjwgsORvEzp98TmB1cAIseNOoD9+GLyN/1DzJ5+jxZM=",
+<Tabs items={['Method Call', 'Request Type', 'Response Type']} defaultIndex="0"><Tabs.Tab>
+
+```typescript filename="Method Call"
+const response: Response = await connection.callCanister({
+  canisterId: "xhy27-fqaaa-aaaao-a2hlq-ca",
+  sender: "b7gqo-ulk5n-2kpo7-oalt7-p2kyl-o4j5l-kiuwo-eeybr-dab4l-ur6up-pqe",
+  method: "transfer",
+  arg: "RElETARte24AbAKzsNrDA2ithsqDBQFsA/vKAQKi3pTrBgHYo4yoDX0BAwEdV+ztKgq7E4l1ffuTuwEmw8AtYSjlrJ+WLO5ofQIAAMgB"
 })
 ```
+
+```json filename="Response Data"
+{
+  "version": "1",
+  "contentMap": "2dn3p2NhcmdYTkRJREwEbXtuAGwCs7DawwNorYbKgwUBbAP7ygECot6U6wYB2KOMqA19AQMBHVfs7SoKuxOJdX37k7sBJsPALWEo5ayflizuaH0CAADIAWtjYW5pc3Rlcl9pZEoAAAAAAcDR1wEBbmluZ3Jlc3NfZXhwaXJ5GxeNX/65y4YAa21ldGhvZF9uYW1laHRyYW5zZmVyZW5vbmNlUFF4+hAimFhoqkdUcIchz0xscmVxdWVzdF90eXBlZGNhbGxmc2VuZGVyWB1q63Snu+4C5/fpWFu4nq1IpZxCYDEYA8XSPqPfAg==",
+  "certificate": "2dn3omR0cmVlgwGDAYIEWCAPzKZJY/emKhi2GGtBrnHh4cdttATd4+9GtJrNCBepb4MBgwJOcmVxdWVzdF9zdGF0dXODAYIEWCCCgynUaonrKCCywghWCSk9BeDqMoI4yf15nxyU/5JZv4MBggRYIDG7WdzQ9sGWI1MpxizUzxubsEBuNkTT94UOZ9USbzNvgwGCBFggawwbTHxnPUzBAUhWBRjk0nzPs2fPpJlaIYtj5AvcX+ODAYIEWCDiFLyaWuMWjtVurCQcSgny/cqfM8S6qrdihVq7nPz1FoMCWCD/8jdeccvqHVYf06Hw7qPXIDNimC1Uyf47VsvgqKpPiIMBgwJFcmVwbHmCA1RESURMAWsCvIoBfcX+0gFxAQAABIMCRnN0YXR1c4IDR3JlcGxpZWSCBFgg7qZngcNt2+B/RuF44W3LRsKWXG6QQg2L6GdZgJ6Nb3+DAYIEWCAx3tU/mhHfX+wDzF003eSJYN8Nebou8rTeGyxr/rUa1YMCRHRpbWWCA0nw9+r88fjXxhdpc2lnbmF0dXJlWDCXNshvwWG1jGViP7ELePGHCThBw9mts45FxIy4gZATkUEsPeJ6y+cjbn2REmB0Soo="
+}
+
+```
+
+</Tabs.Tab><Tabs.Tab>
+
+```typescript filename="Request Type"
+type Request = {
+  version: string
+  canisterId: string
+  sender: string
+  method: string
+  arg: string
+}
+
+```
+
+</Tabs.Tab><Tabs.Tab>
+
+```typescript filename="Response Type"
+type Response = {
+  version: string
+  contentMap: string
+  certificate: string
+}
+
+```
+</Tabs.Tab></Tabs>
 
 ### ICRC-34 Get Delegation
 
