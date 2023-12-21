@@ -1,12 +1,12 @@
 ---
-title: "Embracing the Future: How ICP Wallet Standards are Revolutionizing Web3 Applications"
+title: "Embracing the Future of Standardisation: Revolutionize Web3 dApp Interactions - Part I"
 date: "2023-12-12"
 authors:
   - name: "Dan Ostrovski"
   - name: "Philipp Litzenberger"
 ---
 
-# Streamlining Development: Embracing ICP Wallet Standards in Web3
+# Revolutionize Web3 dApp Interactions - Part I
 
 The Internet Computer Protocol (ICP) has emerged as a pivotal force in the realm of decentralized
 applications, with its rapid evolution and diverse applications ranging from Bitcoin marketplaces to
