@@ -14,6 +14,14 @@ music streaming platforms. This dynamic growth has reshaped the way we interact 
 systems, significantly reducing reliance on centralized infrastructures and leveraging the inherent
 security of the protocol itself. However, the journey is not without its challenges.
 
+## Disclaimer
+
+The standards mentioned in this document are currently in progress. We warmly invite the ICP
+community to contribute to the finalization of these standards. The purpose of this blog post is to
+provide an update on the current status of the standards and present a draft implementation for
+discussion. These ideas represent our vision and perspective on the potential benefits of this
+collaborative effort to enhance the ICP ecosystem.
+
 ## Why ICP Wallet Standards are Important
 
 ### Empowering User Choice in Web3
@@ -22,9 +30,12 @@ In the ever-evolving landscape of Web3, one principle stands paramount: user cho
 only advocates for freedom in wallet selection but also demands flexibility in interaction with
 various applications. The current state of ICP application development, however, presents a
 significant hurdle. The need for individual wallet integrations consumes vast amounts of time and
-resources, diverting attention from enhancing application functionality. Recognizing this, DFINITY
-and the NFID Wallet team are spearheading an initiative to standardize cryptographic flows, thereby
-broadening user choices and smoothing the developer experience.
+resources, diverting attention from enhancing application functionality. Recognizing this, the
+Internet Computer Community demanded a decentralized process of standardization. As a result,
+standardization working groups were established to fulfill this need. The NFID Wallet team highly
+appreciates this development and is pleased to contribute and lead the initiative of standardizing
+the interaction between decentralized applications and wallets (referred to as "signers" in this
+document). This will expand user options and enhance the developer experience.
 
 ### Streamlining the Development Process
 
