@@ -1,0 +1,93 @@
+---
+title: "Standardizing ICP Wallet and Identity Interaction UX & DX - Part I"
+date: "2023-12-12"
+authors:
+  - name: "Dan Ostrovski"
+  - name: "Philipp Litzenberger"
+---
+
+import { StandardCard } from "../../components/standard.tsx"
+import { Cards, Card } from "nextra/components"
+import { CardStackPlusIcon } from "@radix-ui/react-icons"
+
+# Standardizing ICP Wallet and Identity Interaction UX & DX - Part I
+
+The Internet Computer Protocol (ICP) has emerged as a pivotal force in the realm of decentralized
+applications, with its rapid evolution and diverse applications ranging from Bitcoin marketplaces to
+music streaming platforms. This dynamic growth has reshaped the way we interact with decentralized
+systems, significantly reducing reliance on centralized infrastructure and leveraging the inherent
+security of the protocol itself. However, the journey has not been without its challenges.
+
+## What is this post about?
+
+Developers building on the Internet Computer have encountered significant challenges in
+accommodating the wide range of wallet and identity options available (i.e. NFID, Internet Identity,
+Plug, Stoic, Me, etc). This difficulty primarily arises from the need to adapt to each wallet's
+unique interfaces for user authentication, token transfers, and other identity-related interactions,
+leading to compatibility issues and delays in development.
+
+This post aims to update on the development of standards designed to resolve these challenges. The
+goal is to create a unified standard package that developers can implement to support all existing
+and future ICP wallet and identity providers seamlessly.
+
+These standards are currently under development, and we encourage the ICP community to actively
+participate in finalizing them. The development process has been transparent and collaborative
+within the Identity and Wallet Standard Working Group, which meets publicly every two weeks and
+primarily the work of @IdentityMaxis (NFID Team) and DFINITY.
+
+With DFINITY's support, the NFID team is releasing the @nfid/identity-kit package as an open-source
+tool designed to simplify the integration of these new standards. This package will enable
+developers to effortlessly incorporate a broad spectrum of functionalities, paving the way for a
+more interconnected and efficient application environment.
+
+Post-implementation of these standards, the most noticeable change for users will be the increased
+compatibility between applications and a variety of wallets. This means users can manage assets more
+efficiently and engage with applications in more dynamic ways. Features like secure data sharing
+across applications without compromising privacy will become a norm.
+
+## Exploring the Different ICP Wallet Standards
+
+<Cards>
+  <Card
+    icon={<CardStackPlusIcon />}
+    title={<StandardCard id="ICRC-25" description="Signer Interaction" />}
+    href="#icrc-25-base-signer-interaction-standard"
+  />
+  <Card
+    icon={<CardStackPlusIcon />}
+    title={<StandardCard id="ICRC-31" description="Get Principals" />}
+    href="#icrc-31-get-principals"
+  />
+  <Card
+    icon={<CardStackPlusIcon />}
+    title={<StandardCard id="ICRC-32" description="Sign Challenge" />}
+    href="#icrc-32-sign-challenge"
+  />
+  <Card
+    icon={<CardStackPlusIcon />}
+    title={<StandardCard id="ICRC-33" description="Call Canister" />}
+    href="#icrc-33-call-canister"
+  />
+  <Card
+    icon={<CardStackPlusIcon />}
+    title={<StandardCard id="ICRC-34" description="Get Delegation" />}
+    href="#icrc-34-get-delegation"
+  />
+</Cards>
+
+### ICRC-25 Base Signer Interaction Standard
+
+This standard outlines a foundational protocol for communication between decentralized apps (dapps)
+and signers (wallets and identity providers that can generate signatures). It specifies a set of
+messages to facilitate this interaction, ensuring a seamless and secure exchange of information.
+ICRC-25 aims to create a uniform language for dapps and signers, enhancing interoperability and
+simplifying the development process.
+
+## TECHNICAL IMPLEMENTATIONS
+
+### What's next
+
+In part 2 of this developer series, we'll share the prototype UX for how this will look in your
+dapps, and the configuration options we'll provide at launch.
+
+In part 3, we'll share a beta example for you to explore, tweak, and test.
