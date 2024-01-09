@@ -82,6 +82,9 @@ importers:
       eslint-config-next:
         specifier: 13.2.4
         version: 13.2.4(eslint@8.36.0)(typescript@4.9.5)
+      flexsearch:
+        specifier: ^0.7.41
+        version: 0.7.41
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -5925,8 +5928,8 @@ packages:
   /flatted@3.2.9:
     resolution: {integrity: sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==}
 
-  /flexsearch@0.7.31:
-    resolution: {integrity: sha512-XGozTsMPYkm+6b5QL3Z9wQcJjNYxp0CYn3U1gO7dwD6PAqU1SVWZxI9CCg3z+ml3YfqdPnrBehaBrnH2AGKbNA==}
+  /flexsearch@0.7.41:
+    resolution: {integrity: sha512-nlSsN+cLeoOMEPivjjMuYdMN7WdCKaogCirVZNxQ8a34reoKZvxDxbAtIoAK1ewmkXd5dz8Pb2kwwYJ6b/07PQ==}
     dev: false
 
   /focus-visible@5.2.0:
@@ -8429,7 +8432,7 @@ packages:
       '@popperjs/core': 2.11.8
       clsx: 2.0.0
       escape-string-regexp: 5.0.0
-      flexsearch: 0.7.31
+      flexsearch: 0.7.41
       focus-visible: 5.2.0
       git-url-parse: 13.1.1
       intersection-observer: 0.12.2
