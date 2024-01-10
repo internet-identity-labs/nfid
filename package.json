@@ -14,7 +14,8 @@
     "@nfid/eslint-config": "*",
     "@nfid/typescript-config": "*",
     "prettier": "^3.1.0",
-    "turbo": "latest"
+    "turbo": "latest",
+    "typescript": "^5.3.3"
   },
   "packageManager": "npm@9.8.0",
   "workspaces": [

@@ -20,6 +20,9 @@ importers:
       turbo:
         specifier: latest
         version: 1.10.16
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
 
   config/eslint-config:
     devDependencies:
@@ -193,6 +196,45 @@ importers:
         version: 3.14.0
 
   packages/identity-kit:
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.23.5
+        version: 7.23.5
+      '@babel/preset-env':
+        specifier: ^7.23.5
+        version: 7.23.5(@babel/core@7.23.5)
+      '@jest/globals':
+        specifier: ^29.7.0
+        version: 29.7.0
+      '@nfid/eslint-config':
+        specifier: '*'
+        version: link:../../config/eslint-config
+      '@nfid/typescript-config':
+        specifier: '*'
+        version: link:../../config/typescript-config
+      '@types/jest':
+        specifier: ^29.5.10
+        version: 29.5.10
+      babel-jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@babel/core@7.23.5)
+      eslint-plugin-jest:
+        specifier: ^27.6.0
+        version: 27.6.0(eslint@8.36.0)(jest@29.7.0)(typescript@5.3.2)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0
+      jest-environment-jsdom:
+        specifier: ^29.7.0
+        version: 29.7.0
+      ts-jest:
+        specifier: ^29.1.1
+        version: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.3.2)
+      typescript:
+        specifier: ^5.3.0
+        version: 5.3.2
+
+  packages/postmessage-rpc:
     devDependencies:
       '@babel/core':
         specifier: ^7.23.5
@@ -10293,6 +10335,12 @@ packages:
 
   /typescript@5.3.2:
     resolution: {integrity: sha512-6l+RyNy7oAHDfxC4FzSJcz9vnjTKxrLpDG5M2Vu4SHRVNg6xzqZp6LYSR9zjqQTu8DU/f5xwxUdADOkbrIX2gQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: true
+
+  /typescript@5.3.3:
+    resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
