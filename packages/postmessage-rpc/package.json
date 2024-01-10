@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "lint": "eslint . --max-warnings 0"
   },
   "devDependencies": {
