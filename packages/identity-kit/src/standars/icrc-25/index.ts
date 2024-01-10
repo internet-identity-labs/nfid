@@ -8,7 +8,7 @@ export type AdapterConfig = {
 }
 
 export interface ICRC25Adapter<T> {
-  config(request: AdapterConfig): T,
+  config(request: AdapterConfig): T
   getSupportedStandards(): SupportedStandard[]
 }
 
@@ -17,5 +17,5 @@ export enum Standard {
   ICRC31,
   ICRC32,
   ICRC33,
-  ICRC34
+  ICRC34,
 }
