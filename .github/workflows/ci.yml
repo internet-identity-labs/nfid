@@ -22,24 +22,20 @@ jobs:
         with:
           fetch-depth: 2
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "pnpm"
+          cache: "npm"
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Format Check
-        run: pnpm format:check
+        run: npm run format:check
 
       - name: Build
-        run: pnpm build
+        run: npm run build
 
       - name: Test
-        run: pnpm test
+        run: npm run test

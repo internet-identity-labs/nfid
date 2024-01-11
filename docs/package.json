@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier .",
-    "format:check": "pnpm run format --check",
-    "format:write": "pnpm run format --write"
+    "format:check": "npm run format --check",
+    "format:write": "npm run format --write"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.3",

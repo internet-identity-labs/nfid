@@ -1,9 +1,0 @@
-packages:
-  # all configuration packages
-  - "config/**"
-  # all packages related to docs site
-  - "docs/**"
-  # all packages released to @nfid npm org namespace
-  - "packages/*"
-  # exclude packages that are inside test directories
-  - "!**/test/**"

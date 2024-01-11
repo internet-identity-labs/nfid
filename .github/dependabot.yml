@@ -5,17 +5,17 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pnpm"
+  - package-ecosystem: "npm"
     target-branch: "main"
     directory: "/"
     schedule:
       interval: "daily"
-  - package-ecosystem: "pnpm"
+  - package-ecosystem: "npm"
     target-branch: "main"
     directory: "docs/"
     schedule:
       interval: "daily"
-  - package-ecosystem: "pnpm"
+  - package-ecosystem: "npm"
     target-branch: "main"
     directory: "packages/identity-kit/"
     schedule:
