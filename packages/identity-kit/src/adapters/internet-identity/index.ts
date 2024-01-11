@@ -1,47 +1,42 @@
-import { AdapterConfig, ICRC25Adapter, SupportedStandard } from "../../standards/icrc-25"
+import { AdapterConfig, GetSupportedStandardRequest, GetSupportedStandardResponse, GrantedPermissionRequest, ICRC25Adapter, PermissionRequest, PermissionResponse, RevokePermissionRequest, SupportedStandard } from "../../standards/icrc-25"
 import { GetPrincipalResponse, ICRC31Adapter } from "../../standards/icrc-31"
 import { ICRC32Adapter, SignChallengeRequest, SignChallengeResponse } from "../../standards/icrc-32"
 import { CallCanisterRequest, CallCanisterResponse, ICRC33Adapter } from "../../standards/icrc-33"
-import { IRCR34Adapter } from "../../standards/icrc-34"
+import { GetDelegationRequest, GetDelegationResponse, IRCR34Adapter } from "../../standards/icrc-34"
 
-export class II
-  implements ICRC25Adapter<II>, ICRC31Adapter, ICRC32Adapter, ICRC33Adapter, IRCR34Adapter
+export class IIAdapter
+  implements ICRC25Adapter<IIAdapter>, ICRC31Adapter, ICRC32Adapter, ICRC33Adapter, IRCR34Adapter
 {
-  private _config: AdapterConfig
+  private _config: AdapterConfig | undefined
 
-  constructor(request: AdapterConfig) {
-    this._config = request
-  }
-
-  static config(request: AdapterConfig): II {
-    return new II(request)
-  }
-
-  config(request: AdapterConfig): II {
+  config(request: AdapterConfig): IIAdapter {
     this._config = request
     return this
   }
-
-  getSupportedStandards(): SupportedStandard[] {
-    return [
-      { name: "ICRC_25", url: "url" },
-      { name: "ICRC_31", url: "url" },
-      { name: "ICRC_32", url: "url" },
-      { name: "ICRC_33", url: "url" },
-      { name: "ICRC_34", url: "url" },
-    ]
-  }
-
-  getDelegation(request: unknown): Promise<unknown> {
+  callCanister(request: CallCanisterRequest): Promise<CallCanisterResponse> {
     throw new Error("Method not implemented.")
   }
-  callCanister(request: CallCanisterRequest): CallCanisterResponse {
+  signChallange(request: SignChallengeRequest): Promise<SignChallengeResponse> {
     throw new Error("Method not implemented.")
   }
-  signChallange(request: SignChallengeRequest): SignChallengeResponse {
+  getPrincipals(): Promise<GetPrincipalResponse> {
     throw new Error("Method not implemented.")
   }
-  getPrincipals(): GetPrincipalResponse {
+  getDelegation(request: GetDelegationRequest): Promise<GetDelegationResponse> {
+    throw new Error("Method not implemented.")
+  }
+  getSupportedStandards(request: GetSupportedStandardRequest): GetSupportedStandardResponse {
+    throw new Error("Method not implemented.")
+  }
+  requestPermission(request: PermissionRequest): Promise<PermissionResponse> {
+    throw new Error("Method not implemented.")
+  }
+  grantedPermission(request: GrantedPermissionRequest): Promise<PermissionResponse> {
+    throw new Error("Method not implemented.")
+  }
+  revokePermission(request: RevokePermissionRequest): Promise<PermissionResponse> {
     throw new Error("Method not implemented.")
   }
 }
+
+export const II = new IIAdapter()

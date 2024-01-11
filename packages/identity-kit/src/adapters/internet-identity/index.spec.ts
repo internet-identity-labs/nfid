@@ -14,5 +14,8 @@ describe("ii", () => {
     expect(ii.callCanister).toBeDefined()
     expect(ii.signChallange).toBeDefined()
     expect(ii.getPrincipals).toBeDefined()
+    expect(ii.requestPermission).toBeDefined()
+    expect(ii.grantedPermission).toBeDefined()
+    expect(ii.revokePermission).toBeDefined()
   })
 })

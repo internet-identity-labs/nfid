@@ -14,5 +14,8 @@ describe("nfid", () => {
     expect(nfid.callCanister).toBeDefined()
     expect(nfid.signChallange).toBeDefined()
     expect(nfid.getPrincipals).toBeDefined()
+    expect(nfid.requestPermission).toBeDefined()
+    expect(nfid.grantedPermission).toBeDefined()
+    expect(nfid.revokePermission).toBeDefined()
   })
 })
