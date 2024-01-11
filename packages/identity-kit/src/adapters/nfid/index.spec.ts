@@ -4,7 +4,7 @@ import { AdapterConfig } from "../../standars/icrc-25"
 describe("nfid", () => {
   test("config", () => {
     const adapterConfig: AdapterConfig = {
-        providerUrl: "test"
+      providerUrl: "test",
     }
 
     const nfid = NFID.config(adapterConfig)

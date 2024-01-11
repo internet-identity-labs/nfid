@@ -6,4 +6,4 @@ export enum SupportedStandards {
   "ICRC_34" = "ICRC-34",
 }
 
-export type SupportedStandardsType = Array<keyof typeof SupportedStandards>;
+export type SupportedStandardsType = Array<keyof typeof SupportedStandards>
