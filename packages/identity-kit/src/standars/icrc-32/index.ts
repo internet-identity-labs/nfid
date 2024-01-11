@@ -1,1 +1,17 @@
-// TODO: Define the ICRC-32 standard typescript Interface
+export type SignChallengeRequest = {
+  version?: string
+  principal?: string
+  challenge: string
+}
+
+export type SignChallengeResponse = {
+  version: string
+  signedChallenge: {
+    publicKey: string
+    signature: string
+  }
+}
+
+export interface ICRC32Adapter {
+  signChallange(request: SignChallengeRequest): SignChallengeResponse
+}
