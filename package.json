@@ -16,7 +16,6 @@
     "prettier": "^3.1.0",
     "turbo": "latest"
   },
-  "packageManager": "npm@9.8.0",
   "workspaces": [
     "docs",
     "packages/*",
