@@ -24,11 +24,11 @@ export class II
 
   getSupportedStandards(): SupportedStandard[] {
     return [
-      { type: "ICRC_25", url: "url" },
-      { type: "ICRC_31", url: "url" },
-      { type: "ICRC_32", url: "url" },
-      { type: "ICRC_33", url: "url" },
-      { type: "ICRC_34", url: "url" },
+      { name: "ICRC_25", url: "url" },
+      { name: "ICRC_31", url: "url" },
+      { name: "ICRC_32", url: "url" },
+      { name: "ICRC_33", url: "url" },
+      { name: "ICRC_34", url: "url" },
     ]
   }
 

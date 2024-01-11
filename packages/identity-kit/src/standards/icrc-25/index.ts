@@ -1,5 +1,5 @@
 export type SupportedStandard = {
-  type: string
+  name: string
   url: string
 }
 
