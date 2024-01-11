@@ -1,5 +1,5 @@
 export type SupportedStandard = {
-  type: Standard
+  type: string
   url: string
 }
 
@@ -10,12 +10,4 @@ export type AdapterConfig = {
 export interface ICRC25Adapter<T> {
   config(request: AdapterConfig): T
   getSupportedStandards(): SupportedStandard[]
-}
-
-export enum Standard {
-  ICRC25,
-  ICRC31,
-  ICRC32,
-  ICRC33,
-  ICRC34,
 }

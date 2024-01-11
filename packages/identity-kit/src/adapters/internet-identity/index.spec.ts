@@ -1,7 +1,7 @@
 import { II } from "."
-import { AdapterConfig } from "../../standars/icrc-25"
+import { AdapterConfig } from "../../standards/icrc-25"
 
-describe("nfid", () => {
+describe("ii", () => {
   test("config", () => {
     const adapterConfig: AdapterConfig = {
       providerUrl: "test",

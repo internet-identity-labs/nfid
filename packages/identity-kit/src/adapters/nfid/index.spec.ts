@@ -1,5 +1,5 @@
 import { NFID } from "."
-import { AdapterConfig } from "../../standars/icrc-25"
+import { AdapterConfig } from "../../standards/icrc-25"
 
 describe("nfid", () => {
   test("config", () => {

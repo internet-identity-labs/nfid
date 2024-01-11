@@ -1,8 +1,8 @@
-import { AdapterConfig, ICRC25Adapter, Standard, SupportedStandard } from "../../standars/icrc-25"
-import { GetPrincipalResponse, ICRC31Adapter } from "../../standars/icrc-31"
-import { ICRC32Adapter, SignChallengeRequest, SignChallengeResponse } from "../../standars/icrc-32"
-import { CallCanisterRequest, CallCanisterResponse, ICRC33Adapter } from "../../standars/icrc-33"
-import { IRCR34Adapter } from "../../standars/icrc-34"
+import { AdapterConfig, ICRC25Adapter, SupportedStandard } from "../../standards/icrc-25"
+import { GetPrincipalResponse, ICRC31Adapter } from "../../standards/icrc-31"
+import { ICRC32Adapter, SignChallengeRequest, SignChallengeResponse } from "../../standards/icrc-32"
+import { CallCanisterRequest, CallCanisterResponse, ICRC33Adapter } from "../../standards/icrc-33"
+import { IRCR34Adapter } from "../../standards/icrc-34"
 
 export class II
   implements ICRC25Adapter<II>, ICRC31Adapter, ICRC32Adapter, ICRC33Adapter, IRCR34Adapter
@@ -24,11 +24,11 @@ export class II
 
   getSupportedStandards(): SupportedStandard[] {
     return [
-      { type: Standard.ICRC25, url: "url" },
-      { type: Standard.ICRC31, url: "url" },
-      { type: Standard.ICRC32, url: "url" },
-      { type: Standard.ICRC33, url: "url" },
-      { type: Standard.ICRC34, url: "url" },
+      { type: "ICRC_25", url: "url" },
+      { type: "ICRC_31", url: "url" },
+      { type: "ICRC_32", url: "url" },
+      { type: "ICRC_33", url: "url" },
+      { type: "ICRC_34", url: "url" },
     ]
   }
 
