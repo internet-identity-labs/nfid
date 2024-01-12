@@ -25,7 +25,6 @@ signer. By using the `icrc33_call_canister` method, applications can interact wi
 of services and functionalities, enhancing the versatility and reach of ICP-based applications.
 
 <Tabs items={['Method Call', 'Request Type', 'Response Type']} defaultIndex="0"><Tabs.Tab>
-
 ```typescript filename="Method Call"
 const response: Response = await connection.callCanister({
   canisterId: "xhy27-fqaaa-aaaao-a2hlq-ca",
@@ -43,12 +42,11 @@ const response: Response = await connection.callCanister({
 }
 
 ```
+</Tabs.Tab>
 
-</Tabs.Tab><Tabs.Tab>
-
+<Tabs.Tab>
 ```typescript filename="Request Type"
 type Request = {
-  version: string
   canisterId: string
   sender: string
   method: string
@@ -56,9 +54,9 @@ type Request = {
 }
 
 ```
+</Tabs.Tab>
 
-</Tabs.Tab><Tabs.Tab>
-
+<Tabs.Tab>
 ```typescript filename="Response Type"
 type Response = {
   version: string

@@ -24,6 +24,34 @@ The `icrc34_get_delegation` method is designed to facilitate the delegation of i
 This process allows users to securely manage their identities and permissions, providing a flexible
 and secure framework for identity delegation within the ICP ecosystem.
 
-```typescript
-const response = await connection.getDelegation({...})
+<Tabs items={['Method Call', 'Response Type']} defaultIndex="0"><Tabs.Tab>
+```typescript filename="Method Call"
+const response: Response = await connection.getDelegation()
 ```
+
+```json filename="Response Data"
+{
+  "version": "1",
+  "identities": [
+    {
+      "tbd": "tbd"
+    }
+  ]
+}
+
+```
+</Tabs.Tab>
+
+<Tabs.Tab>
+```typescript filename="Response Type"
+type Response = {
+  version: string
+  identities: [
+    {
+      tbd: string
+    }
+  ]
+}
+
+```
+</Tabs.Tab></Tabs>

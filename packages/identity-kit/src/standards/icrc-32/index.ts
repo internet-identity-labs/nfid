@@ -6,7 +6,7 @@ import { Version } from "../ version"
  * @remarks
  * The `SignChallengeRequest` type is used as input for the `signChallange` method in the `ICRC32Adapter` interface.
  */
-export type SignChallengeRequest = Version & {
+export type SignChallengeRequest = {
   /**
    * Principal (text): Principal (textual representation) corresponding to the identity
    * that the signer should provide the challenge signature for.

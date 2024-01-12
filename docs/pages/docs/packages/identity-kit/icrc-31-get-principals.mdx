@@ -24,7 +24,8 @@ applications to retrieve information about the identities managed by a signer, s
 authentication process. This standard is pivotal in ensuring that users can manage their digital
 identities efficiently and securely.
 
-<Tabs items={['Method Call', 'Response Type']} defaultIndex="0">
+<Tabs items={['Method Call', 'Request Type', 'Response Type']} defaultIndex="0">
+
 <Tabs.Tab>
 ```typescript filename="Method Call"
 const response: Response = await connection.getPrincipals()
@@ -37,13 +38,14 @@ const response: Response = await connection.getPrincipals()
 }
 ```
 </Tabs.Tab>
+
 <Tabs.Tab>
 ```typescript filename="Response Type"
 type Response = {
-  version: string
   principals: string[]
 }
 
 ```
 </Tabs.Tab>
+
 </Tabs>
