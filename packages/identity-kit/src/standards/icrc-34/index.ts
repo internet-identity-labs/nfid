@@ -1,11 +1,6 @@
 import { Version } from "../ version";
 
 /**
- * Represents a request to get delegation information, specifying the version of the standard used.
- */
-export type GetDelegationRequest = Version
-
-/**
  * Represents the response to getting delegation information, including the version, identities, and optional delegation details.
  */
 export type GetDelegationResponse = Version & {
@@ -49,8 +44,7 @@ export interface IRCR34Adapter {
    * @remarks
    * Prerequisite: Active session with granted permission scope icrc34_get_delegation or *.
    *
-   * @param request - The GetDelegationRequest containing the version information.
    * @returns A Promise resolving to the GetDelegationResponse containing the response to the delegation request.
    */
-  getDelegation(request: GetDelegationRequest): Promise<GetDelegationResponse>;
+  getDelegation(): Promise<GetDelegationResponse>;
 }

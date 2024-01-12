@@ -24,9 +24,9 @@ The `icrc32_sign_challenge` method provides a secure mechanism for verifying own
 identities. By facilitating cryptographic proofs, this standard strengthens the security framework
 of applications, ensuring that user identities are protected and authenticated reliably.
 
+<Tabs items={['Method Call', 'Request Type', 'Response Type']} defaultIndex="0">
 
-<Tabs items={['Method Call', 'Request Type', 'Response Type']} defaultIndex="0"><Tabs.Tab>
-
+<Tabs.Tab>
 ```typescript filename="Method Call"
 const response: Response = await connection.signChallange({
   principal: "rwlgt-iiaaa-aaaaa-aaaaa-cai", // optinal filter for identity that should sign 
@@ -43,23 +43,21 @@ const response: Response = await connection.signChallange({
   }
 }
 ```
+</Tabs.Tab>
 
-</Tabs.Tab><Tabs.Tab>
-
+<Tabs.Tab>
 ```typescript filename="Request Type"
 type Request = {
-  version?: string
   principal?: string
   challenge: string
 }
 
 ```
+</Tabs.Tab>
 
-</Tabs.Tab><Tabs.Tab>
-
+<Tabs.Tab>
 ```typescript filename="Response Type"
 type Response = {
-  version: string
   signedChallenge: {
     publicKey: string
     signature: string
@@ -67,4 +65,6 @@ type Response = {
 }
 
 ```
-</Tabs.Tab></Tabs>
+</Tabs.Tab>
+
+</Tabs>

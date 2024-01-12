@@ -3,7 +3,7 @@ import { Version } from "../ version";
 /**
  * Represents a request to call a canister, specifying the version, canister id, sender, method, and arguments.
  */
-export type CallCanisterRequest = Version & {
+export type CallCanisterRequest = {
   /**
    * The id of the canister on which the call should be executed.
    */

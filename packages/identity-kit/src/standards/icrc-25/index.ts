@@ -15,11 +15,6 @@ export type SupportedStandard = {
 }
 
 /**
- * Represents a request to get the supported standards.
- */
-export type GetSupportedStandardRequest = Version;
-
-/**
  * Represents the response containing the supported standards.
  */
 export type GetSupportedStandardResponse = Version & {
@@ -33,6 +28,12 @@ export type GetSupportedStandardResponse = Version & {
  * Configuration for the adapter.
  */
 export type AdapterConfig = {
+  /**
+   * The version of the standard used. If the signer does not support the version of the request,
+   * it must send the "VERSION_NOT_SUPPORTED" error in response.
+   * Optional.
+   */
+  version?: string
   /**
    * URL of the provider.
    */
@@ -78,7 +79,7 @@ export type ScopeResponse = {
 /**
  * Represents a collection of permission scopes.
  */
-export type PermissionRequest = Version & {
+export type PermissionRequest = {
   /**
    * Array of permission scope objects.
    */
@@ -88,17 +89,12 @@ export type PermissionRequest = Version & {
 /**
  * Represents a collection of permission scopes.
  */
-export type RevokePermissionRequest = Version & {
+export type RevokePermissionRequest = {
   /**
    * Array of permission scope objects.
    */
   scopes?: ScopeRequest[]
 }
-
-/**
- * Represents a collection of permission scopes.
- */
-export type GrantedPermissionRequest = Version
 
 /**
  * Represents a collection of permission scopes.
@@ -129,7 +125,7 @@ export interface ICRC25Adapter<T> {
    *   - 10001: Unknown error
    *   - 20101: Version not supported
    */
-  getSupportedStandards(request: GetSupportedStandardRequest): GetSupportedStandardResponse
+  getSupportedStandards(): GetSupportedStandardResponse
 
   /**
    * Requests permission scopes to perform further actions.
@@ -150,7 +146,7 @@ export interface ICRC25Adapter<T> {
    *   - 10001: Unknown error
    *   - 20101: Version not supported
    */
-  grantedPermission(request: GrantedPermissionRequest): Promise<PermissionResponse>
+  grantedPermission(): Promise<PermissionResponse>
 
   /**
    * Revokes previously granted permission scopes.
