@@ -1,12 +1,12 @@
 {
   "index": {
-    "title": "Introduction",
-    "type": "page",
-    "display": "hidden"
+    "title": "Welcome"
   },
-  "docs": {
-    "title": "Docs",
-    "type": "page"
+  "embed": {
+    "title": "@nfid/embed"
+  },
+  "identity-kit": {
+    "title": "@nfid/identity-kit"
   },
   "examples": {
     "title": "Examples",
@@ -14,9 +14,20 @@
   },
   "blog": {
     "title": "Blog",
-    "type": "page",
-    "theme": {
-      "sidebar": false
+    "type": "page"
+  },
+  "legal": {
+    "title": "Legal",
+    "type": "menu",
+    "items": {
+      "privacy": {
+        "title": "Privacy policy",
+        "href": "/legal/privacy"
+      },
+      "terms": {
+        "title": "Terms of use",
+        "href": "/legal/terms"
+      }
     }
   }
 }
