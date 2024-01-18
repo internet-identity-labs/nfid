@@ -1,9 +1,9 @@
 /* eslint-env browser */
 
+import { setupDapp } from "./setup-dapp"
 import "./style.css"
 import typescriptLogo from "./typescript.svg"
 import viteLogo from "/vite.svg"
-import { setupSigner } from "./setup-signer.ts"
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -14,8 +14,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
     </a>
     <h1>Vite + TypeScript</h1>
-    <div><pre>@nfid/identity-kit</pre> signer example</div>
+    <div><pre>@nfid/identity-kit</pre> dapp example</div>
   </div>
 `
 
-setupSigner()
+setupDapp()
