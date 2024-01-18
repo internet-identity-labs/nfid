@@ -1,6 +1,8 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
+/* eslint-env browser */
+
+import "./style.css"
+import typescriptLogo from "./typescript.svg"
+import viteLogo from "/vite.svg"
 import { setupSigner } from "./counter.ts"
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
@@ -16,4 +18,4 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   </div>
 `
 
-setupSigner(document.querySelector<HTMLButtonElement>("#counter")!)
+setupSigner()
