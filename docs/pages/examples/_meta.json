@@ -1,0 +1,10 @@
+{
+  "vanilla-javascript": {
+    "title": "Vanilla JS Example",
+    "theme": {
+      "breadcrumb": false,
+      "typesetting": "article",
+      "sidebar": false
+    }
+  }
+}

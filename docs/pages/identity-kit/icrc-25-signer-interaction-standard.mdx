@@ -6,10 +6,10 @@ authors:
   - name: "Philipp Litzenberger"
 ---
 
-import { Stack } from "../../../../components/stack.tsx"
+import { Stack } from "../../components/stack.tsx"
 import { Tabs } from "nextra/components"
 
-# ICRC-25: Signer Interactions
+## ICRC-25: Signer Interactions
 
 <Stack>
 [![Status Badge](https://img.shields.io/badge/STATUS-DRAFT-ffcc00.svg)](https://github.com/dfinity/wg-identity-authentication/blob/main/topics/icrc_25_signer_interaction_standard.md)
@@ -17,13 +17,13 @@ import { Tabs } from "nextra/components"
 [![Standard Issue](https://img.shields.io/badge/ISSUE-ICRC--25-blue?logo=github)](https://github.com/dfinity/wg-identity-authentication/issues/94)
 </Stack>
 
-This standard outlines a foundational protocol for communication between decentralized apps (dapps)
+This standard outlines a foundational protocol for communication between decentralized apps (dApps)
 and signers. It specifies a set of messages to facilitate this interaction, ensuring a seamless and
-secure exchange of information. The ICRC-25 aims to create a uniform language for dapps and signers,
+secure exchange of information. ICRC-25 aims to create a uniform language for dApps and signers,
 enhancing interoperability and simplifying the development process.
 
-We invite the community to contribute adapters for other signers to `@nfid/identity-kit`. But
-obviously, you can also use custom adapters from your own or other external packages.
+We invite the community to contribute adapters for other signers to `@nfid/identity-kit`, but
+you can also use custom adapters from your own or other external packages.
 
 ```typescript filename="Import and configure Signer"
 import * as IdentityKit from "@nfid/identity-kit"
@@ -61,7 +61,7 @@ const connection = await IdentityKit.connect({
 })
 ```
 
-#### Exploring available standards on a given signer:
+### Exploring available standards on a given signer:
 
 To understand what standards are supported on a user selected signer, you will be able to call
 `connection.getSupportedStandards()` which returns the list of strings representing the standard
@@ -90,9 +90,9 @@ type Response = string[]
 
 </Tabs>
 
-#### Request Permissions:
+### Request Permissions:
 
-The purpose of the requestPermissions method is for the relying party to request permission scopes to perform further actions. 
+The purpose of the `requestPermissions` method is for the relying party to request permission scopes to perform further actions. 
 If the set of granted scopes is not empty and there was no session before, a new session is created.
 
 <Tabs items={['Method Call', 'Request Type', 'Response Type']} defaultIndex="0">
@@ -162,9 +162,9 @@ type Response = {
 
 </Tabs>
 
-#### Granted Permissions Method:
+### Granted Permissions Method:
 
-The purpose of the grantedPermissions method is for the relying party to query the granted permission scopes on the active session.
+The purpose of the `grantedPermissions` method is for the relying party to query the granted permission scopes on the active session.
 
 <Tabs items={['Method Call', 'Response Type']} defaultIndex="0">
 
@@ -209,7 +209,7 @@ type Response = {
 
 </Tabs>
 
-#### Revoke Permissions Method:
+### Revoke Permissions Method:
 
 The relying party can request to revoke all or a subset of the previously granted permission scopes. If all granted permission scopes are revoked, the session (if any) is terminated.
 
