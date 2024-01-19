@@ -1,0 +1,46 @@
+{
+  "canisters": {
+    "signer": {
+      "frontend": {
+        "entrypoint": "examples/signer/dist/index.html"
+      },
+      "source": [
+        "examples/signer/dist/"
+      ],
+      "type": "assets"
+    },
+    "dapp": {
+      "frontend": {
+        "entrypoint": "examples/dapp/dist/index.html"
+      },
+      "source": [
+        "examples/dapp/dist/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": ""
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    },
+    "ic": {
+      "providers": [
+        "https://mainnet.dfinity.network"
+      ],
+      "type": "persistent"
+    },
+    "dev": {
+      "providers": [
+        "https://icp0.io"
+      ],
+      "type": "persistent"
+    }
+  },
+  "version": 1
+}

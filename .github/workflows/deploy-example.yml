@@ -1,0 +1,69 @@
+name: Deploy Signer and Dapp apps.
+
+on:
+  workflow_dispatch:
+    inputs:
+      network:
+        description: 'Network:'
+        required: true
+        type: choice
+        options: 
+          - dev
+          - ic
+env:
+  NETWORK: ${{ github.event.inputs.network }}
+
+jobs:
+  deploy:
+    name: Deploy
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install DFX
+        uses: aviate-labs/setup-dfx@v0.2.6
+        with:
+          dfx-version: 0.15.3
+          dfx-disable-encryption: true
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build-example
+
+      - name: Setup DFX Identity
+        run: |
+          if [[ "${NETWORK}" == 'dev' ]]; then
+            ID_NAME="icrc25_dev_identity"
+            IDENTITY_PEM_NAME_VAR="ICRC25_DEV_IDENTITY"
+          elif [ "${NETWORK}" == 'ic' ]; then
+            ID_NAME="icrc25_prod_identity"
+            IDENTITY_PEM_NAME_VAR="ICRC25_PROD_IDENTITY"
+          fi
+
+          ID_PATH="$HOME/.config/dfx/identity/${ID_NAME}"
+          mkdir -p "${ID_PATH}"
+          echo "${!IDENTITY_PEM_NAME_VAR}" | base64 -d > "${ID_PATH}/identity.pem"
+          dfx identity use "${ID_NAME}"
+        env:
+          ICRC25_DEV_IDENTITY: ${{secrets.ICRC25_DEV_IDENTITY}}
+          ICRC25_PROD_IDENTITY: ${{secrets.ICRC25_PROD_IDENTITY}}
+
+      - name: Deploy
+        run: | 
+          echo "dfx deploy --network "${NETWORK}"" >&2
+          if ! result=$(dfx deploy --network "${NETWORK}"); then
+            echo "Deploy failed ${result}" >&2
+            exit 1
+          fi
