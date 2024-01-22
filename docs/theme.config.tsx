@@ -42,6 +42,7 @@ const theme = {
 
     const imageUrl = new URL("https://3y5ko-7qaaa-aaaal-aaaaq-cai.ic0.app/assets/nfid_og.png")
 
+    const ogTitle = frontMatter.title || "NFID Docs"
     const ogDescription = frontMatter.description || "NFID Docs"
     const ogImage = frontMatter.image || imageUrl.toString()
     return (
@@ -50,7 +51,7 @@ const theme = {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@IdentityMaxis" />
         <meta name="twitter:image" content={ogImage} />
-        <meta property="og:title" content={"NFID Docs"} />
+        <meta property="og:title" content={ogTitle} />
         <meta property="og:description" content={ogDescription} />
         <meta property="og:image" content={ogImage} />
       </>
