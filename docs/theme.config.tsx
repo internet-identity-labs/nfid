@@ -3,6 +3,7 @@ import { GitHubLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons'
 
 import LogoLight from "./public/img/logo-light.png"
 import LogoDark from "./public/img/logo-dark.png"
+import { useConfig } from "nextra-theme-docs"
 
 const REPO_BASE = "https://github.com/internet-identity-labs/nfid"
 const TWITTER_LINK = "https://twitter.com/@IdentityMaxis"
@@ -10,7 +11,7 @@ const TWITTER_LINK = "https://twitter.com/@IdentityMaxis"
 const theme = {
   useNextSeoProps() {
     return {
-      titleTemplate: 'NFID Docs - %s'
+      titleTemplate: "NFID Docs - %s",
     }
   },
   logo: (
@@ -26,15 +27,35 @@ const theme = {
   docsRepositoryBase: REPO_BASE,
   project: {
     link: REPO_BASE,
-    icon: <GitHubLogoIcon />
+    icon: <GitHubLogoIcon />,
   },
   chat: {
     link: TWITTER_LINK,
-    icon: <TwitterLogoIcon />
+    icon: <TwitterLogoIcon />,
   },
-  sidebar: { 
+  sidebar: {
     toggleButton: true,
     defaultMenuCollapseLevel: 1,
+  },
+  head: () => {
+    const { frontMatter } = useConfig()
+
+    const imageUrl = new URL("https://3y5ko-7qaaa-aaaal-aaaaq-cai.ic0.app/assets/nfid_og.png")
+
+    const ogTitle = frontMatter.title || "NFID Docs"
+    const ogDescription = frontMatter.description || "NFID Docs"
+    const ogImage = frontMatter.image || imageUrl.toString()
+    return (
+      <>
+        <meta name="description" content={ogDescription} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@IdentityMaxis" />
+        <meta name="twitter:image" content={ogImage} />
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
+        <meta property="og:image" content={ogImage} />
+      </>
+    )
   },
   footer: {
     text: (
