@@ -9,7 +9,7 @@ on:
         type: choice
         options: 
           - dev
-          - ic
+          - prod
 env:
   NETWORK: ${{ github.event.inputs.network }}
 

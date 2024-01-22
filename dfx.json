@@ -29,9 +29,9 @@
       "bind": "127.0.0.1:8000",
       "type": "ephemeral"
     },
-    "ic": {
+    "prod": {
       "providers": [
-        "https://mainnet.dfinity.network"
+        "https://icp0.io"
       ],
       "type": "persistent"
     },
