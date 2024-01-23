@@ -24,7 +24,7 @@ const theme = {
       </div>
     </div>
   ),
-  docsRepositoryBase: REPO_BASE,
+  docsRepositoryBase: `${REPO_BASE}/blob/main/docs`,
   project: {
     link: REPO_BASE,
     icon: <GitHubLogoIcon />,
