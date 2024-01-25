@@ -69,7 +69,7 @@ jobs:
         run: npm run build-package @nfid/${{ github.event.inputs.package }}
 
       - name: 📦 Publish package on NPM
-        working-directory: packages/${{ github.event.inputs.package }}/dist
+        working-directory: packages/${{ github.event.inputs.package }}
         run: npx yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.IL_GH_NPM_TOKEN }}
