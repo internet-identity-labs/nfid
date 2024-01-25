@@ -1,11 +1,11 @@
 import { AdapterConfig, GetSupportedStandardResponse, ICRC25Adapter, PermissionRequest, PermissionResponse, RevokePermissionRequest } from "../../standards/icrc-25"
 import { GetPrincipalResponse, ICRC31Adapter } from "../../standards/icrc-31"
 import { ICRC32Adapter, SignChallengeRequest, SignChallengeResponse } from "../../standards/icrc-32"
-import { CallCanisterRequest, CallCanisterResponse, ICRC33Adapter } from "../../standards/icrc-33"
+import { CallCanisterRequest, CallCanisterResponse, ICRC49Adapter } from "../../standards/icrc-49"
 import { GetDelegationResponse, IRCR34Adapter } from "../../standards/icrc-34"
 
 export class IIAdapter
-  implements ICRC25Adapter<IIAdapter>, ICRC31Adapter, ICRC32Adapter, ICRC33Adapter, IRCR34Adapter
+  implements ICRC25Adapter<IIAdapter>, ICRC31Adapter, ICRC32Adapter, ICRC49Adapter, IRCR34Adapter
 {
   private _config: AdapterConfig | undefined
 

@@ -6,7 +6,7 @@ authors:
   - name: "Philipp Litzenberger"
 ---
 
-import { Stack } from "../../components/stack.tsx"
+import { Stack } from "../../components/stack"
 import { Tabs } from "nextra/components"
 
 ## ICRC-25: Signer Interactions
@@ -105,7 +105,7 @@ const response: Response = await nfid.requestPermissions({
       method: "icrc31_get_principals"
     },
     {
-      method: "icrc33_canister_call",
+      method: "icrc49_canister_call",
       targets: ["ryjl3-tyaaa-aaaaa-aaaba-cai"]
     }
   ]
@@ -120,7 +120,7 @@ const response: Response = await nfid.requestPermissions({
       "method": "icrc31_get_principals"
     },
     {
-      "method": "icrc33_canister_call",
+      "method": "icrc49_canister_call",
       "targets": ["ryjl3-tyaaa-aaaaa-aaaba-cai"],
       "senders": ["btbdd-ob3pe-dz6kv-7n4gh-k2xtm-xjthz-kcvpk-fwbnv-w5qbk-iqjm4-4qe"]
     }
@@ -181,7 +181,7 @@ const response: Response = await nfid.grantedPermissions()
       "method": "icrc31_get_principals"
     },
     {
-      "method": "icrc33_canister_call",
+      "method": "icrc49_canister_call",
       "targets": ["ryjl3-tyaaa-aaaaa-aaaba-cai"],
       "senders": ["btbdd-ob3pe-dz6kv-7n4gh-k2xtm-xjthz-kcvpk-fwbnv-w5qbk-iqjm4-4qe"]
     }
@@ -220,7 +220,7 @@ The relying party can request to revoke all or a subset of the previously grante
 const response: Response = await nfid.revokePermissions({
   scopes: [
     {
-      method: "icrc33_canister_call"
+      method: "icrc49_canister_call"
     }
   ]
 })
