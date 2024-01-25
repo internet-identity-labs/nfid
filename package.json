@@ -3,6 +3,7 @@
   "private": false,
   "scripts": {
     "build": "turbo build",
+    "build-package": "turbo build --scope",
     "build-example": "turbo build --force --scope='@nfid/example-**'",
     "dev": "turbo dev",
     "lint": "turbo lint",
