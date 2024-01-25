@@ -41,19 +41,19 @@ export type CallCanisterResponse = Version & {
 };
 
 /**
- * Interface for ICRC33 adapters.
+ * Interface for ICRC49 adapters.
  */
-export interface ICRC33Adapter {
+export interface ICRC49Adapter {
   /**
    * This method can be used by the relying party to request calls to 3rd party canister executed by the signer using the requested identity.
-   * In order to prevent misuse of this method, all icrc33_call_canister requests are subject to user approval.
+   * In order to prevent misuse of this method, all icrc49_call_canister requests are subject to user approval.
    *
    * @remarks
-   * Prerequisite: Active session with granted permission scope icrc33_call_canister or *.
+   * Prerequisite: Active session with granted permission scope icrc49_call_canister or *.
    * This scope may be restricted to specific target canister ids and/or sender principals.
    *
    * @param request - The CallCanisterRequest containing the details of the canister call.
    * @returns The CallCanisterResponse containing the response to the canister call.
    */
-  callCanister(request: CallCanisterRequest): Promise<CallCanisterResponse>;
+  callCanister(request: CallCanisterRequest): Promise<CallCanisterResponse>
 }
