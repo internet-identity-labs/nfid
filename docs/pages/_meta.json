@@ -8,6 +8,9 @@
   "identity-kit": {
     "title": "@nfid/identity-kit"
   },
+  "vaults": {
+    "title": "@nfid/vaults"
+  },
   "blog": {
     "title": "Blog",
     "type": "page"
