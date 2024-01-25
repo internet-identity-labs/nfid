@@ -66,7 +66,7 @@ jobs:
           fi
 
       - name: 🤖 Build
-        run: npm run build ${{ github.event.inputs.package }}
+        run: npm run build-package @nfid/${{ github.event.inputs.package }}
 
       - name: 📦 Publish package on NPM
         working-directory: packages/${{ github.event.inputs.package }}/dist
