@@ -9,6 +9,7 @@ on:
         required: true
         options:
           - "identity-kit"
+          - "vaults"
 
       level:
         type: choice
@@ -49,27 +50,27 @@ jobs:
 
       - name: 🔧 Yarn
         run: |
-          yarn config set version-git-message "chore(${{ github.event.inputs.package }}): release v%s"
-          yarn config set version-tag-prefix "@nfid/${{ github.event.inputs.package }}-v"
+          npx yarn config set version-git-message "chore(${{ github.event.inputs.package }}): release v%s"
+          npx yarn config set version-tag-prefix "@nfid/${{ github.event.inputs.package }}-v"
 
       - name: 🤖 Install
-        run: yarn
+        run: npm i
 
       - name: 🤖 Increment package version
         working-directory: packages/${{ github.event.inputs.package }}
         run: |
           if [[ ${{ github.event.inputs.level }} == "pre"* ]]; then
-            yarn version --${{ github.event.inputs.level }} --preid ${{ github.event.inputs.preid }}
+            npx yarn version --${{ github.event.inputs.level }} --preid ${{ github.event.inputs.preid }}
           else
-            yarn version --${{ github.event.inputs.level }}
+            npx yarn version --${{ github.event.inputs.level }}
           fi
 
       - name: 🤖 Build
-        run: npx nx build ${{ github.event.inputs.package }}
+        run: npm run build ${{ github.event.inputs.package }}
 
       - name: 📦 Publish package on NPM
         working-directory: packages/${{ github.event.inputs.package }}/dist
-        run: yarn publish --access public
+        run: npx yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.IL_GH_NPM_TOKEN }}
 
