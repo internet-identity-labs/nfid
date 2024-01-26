@@ -45,6 +45,7 @@ const theme = {
     const ogTitle = frontMatter.title || "NFID Docs"
     const ogDescription = frontMatter.description || "NFID Docs"
     const ogImage = frontMatter.image || imageUrl.toString()
+
     return (
       <>
         <meta name="description" content={ogDescription} />
@@ -53,7 +54,7 @@ const theme = {
         <meta name="twitter:image" content={ogImage} />
         <meta property="og:title" content={ogTitle} />
         <meta property="og:description" content={ogDescription} />
-        <meta property="og:image" content={ogImage} />
+        <meta property="og:image" content={`${window.location.origin}${ogImage}`} />
       </>
     )
   },
