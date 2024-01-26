@@ -1,5 +1,8 @@
 name: Dispatch NPM release
 
+permissions:
+  contents: "write"
+
 on:
   workflow_dispatch:
     inputs:
@@ -36,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: 🔧 Git
         run: |
@@ -76,5 +79,7 @@ jobs:
 
       - name: 🎉 Push tags
         run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git push
           git push --tags
