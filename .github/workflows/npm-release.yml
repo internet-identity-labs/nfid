@@ -46,6 +46,8 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.NFID_GITHUB_ACTION_GPG_KEY }}
           passphrase: ${{ secrets.NFID_GITHUB_ACTION_GPG_KEY_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
 
       - name: 🔧 Git
         run: |
