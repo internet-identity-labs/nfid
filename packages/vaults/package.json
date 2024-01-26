@@ -1,7 +1,7 @@
 {
   "name": "@nfid/vaults",
   "version": "0.0.0-alpha.1",
-  "description": "software development kit to interact with NFID Vaults",
+  "description": "Software Development Kit to interact with NFID Vaults",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -36,5 +36,9 @@
   },
   "dependencies": {
     "simple-cbor": "^0.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/internet-identity-labs/nfid"
   }
 }
