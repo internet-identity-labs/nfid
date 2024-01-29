@@ -40,11 +40,12 @@ const theme = {
   head: () => {
     const { frontMatter } = useConfig()
 
-    const imageUrl = new URL("https://3y5ko-7qaaa-aaaal-aaaaq-cai.ic0.app/assets/nfid_og.png")
-
     const ogTitle = frontMatter.title || "NFID Docs"
     const ogDescription = frontMatter.description || "NFID Docs"
-    const ogImage = frontMatter.image || imageUrl.toString()
+
+    const ogImage = frontMatter.image
+      ? `https://docs.nfid.one${frontMatter.image}`
+      : "https://3y5ko-7qaaa-aaaal-aaaaq-cai.ic0.app/assets/nfid_og.png"
 
     return (
       <>
@@ -54,7 +55,7 @@ const theme = {
         <meta name="twitter:image" content={ogImage} />
         <meta property="og:title" content={ogTitle} />
         <meta property="og:description" content={ogDescription} />
-        <meta property="og:image" content={`https://docs.nfid.one${ogImage}`} />
+        <meta property="og:image" content={ogImage} />
       </>
     )
   },
