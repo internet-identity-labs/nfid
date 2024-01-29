@@ -54,7 +54,7 @@ const theme = {
         <meta name="twitter:image" content={ogImage} />
         <meta property="og:title" content={ogTitle} />
         <meta property="og:description" content={ogDescription} />
-        <meta property="og:image" content={`${window.location.origin}${ogImage}`} />
+        <meta property="og:image" content={`https://docs.nfid.one${ogImage}`} />
       </>
     )
   },
