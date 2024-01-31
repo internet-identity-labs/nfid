@@ -9,5 +9,6 @@ module.exports = {
   plugins: ["jest"],
   env: {
     jest: true,
+    browser: true,
   },
-};
+}
