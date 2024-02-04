@@ -7,8 +7,5 @@ export default {
     // The package exports the compiled style sheet
     "../../packages/identity-kit/src/libs/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
-    extend: {},
-  },
   plugins: [],
 }
