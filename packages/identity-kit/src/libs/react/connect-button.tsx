@@ -7,8 +7,12 @@ import { Box, Button, Flex, IconButton } from "@radix-ui/themes"
 import "./styles.css"
 import "@radix-ui/themes/styles.css"
 
+import { useIdentityKit } from "./provider"
+import { SignerCard } from "./components/signer-card"
+
 export const ConnectButton = () => {
   const [showInfo, toggleInfo] = React.useReducer((value) => !value, false)
+  const { signer, handleConnect } = useIdentityKit()
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -25,7 +29,15 @@ export const ConnectButton = () => {
               </IconButton>
             </Flex>
           </Dialog.Title>
-          {showInfo ? <div>This is Info</div> : <div>Regular Content</div>}
+          {showInfo ? (
+            <div>This is Info</div>
+          ) : (
+            <Flex>
+              {signer.map(({ icon, label, id }) => (
+                <SignerCard icon={icon} label={label} onClick={() => handleConnect(id)} />
+              ))}
+            </Flex>
+          )}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
