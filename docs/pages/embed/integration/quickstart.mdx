@@ -29,6 +29,10 @@ type NFIDConfig = {
     name?: string; // your app name user can recognize
     logo?: string; // your app logo user can recognize
   };
+  identity?: SignIdentity;
+  storage?: AuthClientStorage;
+  keyType?: "ECDSA" | "ed25519" // default is "ECDSA"
+  idleOptions?: IdleOptions;
 };
 
 const nfid = await NFID.init({
