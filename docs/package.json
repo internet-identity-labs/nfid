@@ -24,7 +24,7 @@
     "eslint-config-next": "13.2.4",
     "github-slugger": "^2.0.0",
     "gpt3-tokenizer": "^1.1.5",
-    "lucide-react": "^0.128.0",
+    "lucide-react": "^0.335.0",
     "mdast": "^3.0.0",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-mdx": "^2.0.0",
