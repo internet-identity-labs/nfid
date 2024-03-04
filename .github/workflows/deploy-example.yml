@@ -9,7 +9,7 @@ on:
         type: choice
         options: 
           - dev
-          - prod
+          - ic
 env:
   NETWORK: ${{ github.event.inputs.network }}
 
@@ -20,21 +20,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
+        uses: actions/checkout@v4
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: npm
 
-      - name: Install DFX
-        uses: aviate-labs/setup-dfx@v0.2.6
+      - name: Setup DFX 15
+        uses: dfinity/setup-dfx@main
         with:
           dfx-version: 0.15.3
-          dfx-disable-encryption: true
 
       - name: Install dependencies
         run: npm install
