@@ -1,6 +1,8 @@
+// @ts-nocheck
 import {TransactionRequest as TransactionRequestCandid} from "./service_vault";
 import {Currency, Network, VaultRole} from "./enums";
 import {networkToCandid, roleToCandid} from "./helper";
+import {Principal} from "@dfinity/principal";
 
 export abstract class TransactionRequest {
     abstract toCandid(): TransactionRequestCandid
@@ -77,6 +79,34 @@ export class TransferTransactionRequest implements TransactionRequest {
     }
 }
 
+export class TransferQuorumTransactionRequest implements TransactionRequest {
+    currency: Currency;
+    address: string;
+    wallet: string;
+    amount: bigint;
+    memo: string | undefined;
+
+    constructor(currency: Currency, address: string, wallet: string, amount: bigint) {
+        this.currency = currency
+        this.address = address
+        this.wallet = wallet
+        this.amount = amount
+    }
+
+    toCandid(): TransactionRequestCandid {
+        return {
+            TransferQuorumTransactionRequestV: {
+                //TODO
+                currency: {'ICP': null},
+                address: this.address,
+                wallet: this.wallet,
+                amount: this.amount,
+                memo: this.memo !== undefined ? [this.memo] : []
+            }
+        }
+    }
+}
+
 export class TopUpTransactionRequest implements TransactionRequest {
     currency: Currency;
     wallet: string;
@@ -118,6 +148,22 @@ export class MemberCreateTransactionRequest implements TransactionRequest {
             MemberCreateTransactionRequestV: {
                 member_id: this.member_id, name: this.name, role: roleToCandid(this.role),
                 batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
+            }
+        }
+    }
+}
+
+export class ControllersUpdateTransactionRequest implements TransactionRequest {
+    principals: Array<Principal>
+
+    constructor(principals: Array<Principal>) {
+        this.principals = principals
+    }
+
+    toCandid(): TransactionRequestCandid {
+        return {
+            ControllersUpdateTransactionRequestV: {
+                principals: this.principals
             }
         }
     }

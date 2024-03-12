@@ -12,9 +12,11 @@ export enum TransactionType {
     QuorumUpdate = 'QuorumUpdate',
     VaultNamingUpdate = 'VaultNamingUpdate',
     Transfer = 'Transfer',
+    TransferQuorum = 'TransferQuorum',
     TopUp = 'TopUp',
     VersionUpgrade = 'VersionUpgrade',
     Purge = 'Purge',
+    ControllerUpdate = 'ControllerUpdate',
 }
 
 export enum Currency {

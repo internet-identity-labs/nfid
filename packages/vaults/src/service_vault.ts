@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 
@@ -19,9 +20,14 @@ export interface BasicTransactionFields {
     'created_date' : bigint,
     'batch_uid' : [] | [string],
 }
-export interface Conf {
-    'origins' : Array<string>,
-    'management_canister' : string,
+export interface Conf { 'origins' : Array<string>, 'repo_canister' : string }
+export interface ControllersUpdateTransaction {
+    'principals' : Array<Principal>,
+    'common' : BasicTransactionFields,
+    'current_controllers' : Array<Principal>,
+}
+export interface ControllersUpdateTransactionRequest {
+    'principals' : Array<Principal>,
 }
 export type Currency = { 'ICP' : null };
 export interface Member {
@@ -147,8 +153,9 @@ export interface TransactionApproveRequest {
     'state' : TransactionState,
 }
 export type TransactionCandid = {
-    'WalletCreateTransactionV' : WalletCreateTransaction
+    'ControllersUpdateTransactionV' : ControllersUpdateTransaction
 } |
+    { 'WalletCreateTransactionV' : WalletCreateTransaction } |
     { 'PolicyCreateTransactionV' : PolicyCreateTransaction } |
     { 'MemberUpdateRoleTransactionV' : MemberUpdateRoleTransaction } |
     { 'TopUpTransactionV' : TopUpTransaction } |
@@ -160,6 +167,7 @@ export type TransactionCandid = {
     { 'MemberUpdateNameTransactionV' : MemberUpdateNameTransaction } |
     { 'UpgradeTransactionV' : VersionUpgradeTransaction } |
     { 'PurgeTransactionV' : PurgeTransaction } |
+    { 'TransferQuorumTransactionV' : TransferQuorumTransaction } |
     { 'QuorumUpdateTransactionV' : QuorumUpdateTransaction } |
     { 'WalletUpdateNameTransactionV' : WalletUpdateNameTransaction } |
     { 'MemberRemoveTransactionV' : MemberRemoveTransaction };
@@ -171,12 +179,16 @@ export type TransactionRequest = {
     } |
     { 'PurgeTransactionRequestV' : {} } |
     {
+        'ControllersUpdateTransactionRequestV' : ControllersUpdateTransactionRequest
+    } |
+    {
         'MemberUpdateNameTransactionRequestV' : MemberUpdateNameTransactionRequest
     } |
     { 'TopUpTransactionRequestV' : TopUpTransactionRequest } |
     { 'WalletCreateTransactionRequestV' : WalletCreateTransactionRequest } |
     { 'MemberRemoveTransactionRequestV' : MemberRemoveTransactionRequest } |
     { 'MemberCreateTransactionRequestV' : MemberCreateTransactionRequest } |
+    { 'TransferQuorumTransactionRequestV' : TransferQuorumTransactionRequest } |
     { 'TransferTransactionRequestV' : TransferTransactionRequest } |
     {
         'MemberUpdateRoleTransactionRequestV' : MemberUpdateRoleTransactionRequest
@@ -194,6 +206,21 @@ export type TransactionState = { 'Blocked' : null } |
     { 'Executed' : null } |
     { 'Purged' : null } |
     { 'Pending' : null };
+export interface TransferQuorumTransaction {
+    'block_index' : [] | [bigint],
+    'currency' : Currency,
+    'address' : string,
+    'wallet' : string,
+    'common' : BasicTransactionFields,
+    'amount' : bigint,
+}
+export interface TransferQuorumTransactionRequest {
+    'memo' : [] | [string],
+    'currency' : Currency,
+    'address' : string,
+    'wallet' : string,
+    'amount' : bigint,
+}
 export interface TransferTransaction {
     'block_index' : [] | [bigint],
     'currency' : Currency,
@@ -210,7 +237,8 @@ export interface TransferTransactionRequest {
     'wallet' : string,
     'amount' : bigint,
 }
-export type VaultError = { 'QuorumNotReached' : null } |
+export type VaultError = { 'ControllersUpdateError' : { 'message' : string } } |
+    { 'QuorumNotReachable' : null } |
     { 'WalletNotExists' : null } |
     { 'CouldNotDefinePolicy' : null } |
     { 'ThresholdAlreadyExists' : null } |
@@ -242,6 +270,7 @@ export interface VaultState {
 }
 export interface VersionUpgradeTransaction {
     'version' : string,
+    'initial_version' : string,
     'common' : BasicTransactionFields,
 }
 export interface VersionUpgradeTransactionRequest { 'version' : string }
@@ -281,8 +310,17 @@ export interface _SERVICE {
     >,
     'canister_balance' : ActorMethod<[], bigint>,
     'execute' : ActorMethod<[], undefined>,
+    'get_controllers' : ActorMethod<[], Array<Principal>>,
     'get_state' : ActorMethod<[[] | [bigint]], VaultState>,
     'get_transactions_all' : ActorMethod<[], Array<TransactionCandid>>,
+    'get_trusted_origins_certified' : ActorMethod<
+        [],
+        {
+            'certificate' : Uint8Array | number[],
+            'witness' : Uint8Array | number[],
+            'response' : Array<string>,
+        }
+    >,
     'get_version' : ActorMethod<[], string>,
     'request_transaction' : ActorMethod<
         [Array<TransactionRequest>],

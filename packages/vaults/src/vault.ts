@@ -1,14 +1,15 @@
+// @ts-nocheck
 import {Currency, Network, VaultRole} from "./enums";
 import {Member, Policy as PolicyCandid, VaultState, Wallet as WalletCandid} from "./service_vault";
 import {candidToRole, candidToNetwork} from "./helper";
 
-export interface Vault {
-  members: Array<VaultMember>
-  quorum: Quorum
-  wallets: Array<Wallet>
-  policies: Array<Policy>
-  name?: string
-  description?: string
+export class Vault {
+    members: Array<VaultMember>
+    quorum: Quorum
+    wallets: Array<Wallet>
+    policies: Array<Policy>
+    name?: string
+    description?: string
 }
 
 export interface Quorum {
