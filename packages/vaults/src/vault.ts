@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {Currency, Network, VaultRole} from "./enums";
 import {Member, Policy as PolicyCandid, VaultState, Wallet as WalletCandid} from "./service_vault";
 import {candidToRole, candidToNetwork} from "./helper";

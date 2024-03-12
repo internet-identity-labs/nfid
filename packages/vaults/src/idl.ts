@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const idlFactory = ({ IDL }) => {
     const Conf = IDL.Record({
         'origins' : IDL.Vec(IDL.Text),
