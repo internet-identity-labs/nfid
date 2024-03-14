@@ -1,4 +1,5 @@
 import { Version } from "../ version"
+import { RPCMessage, RPCResponse } from "@nfid/postmessage-rpc"
 
 /**
  * Represents a supported standard.
@@ -21,8 +22,8 @@ export type GetSupportedStandardResponse = Version & {
   /**
    * List of supported standards and their information.
    */
-  standards: SupportedStandard[];
-};
+  standards: SupportedStandard[]
+}
 
 /**
  * Configuration for the adapter.
@@ -38,6 +39,12 @@ export type AdapterConfig = {
    * URL of the provider.
    */
   providerUrl: string
+  /**
+   * Handler transporting the messages
+   */
+  // FIXME:
+  // @ts-ignore
+  requestHandler?: (rpcMessage: RPCMessage) => RPCResponse
 }
 
 /**
