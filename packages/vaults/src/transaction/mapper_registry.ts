@@ -18,6 +18,7 @@ import {TransferTransactionMapper} from "./transfer/transfer";
 import {TopUpTransactionMapper} from "./transfer/top_up";
 import {TransferQuorumTransactionMapper} from "./transfer/transfer_quorum";
 import {ControllersUpdateTransactionMapper} from "./config/controllers_update";
+import {WalletUpdateNameTransactionMapper} from "./wallet/wallet_update_name";
 
 export const TransactionMapperRegistry: Map<PropertyKey, TransactionMapper> = new Map();
 
@@ -40,6 +41,7 @@ export function registerMappers() {
     RegisterTransactionMapper(VersionUpgradeTransactionMapper);
     RegisterTransactionMapper(PurgeTransactionMapper);
     RegisterTransactionMapper(WalletCreateTransactionMapper);
+    RegisterTransactionMapper(WalletUpdateNameTransactionMapper);
     RegisterTransactionMapper(PolicyCreateTransactionMapper);
     RegisterTransactionMapper(PolicyUpdateTransactionMapper);
     RegisterTransactionMapper(PolicyRemoveTransactionMapper);
