@@ -1,6 +1,6 @@
-import {TransactionState} from "./enums";
-import {Approve as ApproveCandid, TransactionApproveRequest} from "./service_vault";
-import {candidToTransactionState, transactionStateToCandid} from "./helper";
+import {TransactionState} from "../enum/enums";
+import {Approve as ApproveCandid, TransactionApproveRequest} from "../idl/service_vault";
+import {candidToTransactionState, transactionStateToCandid} from "../util/helper";
 
 export interface Approve {
     status: TransactionState

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 
@@ -312,7 +311,7 @@ export interface _SERVICE {
     'execute' : ActorMethod<[], undefined>,
     'get_controllers' : ActorMethod<[], Array<Principal>>,
     'get_state' : ActorMethod<[[] | [bigint]], VaultState>,
-    'get_transactions_all' : ActorMethod<[], Array<TransactionCandid>>,
+    get_transactions_all : ActorMethod<[], Array<TransactionCandid>>,
     'get_trusted_origins_certified' : ActorMethod<
         [],
         {

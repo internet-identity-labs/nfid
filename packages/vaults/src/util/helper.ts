@@ -2,8 +2,8 @@ import {
     Network as NetworkCandid,
     TransactionState as TransactionStateCandid,
     VaultRole as VaultRoleCandid
-} from "./service_vault";
-import {Network, TransactionState, TransactionType, VaultRole} from "./enums";
+} from "../idl/service_vault";
+import {Network, TransactionState, TransactionType, VaultRole} from "../enum/enums";
 import {randomBytes} from "crypto";
 
 export function transactionStateToCandid(
@@ -50,15 +50,12 @@ export function candidToNetwork(n: NetworkCandid): Network {
     throw Error();
 }
 
-
-// A `hasOwnProperty` that produces evidence for the typechecker
 export function hasOwnProperty<
     X extends Record<string, unknown>,
     Y extends PropertyKey,
 >(obj: X, prop: Y): obj is X & Record<Y, unknown> {
     return Object.prototype.hasOwnProperty.call(obj, prop)
 }
-
 
 export function roleToCandid(response: VaultRole): VaultRoleCandid {
     if (response === VaultRole.ADMIN) {
