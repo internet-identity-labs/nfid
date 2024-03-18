@@ -18,13 +18,15 @@ import {VaultManagerI} from "../vault_manager_i";
 
 
 export class VaultManager implements VaultManagerI {
-    actor: Agent.ActorSubclass<VaultService>;
-    canisterId: String;
+    private actor: Agent.ActorSubclass<VaultService>;
+    private canisterId: String;
+    private readonly identity: Identity;
 
     constructor(canisterId: string, identity: Identity) {
         registerMappers()
         this.actor = this.getActor(canisterId, identity);
         this.canisterId = canisterId;
+        this.identity = identity;
     }
 
     async getTransactions(): Promise<Array<Transaction>> {
@@ -78,11 +80,11 @@ export class VaultManager implements VaultManagerI {
     }
 
 
-    async resetToLocalEnv(canisterId: string, identity: Identity) {
-        let agent: HttpAgent = new HttpAgent({host: "http://127.0.0.1:8000", identity: identity});
+    async resetToLocalEnv() {
+        let agent: HttpAgent = new HttpAgent({host: "http://127.0.0.1:8000", identity: this.identity});
         await agent.fetchRootKey();
-        return Agent.Actor.createActor<VaultService>(idlFactory, {
-            canisterId,
+        this.actor = Agent.Actor.createActor<VaultService>(idlFactory, {
+            canisterId: this.canisterId.toString(),
             agent,
         })
     }

@@ -17,7 +17,7 @@ export class MemberRemoveTransactionRequest implements TransactionRequest {
     member_id: string
     batch_uid: string | undefined
 
-    constructor(member_id: string, role: VaultRole, batch_uid?: string) {
+    constructor(member_id: string, batch_uid?: string) {
         this.member_id = member_id
         this.batch_uid = batch_uid
 

@@ -38,7 +38,7 @@ export abstract class TransactionMapperAbstract<A, B extends Transaction> implem
             isVaultState: candid.is_vault_state,
             modifiedDate: candid.modified_date,
             state: candidToTransactionState(candid.state),
-            transactionType: TransactionType.MemberCreate,
+            transactionType: this.getType(),
             threshold: candid.threshold.length === 0 ? undefined : candid.threshold[0],
             error: candid.error.length === 0 ? undefined : candid.error[0]
         }

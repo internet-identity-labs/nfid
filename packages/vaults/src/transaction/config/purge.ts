@@ -23,7 +23,7 @@ export class PurgeTransactionRequest implements TransactionRequest {
 
 export class PurgeTransactionMapper extends TransactionMapperAbstract<TransactionCandid, PurgeTransaction> {
     getVariant(): PropertyKey {
-        return "PureTransactionV";
+        return "PurgeTransactionV";
     }
 
     convert(candid: TransactionCandid): PurgeTransaction {

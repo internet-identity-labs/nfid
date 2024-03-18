@@ -39,7 +39,7 @@ export class WalletUpdateNameTransactionRequest implements TransactionRequest {
 
 export class WalletUpdateNameTransactionMapper extends TransactionMapperAbstract<TransactionCandid, WalletUpdateNameTransaction> {
     getVariant(): PropertyKey {
-        return "WalletCreateTransactionV";
+        return "WalletUpdateNameTransactionV";
     }
 
     convert(candid: TransactionCandid): WalletUpdateNameTransaction {
