@@ -25,6 +25,8 @@ export enum Currency {
 
 export enum Network {
     IC = "IC",
+    ETH = "ETH",
+    BTC = "BTC",
 }
 
 export enum TransactionState {
