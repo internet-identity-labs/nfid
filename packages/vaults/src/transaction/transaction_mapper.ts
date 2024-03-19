@@ -22,7 +22,7 @@ export abstract class TransactionMapperAbstract<A, B extends Transaction> implem
 
     public mapTransaction(trsCandid: TransactionCandid): Transaction {
         if (!hasOwnProperty(trsCandid, this.getVariant())) {
-            throw Error("Incorrect Property Key")
+            throw Error("Incorrect property key")
         }
         let response = trsCandid[this.getVariant()]
         return this.convert(response as A)
