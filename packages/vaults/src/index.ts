@@ -1,6 +1,6 @@
 export * from "./approve/approve"
 export * from "./enum/enums"
 export * from "./util/helper"
-export * from "./idl/idl"
 export * from "./manager/vault_manager"
 export * from "./vault/vault"
+export * from "./transaction"
