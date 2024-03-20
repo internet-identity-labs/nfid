@@ -26,15 +26,6 @@ export class WalletUpdateNameTransactionRequest implements TransactionRequest {
 
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            WalletUpdateNameTransactionRequestV: {
-                name: this.name,
-                uid: this.uid,
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
-    }
 }
 
 export class WalletUpdateNameTransactionMapper extends TransactionMapperAbstract<TransactionCandid, WalletUpdateNameTransaction> {
@@ -54,6 +45,18 @@ export class WalletUpdateNameTransactionMapper extends TransactionMapperAbstract
         return TransactionType.WalletUpdateName;
     }
 
+}
+
+export class WalletUpdateNameRequestMapper {
+    toCandid(request: WalletUpdateNameTransactionRequest): TransactionRequestCandid {
+        return {
+            WalletUpdateNameTransactionRequestV: {
+                name: request.name,
+                uid: request.uid,
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
 }
 
 

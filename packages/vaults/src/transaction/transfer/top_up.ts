@@ -30,15 +30,6 @@ export class TopUpTransactionRequest implements TransactionRequest {
         this.amount = amount
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            TopUpTransactionRequestV: {
-                currency: {'ICP': null},
-                wallet: this.wallet,
-                amount: this.amount
-            }
-        }
-    }
 }
 
 
@@ -61,6 +52,18 @@ export class TopUpTransactionMapper extends TransactionMapperAbstract<Transactio
         return TransactionType.TopUp;
     }
 
+}
+
+export class TopUpRequestMapper {
+    toCandid(request: TopUpTransactionRequest): TransactionRequestCandid {
+        return {
+            TopUpTransactionRequestV: {
+                currency: {'ICP': null},
+                wallet: request.wallet,
+                amount: request.amount
+            }
+        }
+    }
 }
 
 

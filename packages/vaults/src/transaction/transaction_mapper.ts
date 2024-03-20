@@ -3,6 +3,8 @@ import {Transaction} from "./transaction";
 import {BasicTransactionFields, TransactionCandid} from "../idl/service_vault";
 import {candidToApprove} from "../approve/approve";
 import {candidToTransactionState, hasOwnProperty} from "../util/helper";
+import {TransactionRequest} from "./transaction_request";
+import {TransactionMapperRegistry} from "./mapper_registry";
 
 export interface TransactionMapper {
     getVariant(): PropertyKey
@@ -45,5 +47,18 @@ export abstract class TransactionMapperAbstract<A, B extends Transaction> implem
         return transaction;
     }
 
+}
+
+export function transactionCandidToTransaction(trs: TransactionCandid): Transaction {
+    let variant = Object.keys(trs);
+    for (let key of variant) {
+        if (hasOwnProperty(trs, key)) {
+            let mapper = TransactionMapperRegistry.get(key);
+            if (mapper) {
+                return mapper.mapTransaction(trs);
+            }
+        }
+    }
+    throw Error("No mapper found")
 }
 

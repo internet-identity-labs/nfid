@@ -25,14 +25,6 @@ export class MemberUpdateNameTransactionRequest implements TransactionRequest {
         this.batch_uid = batch_uid
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            MemberUpdateNameTransactionRequestV: {
-                member_id: this.member_id, name: this.name,
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
-    }
 }
 
 export class MemberUpdateNameTransactionMapper extends TransactionMapperAbstract<MemberUpdateNameTransactionCandid, MemberUpdateNameTransaction> {
@@ -53,6 +45,18 @@ export class MemberUpdateNameTransactionMapper extends TransactionMapperAbstract
         return TransactionType.MemberUpdateName;
     }
 
+}
+
+export class MemberUpdateNameRequestMapper {
+    toCandid(request: MemberUpdateNameTransactionRequest): TransactionRequestCandid {
+        return {
+            MemberUpdateNameTransactionRequestV: {
+                member_id: request.member_id,
+                name: request.name,
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
 }
 
 

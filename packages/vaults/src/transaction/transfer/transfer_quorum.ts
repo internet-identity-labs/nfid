@@ -30,18 +30,6 @@ export class TransferQuorumTransactionRequest implements TransactionRequest {
         this.amount = amount
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            TransferQuorumTransactionRequestV: {
-                //TODO
-                currency: {'ICP': null},
-                address: this.address,
-                wallet: this.wallet,
-                amount: this.amount,
-                memo: this.memo !== undefined ? [this.memo] : []
-            }
-        }
-    }
 }
 
 export class TransferQuorumTransactionMapper extends TransactionMapperAbstract<TransactionCandid, TransferQuorumTransaction> {
@@ -64,6 +52,21 @@ export class TransferQuorumTransactionMapper extends TransactionMapperAbstract<T
         return TransactionType.TransferQuorum;
     }
 
+}
+
+export class TransferQuorumRequestMapper {
+    toCandid(request: TransferQuorumTransactionRequest): TransactionRequestCandid {
+        return {
+            TransferQuorumTransactionRequestV: {
+                //TODO
+                currency: {'ICP': null},
+                address: request.address,
+                wallet: request.wallet,
+                amount: request.amount,
+                memo: request.memo !== undefined ? [request.memo] : []
+            }
+        }
+    }
 }
 
 

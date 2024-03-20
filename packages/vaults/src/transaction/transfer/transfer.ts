@@ -32,18 +32,6 @@ export class TransferTransactionRequest implements TransactionRequest {
         this.amount = amount
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            TransferTransactionRequestV: {
-                //TODO
-                currency: {'ICP': null},
-                address: this.address,
-                wallet: this.wallet,
-                amount: this.amount,
-                memo: this.memo !== undefined ? [this.memo] : []
-            }
-        }
-    }
 }
 
 
@@ -68,6 +56,21 @@ export class TransferTransactionMapper extends TransactionMapperAbstract<Transac
         return TransactionType.Transfer;
     }
 
+}
+
+export class TransferRequestMapper {
+    toCandid(request: TransferTransactionRequest): TransactionRequestCandid {
+        return {
+            TransferTransactionRequestV: {
+                //TODO
+                currency: {'ICP': null},
+                address: request.address,
+                wallet: request.wallet,
+                amount: request.amount,
+                memo: request.memo !== undefined ? [request.memo] : []
+            }
+        }
+    }
 }
 
 

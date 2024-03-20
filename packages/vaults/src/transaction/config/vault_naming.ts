@@ -26,15 +26,6 @@ export class VaultNamingTransactionRequest implements TransactionRequest {
         this.batch_uid = batch_uid
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            VaultNamingUpdateTransactionRequestV: {
-                name: this.name !== undefined ? [this.name] : [],
-                description: this.description !== undefined ? [this.description] : [],
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
-    }
 }
 
 export class VaultUpdateNamingTransactionMapper extends TransactionMapperAbstract<TransactionCandid, VaultUpdateNamingTransaction> {
@@ -54,6 +45,17 @@ export class VaultUpdateNamingTransactionMapper extends TransactionMapperAbstrac
         return TransactionType.VaultNamingUpdate;
     }
 
+}
+export class VaultUpdateNamingRequestMapper {
+    toCandid(request: VaultNamingTransactionRequest): TransactionRequestCandid {
+        return {
+            VaultNamingUpdateTransactionRequestV: {
+                name: request.name !== undefined ? [request.name] : [],
+                description: request.description !== undefined ? [request.description] : [],
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
 }
 
 

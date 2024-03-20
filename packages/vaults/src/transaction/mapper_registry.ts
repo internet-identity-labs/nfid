@@ -1,28 +1,30 @@
 import {Transaction} from "./transaction";
-import {MemberCreateTransactionMapper} from "./member/member_create";
 import {TransactionMapper} from "./transaction_mapper";
-import {MemberUpdateNameTransactionMapper} from "./member/member_update_name";
 import {TransactionCandid} from "../idl/service_vault";
 import {hasOwnProperty} from "../util/helper";
-import {MemberUpdateRoleTransactionMapper} from "./member/member_update_role";
-import {MemberRemoveTransactionMapper} from "./member/member_remove";
-import {QuorumUpdateTransactionMapper} from "./config/quorum_update";
-import {VaultUpdateNamingTransactionMapper} from "./config/vault_naming";
+import {PurgeRequestMapper, PurgeTransactionMapper} from "./config/purge";
+import {ControllersRequestMapper, ControllersUpdateTransactionMapper} from "./config/controllers_update";
+import {QuorumUpdateRequestMapper, QuorumUpdateTransactionMapper} from "./config/quorum_update";
+import {MemberUpdateNameRequestMapper, MemberUpdateNameTransactionMapper} from "./member/member_update_name";
+import {MemberCreateRequestMapper, MemberCreateTransactionMapper} from "./member/member_create";
+import {MemberUpdateRoleRequestMapper, MemberUpdateRoleTransactionMapper} from "./member/member_update_role";
+import {MemberRemoveRequestMapper, MemberRemoveTransactionMapper} from "./member/member_remove";
+import {VaultUpdateNamingRequestMapper, VaultUpdateNamingTransactionMapper} from "./config/vault_naming";
 import {VersionUpgradeTransactionMapper} from "./config/version_upgrade";
-import {PurgeTransactionMapper} from "./config/purge";
-import {WalletCreateTransactionMapper} from "./wallet/wallet_create";
-import {PolicyCreateTransactionMapper} from "./policy/policy_create";
-import {PolicyUpdateTransactionMapper} from "./policy/policy_update";
-import {PolicyRemoveTransactionMapper} from "./policy/policy_remove";
-import {TransferTransactionMapper} from "./transfer/transfer";
-import {TopUpTransactionMapper} from "./transfer/top_up";
-import {TransferQuorumTransactionMapper} from "./transfer/transfer_quorum";
-import {ControllersUpdateTransactionMapper} from "./config/controllers_update";
-import {WalletUpdateNameTransactionMapper} from "./wallet/wallet_update_name";
+import {WalletCreateRequestMapper, WalletCreateTransactionMapper} from "./wallet/wallet_create";
+import {PolicyCreateRequestMapper, PolicyCreateTransactionMapper} from "./policy/policy_create";
+import {PolicyUpdateRequestMapper, PolicyUpdateTransactionMapper} from "./policy/policy_update";
+import {PolicyRemoveRequestMapper, PolicyRemoveTransactionMapper} from "./policy/policy_remove";
+import {TransferRequestMapper, TransferTransactionMapper} from "./transfer/transfer";
+import {TopUpRequestMapper, TopUpTransactionMapper} from "./transfer/top_up";
+import {TransferQuorumRequestMapper, TransferQuorumTransactionMapper} from "./transfer/transfer_quorum";
+import {RequestMapper} from "./request_mapper";
 
 export const TransactionMapperRegistry: Map<PropertyKey, TransactionMapper> = new Map();
+export const RequestMapperRegistry: Map<string, RequestMapper> = new Map();
 
 type TransactionMapperConstructor<T extends Transaction> = new () => TransactionMapper;
+type RequestMapperConstructor<T extends RequestMapper> = new () => RequestMapper;
 
 function RegisterTransactionMapper<T extends Transaction>(
     target: TransactionMapperConstructor<T>
@@ -31,7 +33,16 @@ function RegisterTransactionMapper<T extends Transaction>(
     TransactionMapperRegistry.set(instance.getVariant(), instance);
 }
 
-export function registerMappers() {
+function RegisterRequestMapper<T extends RequestMapper>(
+    target: RequestMapperConstructor<T>
+) {
+    let instance = new target();
+    let className = instance.constructor.name
+    RequestMapperRegistry.set(className, instance);
+}
+
+
+export function registerTransactionMappers() {
     RegisterTransactionMapper(MemberCreateTransactionMapper);
     RegisterTransactionMapper(MemberUpdateNameTransactionMapper);
     RegisterTransactionMapper(MemberUpdateRoleTransactionMapper);
@@ -41,7 +52,6 @@ export function registerMappers() {
     RegisterTransactionMapper(VersionUpgradeTransactionMapper);
     RegisterTransactionMapper(PurgeTransactionMapper);
     RegisterTransactionMapper(WalletCreateTransactionMapper);
-    RegisterTransactionMapper(WalletUpdateNameTransactionMapper);
     RegisterTransactionMapper(PolicyCreateTransactionMapper);
     RegisterTransactionMapper(PolicyUpdateTransactionMapper);
     RegisterTransactionMapper(PolicyRemoveTransactionMapper);
@@ -51,15 +61,21 @@ export function registerMappers() {
     RegisterTransactionMapper(ControllersUpdateTransactionMapper);
 }
 
-export function transactionCandidToTransaction(trs: TransactionCandid): Transaction {
-    let variant = Object.keys(trs);
-    for (let key of variant) {
-        if (hasOwnProperty(trs, key)) {
-            let mapper = TransactionMapperRegistry.get(key);
-            if (mapper) {
-                return mapper.mapTransaction(trs);
-            }
-        }
-    }
-    throw Error("No mapper found")
+export function registerRequestMappers() {
+    RegisterRequestMapper(ControllersRequestMapper);
+    RegisterRequestMapper(QuorumUpdateRequestMapper);
+    RegisterRequestMapper(MemberCreateRequestMapper);
+    RegisterRequestMapper(MemberUpdateNameRequestMapper);
+    RegisterRequestMapper(MemberUpdateRoleRequestMapper);
+    RegisterRequestMapper(MemberRemoveRequestMapper);
+    RegisterRequestMapper(VaultUpdateNamingRequestMapper);
+    RegisterRequestMapper(VaultUpdateNamingRequestMapper);
+    RegisterRequestMapper(PurgeRequestMapper);
+    RegisterRequestMapper(WalletCreateRequestMapper);
+    RegisterRequestMapper(PolicyCreateRequestMapper);
+    RegisterRequestMapper(PolicyUpdateRequestMapper);
+    RegisterRequestMapper(PolicyRemoveRequestMapper);
+    RegisterRequestMapper(TransferRequestMapper);
+    RegisterRequestMapper(TopUpRequestMapper);
+    RegisterRequestMapper(TransferQuorumRequestMapper);
 }

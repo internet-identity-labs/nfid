@@ -62,6 +62,12 @@ export class PolicyUpdateTransactionMapper extends TransactionMapperAbstract<Tra
 
 }
 
+export class PolicyUpdateRequestMapper {
+    toCandid(request: PolicyUpdateTransactionRequest): TransactionRequestCandid {
+        return request.toCandid()
+    }
+}
+
 
 
 

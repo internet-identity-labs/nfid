@@ -20,14 +20,6 @@ export class VersionUpgradeTransactionRequest implements TransactionRequest {
     constructor(version: string) {
         this.version = version
     }
-
-    toCandid(): TransactionRequestCandid {
-        return {
-            VersionUpgradeTransactionRequestV: {
-                version: this.version,
-            }
-        }
-    }
 }
 
 export class VersionUpgradeTransactionMapper extends TransactionMapperAbstract<TransactionCandid, VersionUpgradeTransaction> {
@@ -47,6 +39,16 @@ export class VersionUpgradeTransactionMapper extends TransactionMapperAbstract<T
         return TransactionType.QuorumUpdate;
     }
 
+}
+
+export class VersionUpgradeRequestMapper {
+    toCandid(request: VersionUpgradeTransactionRequest): TransactionRequestCandid {
+        return {
+            VersionUpgradeTransactionRequestV: {
+                version: request.version,
+            }
+        }
+    }
 }
 
 

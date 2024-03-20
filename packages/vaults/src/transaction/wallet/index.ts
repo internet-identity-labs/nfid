@@ -1,2 +1,2 @@
-export * from "./wallet_create"
-export * from "./wallet_update_name"
+export {type WalletCreateTransaction, WalletCreateTransactionRequest} from "./wallet_create"
+export {type WalletUpdateNameTransaction, WalletUpdateNameTransactionRequest} from "./wallet_update_name"

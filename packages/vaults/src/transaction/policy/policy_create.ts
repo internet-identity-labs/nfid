@@ -32,18 +32,6 @@ export class PolicyCreateTransactionRequest implements TransactionRequest {
         this.uid = uid
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            PolicyCreateTransactionRequestV: {
-                uid: this.uid,
-                member_threshold: this.member_threshold,
-                amount_threshold: this.amount_threshold,
-                wallets: this.wallets,
-                currency: {'ICP': null}, //TODO
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
-    }
 }
 
 
@@ -67,6 +55,21 @@ export class PolicyCreateTransactionMapper extends TransactionMapperAbstract<Tra
         return TransactionType.PolicyCreate;
     }
 
+}
+
+export class PolicyCreateRequestMapper {
+    toCandid(request: PolicyCreateTransactionRequest): TransactionRequestCandid {
+        return {
+            PolicyCreateTransactionRequestV: {
+                uid: request.uid,
+                member_threshold: request.member_threshold,
+                amount_threshold: request.amount_threshold,
+                wallets: request.wallets,
+                currency: {'ICP': null}, //TODO
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
 }
 
 

@@ -2,10 +2,11 @@ import {TransactionType} from "../../enum/enums";
 import {Transaction} from "../transaction";
 import {
     QuorumUpdateTransaction as TransactionCandid,
-    TransactionRequest as TransactionRequestCandid
+    TransactionRequest as RequestCandid
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapper} from "../request_mapper";
 
 
 export interface QuorumUpdateTransaction extends Transaction {
@@ -21,15 +22,6 @@ export class QuorumTransactionRequest implements TransactionRequest {
     constructor(quorum: number, batch_uid?: string) {
         this.quorum = quorum
         this.batch_uid = batch_uid
-    }
-
-    toCandid(): TransactionRequestCandid {
-        return {
-            QuorumUpdateTransactionRequestV: {
-                quorum: this.quorum,
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
     }
 }
 
@@ -49,6 +41,19 @@ export class QuorumUpdateTransactionMapper extends TransactionMapperAbstract<Tra
         return TransactionType.QuorumUpdate;
     }
 
+}
+
+
+export class QuorumUpdateRequestMapper implements RequestMapper {
+
+    toCandid(request: QuorumTransactionRequest): RequestCandid {
+        return {
+            QuorumUpdateTransactionRequestV: {
+                quorum: request.quorum,
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
 }
 
 

@@ -1,12 +1,13 @@
 import {TransactionType} from "../../enum/enums";
 import {Transaction} from "../transaction";
 import {
-    ControllersUpdateTransaction as TransactionCandid,
-    TransactionRequest as TransactionRequestCandid
+    ControllersUpdateTransaction as TransactionCandid
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
-import {TransactionRequest} from "../transaction_request";
+import { TransactionRequest} from "../transaction_request";
 import {Principal} from "@dfinity/principal";
+import {TransactionRequest as RequestCandid} from "../../idl/service_vault";
+import {RequestMapper} from "../request_mapper";
 
 
 export interface ControllersUpdateTransaction extends Transaction {
@@ -20,16 +21,7 @@ export class ControllersUpdateTransactionRequest implements TransactionRequest {
     constructor(principals: Array<Principal>) {
         this.principals = principals
     }
-
-    toCandid(): TransactionRequestCandid {
-        return {
-            ControllersUpdateTransactionRequestV: {
-                principals: this.principals
-            }
-        }
-    }
 }
-
 
 export class ControllersUpdateTransactionMapper extends TransactionMapperAbstract<TransactionCandid, ControllersUpdateTransaction> {
     getVariant(): PropertyKey {
@@ -45,9 +37,21 @@ export class ControllersUpdateTransactionMapper extends TransactionMapperAbstrac
     }
 
     getType(): TransactionType {
-        return TransactionType.QuorumUpdate;
+        return TransactionType.ControllerUpdate;
     }
 
+}
+
+
+export class ControllersRequestMapper implements RequestMapper {
+
+    toCandid(request: ControllersUpdateTransactionRequest): RequestCandid {
+        return {
+            ControllersUpdateTransactionRequestV: {
+                principals: request.principals
+            }
+        }
+    }
 }
 
 

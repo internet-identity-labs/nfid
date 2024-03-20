@@ -54,6 +54,17 @@ export class MemberUpdateRoleTransactionMapper extends TransactionMapperAbstract
     }
 }
 
+export class MemberUpdateRoleRequestMapper {
+    toCandid(request: MemberUpdateRoleTransactionRequest): TransactionRequestCandid {
+        return {
+            MemberUpdateRoleTransactionRequestV: {
+                member_id: request.member_id, role: roleToCandid(request.role),
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
+}
+
 
 
 

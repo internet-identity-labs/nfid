@@ -13,12 +13,6 @@ export interface PurgeTransaction extends Transaction {
 
 
 export class PurgeTransactionRequest implements TransactionRequest {
-
-    toCandid(): TransactionRequestCandid {
-        return {
-            PurgeTransactionRequestV: {}
-        }
-    }
 }
 
 export class PurgeTransactionMapper extends TransactionMapperAbstract<TransactionCandid, PurgeTransaction> {
@@ -36,6 +30,15 @@ export class PurgeTransactionMapper extends TransactionMapperAbstract<Transactio
         return TransactionType.Purge;
     }
 
+}
+
+export class PurgeRequestMapper {
+    toCandid(request: PurgeTransactionRequest): TransactionRequestCandid {
+        return {
+            PurgeTransactionRequestV: {
+            }
+        }
+    }
 }
 
 

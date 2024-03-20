@@ -22,15 +22,6 @@ export class MemberRemoveTransactionRequest implements TransactionRequest {
         this.batch_uid = batch_uid
 
     }
-
-    toCandid(): TransactionRequestCandid {
-        return {
-            MemberRemoveTransactionRequestV: {
-                member_id: this.member_id,
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
-    }
 }
 
 
@@ -51,6 +42,17 @@ export class MemberRemoveTransactionMapper extends TransactionMapperAbstract<Mem
         return TransactionType.MemberUpdateRole;
     }
 
+}
+
+export class MemberRemoveRequestMapper {
+    toCandid(request: MemberRemoveTransactionRequest): TransactionRequestCandid {
+        return {
+            MemberRemoveTransactionRequestV: {
+                member_id: request.member_id,
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
 }
 
 
