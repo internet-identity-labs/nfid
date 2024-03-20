@@ -71,7 +71,7 @@ export class TransferQuorumRequestMapper extends RequestMapperAbstract {
     }
 
     getMappedRequestType(): string {
-        return "TransferQuorumTransactionRequestV";
+        return "TransferQuorumTransactionRequest";
     }
 }
 
