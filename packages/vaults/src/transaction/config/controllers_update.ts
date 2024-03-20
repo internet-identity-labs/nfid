@@ -7,7 +7,7 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import { TransactionRequest} from "../transaction_request";
 import {Principal} from "@dfinity/principal";
 import {TransactionRequest as RequestCandid} from "../../idl/service_vault";
-import {RequestMapper} from "../request_mapper";
+import {RequestMapper, RequestMapperAbstract} from "../request_mapper";
 
 
 export interface ControllersUpdateTransaction extends Transaction {
@@ -43,7 +43,9 @@ export class ControllersUpdateTransactionMapper extends TransactionMapperAbstrac
 }
 
 
-export class ControllersRequestMapper implements RequestMapper {
+export class ControllersRequestMapper extends RequestMapperAbstract{
+
+
 
     toCandid(request: ControllersUpdateTransactionRequest): RequestCandid {
         return {
@@ -51,6 +53,10 @@ export class ControllersRequestMapper implements RequestMapper {
                 principals: request.principals
             }
         }
+    }
+
+    getMappedRequestType(): string {
+        return "ControllersUpdateTransactionRequest";
     }
 }
 

@@ -7,6 +7,7 @@ import {
 import {candidToRole, roleToCandid} from "../../util/helper";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface MemberCreateTransaction extends Transaction {
@@ -49,7 +50,7 @@ export class MemberCreateTransactionMapper extends TransactionMapperAbstract<Mem
 
 }
 
-export class MemberCreateRequestMapper implements TransactionRequest {
+export class MemberCreateRequestMapper extends RequestMapperAbstract{
     toCandid(request: MemberCreateTransactionRequest): TransactionRequestCandid {
         return {
             MemberCreateTransactionRequestV: {
@@ -59,6 +60,9 @@ export class MemberCreateRequestMapper implements TransactionRequest {
                 batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
             }
         }
+    }
+    getMappedRequestType(): string {
+        return "MemberCreateTransactionRequest";
     }
 }
 

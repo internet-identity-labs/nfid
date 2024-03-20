@@ -7,6 +7,15 @@ export interface RequestMapper {
 
     toCandid(request: TransactionRequest): TransactionRequestCandid
 
+    getMappedRequestType(): string
+
+}
+
+export abstract class RequestMapperAbstract implements RequestMapper {
+    abstract getMappedRequestType(): string
+    abstract toCandid(request: TransactionRequest): TransactionRequestCandid
+    constructor() {
+    }
 }
 
 
@@ -14,7 +23,7 @@ export function requestToCandid(trs: TransactionRequest): TransactionRequestCand
     let className = trs.constructor.name
     let mapper = RequestMapperRegistry.get(className);
     if (!mapper) {
-        throw Error("No mapper found")
+        throw Error("No mapper found " + className)
     }
     return  mapper.toCandid(trs)
 }

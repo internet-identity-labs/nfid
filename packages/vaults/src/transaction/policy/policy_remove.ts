@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface PolicyRemoveTransaction extends Transaction {
@@ -43,7 +44,7 @@ export class PolicyRemoveTransactionMapper extends TransactionMapperAbstract<Tra
 
 }
 
-export class PolicyRemoveRequestMapper {
+export class PolicyRemoveRequestMapper extends RequestMapperAbstract {
     toCandid(request: PolicyRemoveTransactionRequest): TransactionRequestCandid {
         return {
             PolicyRemoveTransactionRequestV: {
@@ -51,6 +52,10 @@ export class PolicyRemoveRequestMapper {
                 batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
             }
         }
+    }
+
+    getMappedRequestType(): string {
+        return "PolicyRemoveTransactionRequest";
     }
 }
 

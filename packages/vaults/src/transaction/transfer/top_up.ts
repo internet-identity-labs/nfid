@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 
@@ -54,7 +55,7 @@ export class TopUpTransactionMapper extends TransactionMapperAbstract<Transactio
 
 }
 
-export class TopUpRequestMapper {
+export class TopUpRequestMapper extends RequestMapperAbstract{
     toCandid(request: TopUpTransactionRequest): TransactionRequestCandid {
         return {
             TopUpTransactionRequestV: {
@@ -63,6 +64,10 @@ export class TopUpRequestMapper {
                 amount: request.amount
             }
         }
+    }
+
+    getMappedRequestType(): string {
+        return "TopUpTransactionRequest";
     }
 }
 

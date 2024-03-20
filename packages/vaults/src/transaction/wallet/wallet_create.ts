@@ -7,6 +7,7 @@ import {
 import {candidToNetwork, networkToCandid} from "../../util/helper";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface WalletCreateTransaction extends Transaction {
@@ -53,7 +54,7 @@ export class WalletCreateTransactionMapper extends TransactionMapperAbstract<Tra
 
 }
 
-export class WalletCreateRequestMapper {
+export class WalletCreateRequestMapper extends RequestMapperAbstract {
     toCandid(request: WalletCreateTransactionRequest): TransactionRequestCandid {
         return {
             WalletCreateTransactionRequestV: {
@@ -63,6 +64,10 @@ export class WalletCreateRequestMapper {
                 batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
             }
         }
+    }
+
+    getMappedRequestType(): string {
+        return "WalletCreateTransactionRequest";
     }
 }
 

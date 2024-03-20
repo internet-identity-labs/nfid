@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface VaultUpdateNamingTransaction extends Transaction {
@@ -46,7 +47,8 @@ export class VaultUpdateNamingTransactionMapper extends TransactionMapperAbstrac
     }
 
 }
-export class VaultUpdateNamingRequestMapper {
+
+export class VaultUpdateNamingRequestMapper extends RequestMapperAbstract {
     toCandid(request: VaultNamingTransactionRequest): TransactionRequestCandid {
         return {
             VaultNamingUpdateTransactionRequestV: {
@@ -55,6 +57,9 @@ export class VaultUpdateNamingRequestMapper {
                 batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
             }
         }
+    }
+    getMappedRequestType(): string {
+        return "VaultNamingUpdateTransactionRequest";
     }
 }
 

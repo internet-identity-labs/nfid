@@ -6,7 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
-import {RequestMapper} from "../request_mapper";
+import {RequestMapper, RequestMapperAbstract} from "../request_mapper";
 
 
 export interface QuorumUpdateTransaction extends Transaction {
@@ -44,7 +44,7 @@ export class QuorumUpdateTransactionMapper extends TransactionMapperAbstract<Tra
 }
 
 
-export class QuorumUpdateRequestMapper implements RequestMapper {
+export class QuorumUpdateRequestMapper  extends RequestMapperAbstract {
 
     toCandid(request: QuorumTransactionRequest): RequestCandid {
         return {
@@ -53,6 +53,9 @@ export class QuorumUpdateRequestMapper implements RequestMapper {
                 batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
             }
         }
+    }
+    getMappedRequestType(): string {
+        return "QuorumTransactionRequest";
     }
 }
 

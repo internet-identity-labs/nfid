@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface VersionUpgradeTransaction extends Transaction {
@@ -41,13 +42,16 @@ export class VersionUpgradeTransactionMapper extends TransactionMapperAbstract<T
 
 }
 
-export class VersionUpgradeRequestMapper {
+export class VersionUpgradeRequestMapper extends RequestMapperAbstract {
     toCandid(request: VersionUpgradeTransactionRequest): TransactionRequestCandid {
         return {
             VersionUpgradeTransactionRequestV: {
                 version: request.version,
             }
         }
+    }
+    getMappedRequestType(): string {
+        return "VersionUpgradeTransactionRequest";
     }
 }
 

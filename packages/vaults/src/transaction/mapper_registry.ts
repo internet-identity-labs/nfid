@@ -10,7 +10,7 @@ import {MemberCreateRequestMapper, MemberCreateTransactionMapper} from "./member
 import {MemberUpdateRoleRequestMapper, MemberUpdateRoleTransactionMapper} from "./member/member_update_role";
 import {MemberRemoveRequestMapper, MemberRemoveTransactionMapper} from "./member/member_remove";
 import {VaultUpdateNamingRequestMapper, VaultUpdateNamingTransactionMapper} from "./config/vault_naming";
-import {VersionUpgradeTransactionMapper} from "./config/version_upgrade";
+import {VersionUpgradeRequestMapper, VersionUpgradeTransactionMapper} from "./config/version_upgrade";
 import {WalletCreateRequestMapper, WalletCreateTransactionMapper} from "./wallet/wallet_create";
 import {PolicyCreateRequestMapper, PolicyCreateTransactionMapper} from "./policy/policy_create";
 import {PolicyUpdateRequestMapper, PolicyUpdateTransactionMapper} from "./policy/policy_update";
@@ -19,6 +19,7 @@ import {TransferRequestMapper, TransferTransactionMapper} from "./transfer/trans
 import {TopUpRequestMapper, TopUpTransactionMapper} from "./transfer/top_up";
 import {TransferQuorumRequestMapper, TransferQuorumTransactionMapper} from "./transfer/transfer_quorum";
 import {RequestMapper} from "./request_mapper";
+import {WalletUpdateNameRequestMapper, WalletUpdateNameTransactionMapper} from "./wallet/wallet_update_name";
 
 export const TransactionMapperRegistry: Map<PropertyKey, TransactionMapper> = new Map();
 export const RequestMapperRegistry: Map<string, RequestMapper> = new Map();
@@ -37,8 +38,7 @@ function RegisterRequestMapper<T extends RequestMapper>(
     target: RequestMapperConstructor<T>
 ) {
     let instance = new target();
-    let className = instance.constructor.name
-    RequestMapperRegistry.set(className, instance);
+    RequestMapperRegistry.set(instance.getMappedRequestType(), instance);
 }
 
 
@@ -52,6 +52,7 @@ export function registerTransactionMappers() {
     RegisterTransactionMapper(VersionUpgradeTransactionMapper);
     RegisterTransactionMapper(PurgeTransactionMapper);
     RegisterTransactionMapper(WalletCreateTransactionMapper);
+    RegisterTransactionMapper(WalletUpdateNameTransactionMapper);
     RegisterTransactionMapper(PolicyCreateTransactionMapper);
     RegisterTransactionMapper(PolicyUpdateTransactionMapper);
     RegisterTransactionMapper(PolicyRemoveTransactionMapper);
@@ -69,9 +70,10 @@ export function registerRequestMappers() {
     RegisterRequestMapper(MemberUpdateRoleRequestMapper);
     RegisterRequestMapper(MemberRemoveRequestMapper);
     RegisterRequestMapper(VaultUpdateNamingRequestMapper);
-    RegisterRequestMapper(VaultUpdateNamingRequestMapper);
+    RegisterRequestMapper(VersionUpgradeRequestMapper);
     RegisterRequestMapper(PurgeRequestMapper);
     RegisterRequestMapper(WalletCreateRequestMapper);
+    RegisterRequestMapper(WalletUpdateNameRequestMapper);
     RegisterRequestMapper(PolicyCreateRequestMapper);
     RegisterRequestMapper(PolicyUpdateRequestMapper);
     RegisterRequestMapper(PolicyRemoveRequestMapper);

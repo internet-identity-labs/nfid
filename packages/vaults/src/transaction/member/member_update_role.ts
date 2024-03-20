@@ -7,6 +7,7 @@ import {
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
 import {candidToRole, roleToCandid} from "../../util/helper";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface MemberUpdateRoleTransaction extends Transaction {
@@ -54,7 +55,7 @@ export class MemberUpdateRoleTransactionMapper extends TransactionMapperAbstract
     }
 }
 
-export class MemberUpdateRoleRequestMapper {
+export class MemberUpdateRoleRequestMapper extends RequestMapperAbstract {
     toCandid(request: MemberUpdateRoleTransactionRequest): TransactionRequestCandid {
         return {
             MemberUpdateRoleTransactionRequestV: {
@@ -62,6 +63,10 @@ export class MemberUpdateRoleRequestMapper {
                 batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
             }
         }
+    }
+
+    getMappedRequestType(): string {
+        return "MemberUpdateRoleTransactionRequest";
     }
 }
 

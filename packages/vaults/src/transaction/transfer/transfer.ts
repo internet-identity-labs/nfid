@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface TransferTransaction extends Transaction {
@@ -58,7 +59,7 @@ export class TransferTransactionMapper extends TransactionMapperAbstract<Transac
 
 }
 
-export class TransferRequestMapper {
+export class TransferRequestMapper extends RequestMapperAbstract {
     toCandid(request: TransferTransactionRequest): TransactionRequestCandid {
         return {
             TransferTransactionRequestV: {
@@ -70,6 +71,10 @@ export class TransferRequestMapper {
                 memo: request.memo !== undefined ? [request.memo] : []
             }
         }
+    }
+
+    getMappedRequestType(): string {
+        return "TransferTransactionRequest";
     }
 }
 
