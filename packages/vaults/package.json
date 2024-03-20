@@ -1,6 +1,6 @@
 {
   "name": "@nfid/vaults",
-  "version": "0.0.3-alpha.9",
+  "version": "0.0.3-alpha.10",
   "description": "Software Development Kit to interact with NFID Vaults",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
