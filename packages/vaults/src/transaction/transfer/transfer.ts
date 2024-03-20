@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface TransferTransaction extends Transaction {
@@ -32,18 +33,6 @@ export class TransferTransactionRequest implements TransactionRequest {
         this.amount = amount
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            TransferTransactionRequestV: {
-                //TODO
-                currency: {'ICP': null},
-                address: this.address,
-                wallet: this.wallet,
-                amount: this.amount,
-                memo: this.memo !== undefined ? [this.memo] : []
-            }
-        }
-    }
 }
 
 
@@ -68,6 +57,25 @@ export class TransferTransactionMapper extends TransactionMapperAbstract<Transac
         return TransactionType.Transfer;
     }
 
+}
+
+export class TransferRequestMapper extends RequestMapperAbstract {
+    toCandid(request: TransferTransactionRequest): TransactionRequestCandid {
+        return {
+            TransferTransactionRequestV: {
+                //TODO
+                currency: {'ICP': null},
+                address: request.address,
+                wallet: request.wallet,
+                amount: request.amount,
+                memo: request.memo !== undefined ? [request.memo] : []
+            }
+        }
+    }
+
+    getMappedRequestType(): string {
+        return "TransferTransactionRequest";
+    }
 }
 
 

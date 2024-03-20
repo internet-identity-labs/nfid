@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface PurgeTransaction extends Transaction {
@@ -13,12 +14,6 @@ export interface PurgeTransaction extends Transaction {
 
 
 export class PurgeTransactionRequest implements TransactionRequest {
-
-    toCandid(): TransactionRequestCandid {
-        return {
-            PurgeTransactionRequestV: {}
-        }
-    }
 }
 
 export class PurgeTransactionMapper extends TransactionMapperAbstract<TransactionCandid, PurgeTransaction> {
@@ -36,6 +31,18 @@ export class PurgeTransactionMapper extends TransactionMapperAbstract<Transactio
         return TransactionType.Purge;
     }
 
+}
+
+export class PurgeRequestMapper extends RequestMapperAbstract{
+    toCandid(request: PurgeTransactionRequest): TransactionRequestCandid {
+        return {
+            PurgeTransactionRequestV: {
+            }
+        }
+    }
+    getMappedRequestType(): string {
+        return "PurgeTransactionRequest";
+    }
 }
 
 

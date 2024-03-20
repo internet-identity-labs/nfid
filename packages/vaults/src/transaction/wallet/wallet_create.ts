@@ -7,6 +7,7 @@ import {
 import {candidToNetwork, networkToCandid} from "../../util/helper";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface WalletCreateTransaction extends Transaction {
@@ -30,16 +31,6 @@ export class WalletCreateTransactionRequest implements TransactionRequest {
         this.uid = uid
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            WalletCreateTransactionRequestV: {
-                uid: this.uid,
-                name: this.name,
-                network: networkToCandid(this.network),
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
-    }
 }
 
 
@@ -61,6 +52,23 @@ export class WalletCreateTransactionMapper extends TransactionMapperAbstract<Tra
         return TransactionType.WalletCreate;
     }
 
+}
+
+export class WalletCreateRequestMapper extends RequestMapperAbstract {
+    toCandid(request: WalletCreateTransactionRequest): TransactionRequestCandid {
+        return {
+            WalletCreateTransactionRequestV: {
+                name: request.name,
+                uid: request.uid,
+                network: networkToCandid(request.network),
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
+
+    getMappedRequestType(): string {
+        return "WalletCreateTransactionRequest";
+    }
 }
 
 

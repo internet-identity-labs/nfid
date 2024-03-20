@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface PolicyUpdateTransaction extends Transaction {
@@ -60,6 +61,16 @@ export class PolicyUpdateTransactionMapper extends TransactionMapperAbstract<Tra
         return TransactionType.PolicyUpdate;
     }
 
+}
+
+export class PolicyUpdateRequestMapper extends RequestMapperAbstract{
+    toCandid(request: PolicyUpdateTransactionRequest): TransactionRequestCandid {
+        return request.toCandid()
+    }
+
+    getMappedRequestType(): string {
+        return "PolicyUpdateTransactionRequest";
+    }
 }
 
 

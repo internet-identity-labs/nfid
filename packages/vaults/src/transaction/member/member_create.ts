@@ -7,6 +7,7 @@ import {
 import {candidToRole, roleToCandid} from "../../util/helper";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface MemberCreateTransaction extends Transaction {
@@ -26,15 +27,6 @@ export class MemberCreateTransactionRequest implements TransactionRequest {
         this.name = name
         this.role = role
         this.batch_uid = batch_uid
-    }
-
-    toCandid(): TransactionRequestCandid {
-        return {
-            MemberCreateTransactionRequestV: {
-                member_id: this.member_id, name: this.name, role: roleToCandid(this.role),
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
     }
 }
 
@@ -56,6 +48,22 @@ export class MemberCreateTransactionMapper extends TransactionMapperAbstract<Mem
         return TransactionType.MemberCreate;
     }
 
+}
+
+export class MemberCreateRequestMapper extends RequestMapperAbstract{
+    toCandid(request: MemberCreateTransactionRequest): TransactionRequestCandid {
+        return {
+            MemberCreateTransactionRequestV: {
+                member_id: request.member_id,
+                name: request.name,
+                role: roleToCandid(request.role),
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
+    getMappedRequestType(): string {
+        return "MemberCreateTransactionRequest";
+    }
 }
 
 

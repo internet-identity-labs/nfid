@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 
@@ -30,15 +31,6 @@ export class TopUpTransactionRequest implements TransactionRequest {
         this.amount = amount
     }
 
-    toCandid(): TransactionRequestCandid {
-        return {
-            TopUpTransactionRequestV: {
-                currency: {'ICP': null},
-                wallet: this.wallet,
-                amount: this.amount
-            }
-        }
-    }
 }
 
 
@@ -61,6 +53,22 @@ export class TopUpTransactionMapper extends TransactionMapperAbstract<Transactio
         return TransactionType.TopUp;
     }
 
+}
+
+export class TopUpRequestMapper extends RequestMapperAbstract{
+    toCandid(request: TopUpTransactionRequest): TransactionRequestCandid {
+        return {
+            TopUpTransactionRequestV: {
+                currency: {'ICP': null},
+                wallet: request.wallet,
+                amount: request.amount
+            }
+        }
+    }
+
+    getMappedRequestType(): string {
+        return "TopUpTransactionRequest";
+    }
 }
 
 

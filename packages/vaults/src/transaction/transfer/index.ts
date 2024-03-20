@@ -1,3 +1,3 @@
-export * from "./top_up"
-export * from "./transfer"
-export * from "./transfer_quorum"
+export {type TopUpTransaction, TopUpTransactionRequest} from "./top_up"
+export {type TransferTransaction, TransferTransactionRequest} from "./transfer"
+export {type TransferQuorumTransaction, TransferQuorumTransactionRequest} from "./transfer_quorum"

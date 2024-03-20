@@ -11,10 +11,15 @@ import {HttpAgent, Identity} from "@dfinity/agent"
 import {candidToVault, Vault} from "../vault/vault";
 import {ApproveRequest, approveToCandid} from "../approve/approve";
 import {Principal} from "@dfinity/principal";
-import {registerMappers, transactionCandidToTransaction} from "../transaction/mapper_registry";
-import {Transaction} from "../transaction/transaction";
+import {
+    registerRequestMappers,
+    registerTransactionMappers,
+} from "../transaction/mapper_registry";
+import {Transaction} from "../transaction";
 import {TransactionRequest} from "../transaction/transaction_request";
 import {VaultManagerI} from "../vault_manager_i";
+import {transactionCandidToTransaction} from "../transaction/transaction_mapper";
+import {requestToCandid} from "../transaction/request_mapper";
 
 
 export class VaultManager implements VaultManagerI {
@@ -23,7 +28,8 @@ export class VaultManager implements VaultManagerI {
     private readonly identity: Identity;
 
     constructor(canisterId: string, identity: Identity) {
-        registerMappers()
+        registerTransactionMappers()
+        registerRequestMappers()
         this.actor = this.getActor(canisterId, identity);
         this.canisterId = canisterId;
         this.identity = identity;
@@ -43,7 +49,7 @@ export class VaultManager implements VaultManagerI {
     }
 
     async requestTransaction(request: Array<TransactionRequest>): Promise<Array<Transaction>> {
-        let trRequests: Array<TransactionRequestCandid> = request.map(l => l.toCandid())
+        let trRequests: Array<TransactionRequestCandid> = request.map(l => requestToCandid(l))
         let response = await this.actor.request_transaction(trRequests);
         return response.map(transactionCandidToTransaction)
     }
@@ -78,7 +84,6 @@ export class VaultManager implements VaultManagerI {
     async execute(): Promise<void> {
         await this.actor.execute()
     }
-
 
     async resetToLocalEnv() {
         let agent: HttpAgent = new HttpAgent({host: "http://127.0.0.1:8000", identity: this.identity});

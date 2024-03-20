@@ -6,6 +6,7 @@ import {
 } from "../../idl/service_vault";
 import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
 export interface MemberRemoveTransaction extends Transaction {
@@ -21,15 +22,6 @@ export class MemberRemoveTransactionRequest implements TransactionRequest {
         this.member_id = member_id
         this.batch_uid = batch_uid
 
-    }
-
-    toCandid(): TransactionRequestCandid {
-        return {
-            MemberRemoveTransactionRequestV: {
-                member_id: this.member_id,
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
     }
 }
 
@@ -51,6 +43,20 @@ export class MemberRemoveTransactionMapper extends TransactionMapperAbstract<Mem
         return TransactionType.MemberUpdateRole;
     }
 
+}
+
+export class MemberRemoveRequestMapper extends RequestMapperAbstract{
+    toCandid(request: MemberRemoveTransactionRequest): TransactionRequestCandid {
+        return {
+            MemberRemoveTransactionRequestV: {
+                member_id: request.member_id,
+                batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : []
+            }
+        }
+    }
+    getMappedRequestType(): string {
+        return "MemberRemoveTransactionRequest";
+    }
 }
 
 
