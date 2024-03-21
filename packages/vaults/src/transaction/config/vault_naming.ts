@@ -59,7 +59,7 @@ export class VaultUpdateNamingRequestMapper extends RequestMapperAbstract {
         }
     }
     getMappedRequestType(): string {
-        return "VaultNamingUpdateTransactionRequest";
+        return "VaultNamingTransactionRequest";
     }
 }
 
