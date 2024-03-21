@@ -20,10 +20,10 @@ export abstract class RequestMapperAbstract implements RequestMapper {
 
 
 export function requestToCandid(trs: TransactionRequest): TransactionRequestCandid {
-    let className = trs.constructor.name
-    let mapper = RequestMapperRegistry.get(className);
+    let requestType = trs.getType();
+    let mapper = RequestMapperRegistry.get(requestType);
     if (!mapper) {
-        throw Error("No mapper found " + className)
+        throw Error("No mapper found " + requestType)
     }
     return  mapper.toCandid(trs)
 }

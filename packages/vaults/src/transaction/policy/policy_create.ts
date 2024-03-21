@@ -33,6 +33,10 @@ export class PolicyCreateTransactionRequest implements TransactionRequest {
         this.uid = uid
     }
 
+    getType(): string {
+        return "PolicyCreateTransactionRequest";
+    }
+
 }
 
 

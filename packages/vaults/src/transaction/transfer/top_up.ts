@@ -31,6 +31,10 @@ export class TopUpTransactionRequest implements TransactionRequest {
         this.amount = amount
     }
 
+    getType(): string {
+        return "TopUpTransactionRequest";
+    }
+
 }
 
 

@@ -33,6 +33,10 @@ export class TransferTransactionRequest implements TransactionRequest {
         this.amount = amount
     }
 
+    getType(): string {
+        return "TransferTransactionRequest";
+    }
+
 }
 
 

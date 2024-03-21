@@ -23,6 +23,11 @@ export class QuorumTransactionRequest implements TransactionRequest {
         this.quorum = quorum
         this.batch_uid = batch_uid
     }
+
+    getType(): string {
+        return "QuorumTransactionRequest";
+    }
+
 }
 
 export class QuorumUpdateTransactionMapper extends TransactionMapperAbstract<TransactionCandid, QuorumUpdateTransaction> {

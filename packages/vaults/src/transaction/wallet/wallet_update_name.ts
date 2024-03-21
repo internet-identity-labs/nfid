@@ -27,6 +27,10 @@ export class WalletUpdateNameTransactionRequest implements TransactionRequest {
 
     }
 
+    getType(): string {
+        return "WalletUpdateNameTransactionRequest";
+    }
+
 }
 
 export class WalletUpdateNameTransactionMapper extends TransactionMapperAbstract<TransactionCandid, WalletUpdateNameTransaction> {

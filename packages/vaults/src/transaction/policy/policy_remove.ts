@@ -23,6 +23,10 @@ export class PolicyRemoveTransactionRequest implements TransactionRequest {
         this.batch_uid = batch_uid
     }
 
+    getType(): string {
+        return "PolicyRemoveTransactionRequest";
+    }
+
 }
 
 

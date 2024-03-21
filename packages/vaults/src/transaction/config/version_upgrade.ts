@@ -21,6 +21,10 @@ export class VersionUpgradeTransactionRequest implements TransactionRequest {
     constructor(version: string) {
         this.version = version
     }
+
+    getType(): string {
+        return "VersionUpgradeTransactionRequest";
+    }
 }
 
 export class VersionUpgradeTransactionMapper extends TransactionMapperAbstract<TransactionCandid, VersionUpgradeTransaction> {

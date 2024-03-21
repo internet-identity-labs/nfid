@@ -28,6 +28,10 @@ export class MemberCreateTransactionRequest implements TransactionRequest {
         this.role = role
         this.batch_uid = batch_uid
     }
+
+    getType(): string {
+        return "MemberCreateTransactionRequest";
+    }
 }
 
 export class MemberCreateTransactionMapper extends TransactionMapperAbstract<MemberCreateTransactionCandid, MemberCreateTransaction> {

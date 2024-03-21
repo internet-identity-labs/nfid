@@ -14,6 +14,9 @@ export interface PurgeTransaction extends Transaction {
 
 
 export class PurgeTransactionRequest implements TransactionRequest {
+    getType(): string {
+        return "PurgeTransactionRequest";
+    }
 }
 
 export class PurgeTransactionMapper extends TransactionMapperAbstract<TransactionCandid, PurgeTransaction> {
