@@ -24,11 +24,12 @@ export class TransferQuorumTransactionRequest implements TransactionRequest {
     amount: bigint;
     memo: string | undefined;
 
-    constructor(currency: Currency, address: string, wallet: string, amount: bigint) {
+    constructor(currency: Currency, address: string, wallet: string, amount: bigint, memo?: string) {
         this.currency = currency
         this.address = address
         this.wallet = wallet
         this.amount = amount
+        this.memo = memo
     }
 
 }
@@ -70,7 +71,7 @@ export class TransferQuorumRequestMapper extends RequestMapperAbstract {
     }
 
     getMappedRequestType(): string {
-        return "TransferQuorumTransactionRequestV";
+        return "TransferQuorumTransactionRequest";
     }
 }
 

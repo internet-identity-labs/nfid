@@ -40,7 +40,7 @@ export class MemberRemoveTransactionMapper extends TransactionMapperAbstract<Mem
     }
 
     getType(): TransactionType {
-        return TransactionType.MemberUpdateRole;
+        return TransactionType.MemberRemove;
     }
 
 }

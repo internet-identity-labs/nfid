@@ -50,7 +50,7 @@ export class MemberCreateTransactionMapper extends TransactionMapperAbstract<Mem
 
 }
 
-export class MemberCreateRequestMapper extends RequestMapperAbstract{
+export class MemberCreateRequestMapper extends RequestMapperAbstract {
     toCandid(request: MemberCreateTransactionRequest): TransactionRequestCandid {
         return {
             MemberCreateTransactionRequestV: {
@@ -61,6 +61,7 @@ export class MemberCreateRequestMapper extends RequestMapperAbstract{
             }
         }
     }
+
     getMappedRequestType(): string {
         return "MemberCreateTransactionRequest";
     }

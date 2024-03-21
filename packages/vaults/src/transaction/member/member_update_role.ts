@@ -25,15 +25,6 @@ export class MemberUpdateRoleTransactionRequest implements TransactionRequest {
         this.role = role
         this.batch_uid = batch_uid
     }
-
-    toCandid(): TransactionRequestCandid {
-        return {
-            MemberUpdateRoleTransactionRequestV: {
-                member_id: this.member_id, role: roleToCandid(this.role),
-                batch_uid: this.batch_uid !== undefined ? [this.batch_uid] : []
-            }
-        }
-    }
 }
 
 export class MemberUpdateRoleTransactionMapper extends TransactionMapperAbstract<MemberUpdateRoleTransactionCandid, MemberUpdateRoleTransaction> {

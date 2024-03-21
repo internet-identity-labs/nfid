@@ -37,7 +37,7 @@ export class VersionUpgradeTransactionMapper extends TransactionMapperAbstract<T
     }
 
     getType(): TransactionType {
-        return TransactionType.QuorumUpdate;
+        return TransactionType.VersionUpgrade;
     }
 
 }
