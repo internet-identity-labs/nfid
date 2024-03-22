@@ -11,10 +11,7 @@ import {HttpAgent, Identity} from "@dfinity/agent"
 import {candidToVault, Vault} from "../vault/vault";
 import {ApproveRequest, approveToCandid} from "../approve/approve";
 import {Principal} from "@dfinity/principal";
-import {
-    registerRequestMappers,
-    registerTransactionMappers,
-} from "../transaction/mapper_registry";
+import {registerRequestMappers, registerTransactionMappers,} from "../transaction/mapper_registry";
 import {Transaction} from "../transaction";
 import {TransactionRequest} from "../transaction/transaction_request";
 import {VaultManagerI} from "../vault_manager_i";
@@ -33,6 +30,11 @@ export class VaultManager implements VaultManagerI {
         this.actor = this.getActor(canisterId, identity);
         this.canisterId = canisterId;
         this.identity = identity;
+    }
+
+    async addICRC1Canisters(canisters: Principal[]): Promise<Vault> {
+        let vault = await this.actor.store_icrc1_canisters(canisters)
+        return candidToVault(vault)
     }
 
     async getTransactions(): Promise<Array<Transaction>> {

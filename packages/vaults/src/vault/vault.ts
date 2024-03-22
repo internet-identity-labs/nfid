@@ -1,6 +1,7 @@
 import {Currency, Network, VaultRole} from "../enum/enums";
 import {Member, Policy as PolicyCandid, VaultState, Wallet as WalletCandid} from "../idl/service_vault";
 import {candidToRole, candidToNetwork} from "../util/helper";
+import {Principal} from "@dfinity/principal";
 
 export interface Vault {
     members: Array<VaultMember>
@@ -9,6 +10,7 @@ export interface Vault {
     policies: Array<Policy>
     name?: string
     description?: string
+    icrc1_canisters : Array<Principal>
 }
 
 export interface Quorum {
@@ -54,6 +56,7 @@ export function candidToVault(vaultCandid: VaultState): Vault {
     let name = vaultCandid.name.length === 0 ? undefined : vaultCandid.name[0]
     let description = vaultCandid.description.length === 0 ? undefined : vaultCandid.description[0]
     let vault: Vault = {
+        icrc1_canisters: vaultCandid.icrc1_canisters,
         members: members, quorum: quorum, wallets, policies, name, description
     }
 
