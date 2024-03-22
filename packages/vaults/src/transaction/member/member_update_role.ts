@@ -25,6 +25,10 @@ export class MemberUpdateRoleTransactionRequest implements TransactionRequest {
         this.role = role
         this.batch_uid = batch_uid
     }
+
+    getType(): string {
+        return "MemberUpdateRoleTransactionRequest";
+    }
 }
 
 export class MemberUpdateRoleTransactionMapper extends TransactionMapperAbstract<MemberUpdateRoleTransactionCandid, MemberUpdateRoleTransaction> {

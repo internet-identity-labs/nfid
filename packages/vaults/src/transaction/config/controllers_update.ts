@@ -21,6 +21,10 @@ export class ControllersUpdateTransactionRequest implements TransactionRequest {
     constructor(principals: Array<Principal>) {
         this.principals = principals
     }
+
+    getType(): string {
+        return "ControllersUpdateTransactionRequest";
+    }
 }
 
 export class ControllersUpdateTransactionMapper extends TransactionMapperAbstract<TransactionCandid, ControllersUpdateTransaction> {

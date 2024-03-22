@@ -32,6 +32,10 @@ export class TransferQuorumTransactionRequest implements TransactionRequest {
         this.memo = memo
     }
 
+    getType(): string {
+        return "TransferQuorumTransactionRequest";
+    }
+
 }
 
 export class TransferQuorumTransactionMapper extends TransactionMapperAbstract<TransactionCandid, TransferQuorumTransaction> {

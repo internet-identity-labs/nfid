@@ -59,6 +59,6 @@ export function transactionCandidToTransaction(trs: TransactionCandid): Transact
             }
         }
     }
-    throw Error("No mapper found")
+    throw Error("No transaction mapper found")
 }
 

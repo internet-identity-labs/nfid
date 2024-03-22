@@ -31,6 +31,10 @@ export class WalletCreateTransactionRequest implements TransactionRequest {
         this.uid = uid
     }
 
+    getType(): string {
+        return "WalletCreateTransactionRequest";
+    }
+
 }
 
 

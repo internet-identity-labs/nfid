@@ -27,6 +27,10 @@ export class VaultNamingTransactionRequest implements TransactionRequest {
         this.batch_uid = batch_uid
     }
 
+    getType(): string {
+        return "VaultNamingTransactionRequest";
+    }
+
 }
 
 export class VaultUpdateNamingTransactionMapper extends TransactionMapperAbstract<TransactionCandid, VaultUpdateNamingTransaction> {

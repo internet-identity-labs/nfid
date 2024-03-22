@@ -26,6 +26,10 @@ export class MemberUpdateNameTransactionRequest implements TransactionRequest {
         this.batch_uid = batch_uid
     }
 
+    getType(): string {
+        return "MemberUpdateNameTransactionRequest";
+    }
+
 }
 
 export class MemberUpdateNameTransactionMapper extends TransactionMapperAbstract<MemberUpdateNameTransactionCandid, MemberUpdateNameTransaction> {
