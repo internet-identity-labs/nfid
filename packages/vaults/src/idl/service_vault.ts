@@ -237,10 +237,10 @@ export interface TransferTransactionRequest {
     'amount' : bigint,
 }
 export type VaultError = { 'ControllersUpdateError' : { 'message' : string } } |
-    { 'QuorumNotReachable' : null } |
     { 'WalletNotExists' : null } |
     { 'CouldNotDefinePolicy' : null } |
     { 'ThresholdAlreadyExists' : null } |
+    { 'QuorumNotReachable' : null } |
     { 'CanisterReject' : { 'message' : string } } |
     { 'MemberNotExists' : null } |
     { 'MemberAlreadyExists' : null } |
@@ -263,6 +263,7 @@ export interface VaultState {
     'members' : Array<Member>,
     'name' : [] | [string],
     'description' : [] | [string],
+    'icrc1_canisters' : Array<Principal>,
     'wallets' : Array<Wallet>,
     'quorum' : Quorum,
     'policies' : Array<Policy>,
@@ -311,7 +312,7 @@ export interface _SERVICE {
     'execute' : ActorMethod<[], undefined>,
     'get_controllers' : ActorMethod<[], Array<Principal>>,
     'get_state' : ActorMethod<[[] | [bigint]], VaultState>,
-    get_transactions_all : ActorMethod<[], Array<TransactionCandid>>,
+    'get_transactions_all' : ActorMethod<[], Array<TransactionCandid>>,
     'get_trusted_origins_certified' : ActorMethod<
         [],
         {
@@ -325,4 +326,5 @@ export interface _SERVICE {
         [Array<TransactionRequest>],
         Array<TransactionCandid>
     >,
+    'store_icrc1_canisters' : ActorMethod<[Array<Principal>], VaultState>,
 }

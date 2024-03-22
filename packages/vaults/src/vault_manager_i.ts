@@ -20,4 +20,6 @@ export interface VaultManagerI {
     getVersion(): Promise<string>
 
     getControllers(): Promise<Array<Principal>>
+
+    addICRC1Canisters(canisters: Array<Principal>): Promise<Vault>
 }
