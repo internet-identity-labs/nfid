@@ -20,6 +20,10 @@ import {TopUpRequestMapper, TopUpTransactionMapper} from "./transfer/top_up";
 import {TransferQuorumRequestMapper, TransferQuorumTransactionMapper} from "./transfer/transfer_quorum";
 import {RequestMapper} from "./request_mapper";
 import {WalletUpdateNameRequestMapper, WalletUpdateNameTransactionMapper} from "./wallet/wallet_update_name";
+import {
+    TransferICRC1QuorumRequestMapper, TransferICRC1QuorumTransactionMapper,
+    TransferICRC1QuorumTransactionRequest
+} from "./transfer/transfer_icrc1_quorum";
 
 export const TransactionMapperRegistry: Map<PropertyKey, TransactionMapper> = new Map();
 export const RequestMapperRegistry: Map<string, RequestMapper> = new Map();
@@ -60,6 +64,7 @@ export function registerTransactionMappers() {
     RegisterTransactionMapper(TopUpTransactionMapper);
     RegisterTransactionMapper(TransferQuorumTransactionMapper);
     RegisterTransactionMapper(ControllersUpdateTransactionMapper);
+    RegisterTransactionMapper(TransferICRC1QuorumTransactionMapper);
 }
 
 export function registerRequestMappers() {
@@ -80,4 +85,5 @@ export function registerRequestMappers() {
     RegisterRequestMapper(TransferRequestMapper);
     RegisterRequestMapper(TopUpRequestMapper);
     RegisterRequestMapper(TransferQuorumRequestMapper);
+    RegisterRequestMapper(TransferICRC1QuorumRequestMapper);
 }

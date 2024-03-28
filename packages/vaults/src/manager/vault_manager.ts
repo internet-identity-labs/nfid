@@ -62,7 +62,7 @@ export class VaultManager implements VaultManagerI {
 
     async getState(id?: bigint): Promise<Vault> {
         let param: [bigint] | [] = id === undefined ? [] : [id]
-        let state = await this.actor.get_state(param) as VaultState;
+        let state = await this.actor.get_state(param);
         return candidToVault(state)
     }
 

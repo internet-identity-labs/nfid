@@ -13,6 +13,7 @@ export enum TransactionType {
     VaultNamingUpdate = 'VaultNamingUpdate',
     Transfer = 'Transfer',
     TransferQuorum = 'TransferQuorum',
+    TransferICRC1Quorum = 'TransferICRC1Quorum',
     TopUp = 'TopUp',
     VersionUpgrade = 'VersionUpgrade',
     Purge = 'Purge',
