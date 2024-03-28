@@ -109,6 +109,15 @@ export const idlFactory = ({ IDL } : any) => {
         'amount_threshold' : IDL.Nat64,
         'common' : BasicTransactionFields,
     });
+    const TransferICRC1QuorumTransaction = IDL.Record({
+        'to_principal' : IDL.Principal,
+        'block_index' : IDL.Opt(IDL.Nat),
+        'to_subaccount' : IDL.Opt(IDL.Vec(IDL.Nat8)),
+        'ledger_id' : IDL.Principal,
+        'wallet' : IDL.Text,
+        'common' : BasicTransactionFields,
+        'amount' : IDL.Nat64,
+    });
     const MemberCreateTransaction = IDL.Record({
         'name' : IDL.Text,
         'role' : VaultRole,
@@ -157,6 +166,7 @@ export const idlFactory = ({ IDL } : any) => {
         'TransferTransactionV' : TransferTransaction,
         'PolicyRemoveTransactionV' : PolicyRemoveTransaction,
         'PolicyUpdateTransactionV' : PolicyUpdateTransaction,
+        'TransferICRC1QuorumTransactionV' : TransferICRC1QuorumTransaction,
         'MemberCreateTransactionV' : MemberCreateTransaction,
         'MemberUpdateNameTransactionV' : MemberUpdateNameTransaction,
         'UpgradeTransactionV' : VersionUpgradeTransaction,
@@ -224,6 +234,14 @@ export const idlFactory = ({ IDL } : any) => {
         'wallet' : IDL.Text,
         'amount' : IDL.Nat64,
     });
+    const TransferICRC1QuorumTransactionRequest = IDL.Record({
+        'to_principal' : IDL.Principal,
+        'to_subaccount' : IDL.Opt(IDL.Vec(IDL.Nat8)),
+        'memo' : IDL.Opt(IDL.Text),
+        'ledger_id' : IDL.Principal,
+        'wallet' : IDL.Text,
+        'amount' : IDL.Nat64,
+    });
     const WalletCreateTransactionRequest = IDL.Record({
         'uid' : IDL.Text,
         'name' : IDL.Text,
@@ -239,13 +257,6 @@ export const idlFactory = ({ IDL } : any) => {
         'role' : VaultRole,
         'member_id' : IDL.Text,
         'batch_uid' : IDL.Opt(IDL.Text),
-    });
-    const TransferQuorumTransactionRequest = IDL.Record({
-        'memo' : IDL.Opt(IDL.Text),
-        'currency' : Currency,
-        'address' : IDL.Text,
-        'wallet' : IDL.Text,
-        'amount' : IDL.Nat64,
     });
     const TransferTransactionRequest = IDL.Record({
         'memo' : IDL.Opt(IDL.Text),
@@ -290,10 +301,11 @@ export const idlFactory = ({ IDL } : any) => {
         'ControllersUpdateTransactionRequestV' : ControllersUpdateTransactionRequest,
         'MemberUpdateNameTransactionRequestV' : MemberUpdateNameTransactionRequest,
         'TopUpTransactionRequestV' : TopUpTransactionRequest,
+        'TransferICRC1QuorumTransactionRequestV' : TransferICRC1QuorumTransactionRequest,
         'WalletCreateTransactionRequestV' : WalletCreateTransactionRequest,
         'MemberRemoveTransactionRequestV' : MemberRemoveTransactionRequest,
         'MemberCreateTransactionRequestV' : MemberCreateTransactionRequest,
-        'TransferQuorumTransactionRequestV' : TransferQuorumTransactionRequest,
+        'TransferQuorumTransactionRequestV' : TransferTransactionRequest,
         'TransferTransactionRequestV' : TransferTransactionRequest,
         'MemberUpdateRoleTransactionRequestV' : MemberUpdateRoleTransactionRequest,
         'WalletUpdateNameTransactionRequestV' : WalletUpdateNameTransactionRequest,

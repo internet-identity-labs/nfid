@@ -162,6 +162,7 @@ export type TransactionCandid = {
     { 'TransferTransactionV' : TransferTransaction } |
     { 'PolicyRemoveTransactionV' : PolicyRemoveTransaction } |
     { 'PolicyUpdateTransactionV' : PolicyUpdateTransaction } |
+    { 'TransferICRC1QuorumTransactionV' : TransferICRC1QuorumTransaction } |
     { 'MemberCreateTransactionV' : MemberCreateTransaction } |
     { 'MemberUpdateNameTransactionV' : MemberUpdateNameTransaction } |
     { 'UpgradeTransactionV' : VersionUpgradeTransaction } |
@@ -184,10 +185,13 @@ export type TransactionRequest = {
         'MemberUpdateNameTransactionRequestV' : MemberUpdateNameTransactionRequest
     } |
     { 'TopUpTransactionRequestV' : TopUpTransactionRequest } |
+    {
+        'TransferICRC1QuorumTransactionRequestV' : TransferICRC1QuorumTransactionRequest
+    } |
     { 'WalletCreateTransactionRequestV' : WalletCreateTransactionRequest } |
     { 'MemberRemoveTransactionRequestV' : MemberRemoveTransactionRequest } |
     { 'MemberCreateTransactionRequestV' : MemberCreateTransactionRequest } |
-    { 'TransferQuorumTransactionRequestV' : TransferQuorumTransactionRequest } |
+    { 'TransferQuorumTransactionRequestV' : TransferTransactionRequest } |
     { 'TransferTransactionRequestV' : TransferTransactionRequest } |
     {
         'MemberUpdateRoleTransactionRequestV' : MemberUpdateRoleTransactionRequest
@@ -205,19 +209,29 @@ export type TransactionState = { 'Blocked' : null } |
     { 'Executed' : null } |
     { 'Purged' : null } |
     { 'Pending' : null };
+export interface TransferICRC1QuorumTransaction {
+    'to_principal' : Principal,
+    'block_index' : [] | [number],
+    'to_subaccount' : [] | [Uint8Array | number[]],
+    'ledger_id' : Principal,
+    'wallet' : string,
+    'common' : BasicTransactionFields,
+    'amount' : bigint,
+}
+export interface TransferICRC1QuorumTransactionRequest {
+    'to_principal' : Principal,
+    'to_subaccount' : [] | [Uint8Array | number[]],
+    'memo' : [] | [string],
+    'ledger_id' : Principal,
+    'wallet' : string,
+    'amount' : bigint,
+}
 export interface TransferQuorumTransaction {
     'block_index' : [] | [bigint],
     'currency' : Currency,
     'address' : string,
     'wallet' : string,
     'common' : BasicTransactionFields,
-    'amount' : bigint,
-}
-export interface TransferQuorumTransactionRequest {
-    'memo' : [] | [string],
-    'currency' : Currency,
-    'address' : string,
-    'wallet' : string,
     'amount' : bigint,
 }
 export interface TransferTransaction {
