@@ -258,6 +258,13 @@ export const idlFactory = ({ IDL } : any) => {
         'member_id' : IDL.Text,
         'batch_uid' : IDL.Opt(IDL.Text),
     });
+    const TransferQuorumTransactionRequest = IDL.Record({
+        'memo' : IDL.Opt(IDL.Text),
+        'currency' : Currency,
+        'address' : IDL.Text,
+        'wallet' : IDL.Text,
+        'amount' : IDL.Nat64,
+    });
     const TransferTransactionRequest = IDL.Record({
         'memo' : IDL.Opt(IDL.Text),
         'currency' : Currency,
@@ -305,7 +312,7 @@ export const idlFactory = ({ IDL } : any) => {
         'WalletCreateTransactionRequestV' : WalletCreateTransactionRequest,
         'MemberRemoveTransactionRequestV' : MemberRemoveTransactionRequest,
         'MemberCreateTransactionRequestV' : MemberCreateTransactionRequest,
-        'TransferQuorumTransactionRequestV' : TransferTransactionRequest,
+        'TransferQuorumTransactionRequestV' : TransferQuorumTransactionRequest,
         'TransferTransactionRequestV' : TransferTransactionRequest,
         'MemberUpdateRoleTransactionRequestV' : MemberUpdateRoleTransactionRequest,
         'WalletUpdateNameTransactionRequestV' : WalletUpdateNameTransactionRequest,

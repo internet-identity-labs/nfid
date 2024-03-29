@@ -191,7 +191,7 @@ export type TransactionRequest = {
     { 'WalletCreateTransactionRequestV' : WalletCreateTransactionRequest } |
     { 'MemberRemoveTransactionRequestV' : MemberRemoveTransactionRequest } |
     { 'MemberCreateTransactionRequestV' : MemberCreateTransactionRequest } |
-    { 'TransferQuorumTransactionRequestV' : TransferTransactionRequest } |
+    { 'TransferQuorumTransactionRequestV' : TransferQuorumTransactionRequest } |
     { 'TransferTransactionRequestV' : TransferTransactionRequest } |
     {
         'MemberUpdateRoleTransactionRequestV' : MemberUpdateRoleTransactionRequest
@@ -232,6 +232,13 @@ export interface TransferQuorumTransaction {
     'address' : string,
     'wallet' : string,
     'common' : BasicTransactionFields,
+    'amount' : bigint,
+}
+export interface TransferQuorumTransactionRequest {
+    'memo' : [] | [string],
+    'currency' : Currency,
+    'address' : string,
+    'wallet' : string,
     'amount' : bigint,
 }
 export interface TransferTransaction {
