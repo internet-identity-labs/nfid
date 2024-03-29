@@ -17,7 +17,7 @@
     "@nfid/typescript-config": "*",
     "prettier": "^3.1.0",
     "turbo": "latest",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.3"
   },
   "workspaces": [
     "config/*",
