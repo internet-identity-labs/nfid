@@ -42,7 +42,8 @@ export abstract class TransactionMapperAbstract<A, B extends Transaction> implem
             state: candidToTransactionState(candid.state),
             transactionType: this.getType(),
             threshold: candid.threshold.length === 0 ? undefined : candid.threshold[0],
-            error: candid.error.length === 0 ? undefined : candid.error[0]
+            error: candid.error.length === 0 ? undefined : candid.error[0],
+            memo: candid.memo.length === 0 ? undefined : candid.memo[0]
         }
         return transaction;
     }
