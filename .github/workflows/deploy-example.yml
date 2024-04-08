@@ -34,7 +34,7 @@ jobs:
           dfx-version: 0.15.3
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --frozen-lockfile
 
       - name: Build
         run: npm run build-example
