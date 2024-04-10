@@ -29,7 +29,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --frozen-lockfile
 
       - name: Format Check
         run: npm run format:check
