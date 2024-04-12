@@ -3,7 +3,7 @@ import {
     TransactionState as TransactionStateCandid,
     VaultRole as VaultRoleCandid
 } from "../idl/service_vault";
-import {Network, TransactionState, TransactionType, VaultRole} from "../enum/enums";
+import {Network, TransactionState, VaultRole} from "../enum/enums";
 import {randomBytes} from "crypto";
 
 export function transactionStateToCandid(

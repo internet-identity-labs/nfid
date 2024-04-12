@@ -35,6 +35,7 @@ export enum TransactionState {
     Pending = "Pending",
     Rejected = "Rejected",
     Executed = "Executed",
+    Failed = "Failed",
     Blocked = "Blocked",
     Purged = "Purged",
 }
