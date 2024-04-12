@@ -7,6 +7,7 @@ export const idlFactory = ({ IDL } : any) => {
         'Blocked' : IDL.Null,
         'Approved' : IDL.Null,
         'Rejected' : IDL.Null,
+        'Failed' : IDL.Null,
         'Executed' : IDL.Null,
         'Purged' : IDL.Null,
         'Pending' : IDL.Null,
