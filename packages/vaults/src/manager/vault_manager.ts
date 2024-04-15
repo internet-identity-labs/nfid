@@ -2,8 +2,7 @@ import {
     _SERVICE as VaultService,
     TransactionApproveRequest,
     TransactionCandid,
-    TransactionRequest as TransactionRequestCandid,
-    VaultState
+    TransactionRequest as TransactionRequestCandid
 } from "../idl/service_vault";
 import {idlFactory} from "../idl/idl";
 import * as Agent from "@dfinity/agent"
@@ -17,6 +16,7 @@ import {TransactionRequest} from "../transaction/transaction_request";
 import {VaultManagerI} from "../vault_manager_i";
 import {transactionCandidToTransaction} from "../transaction/transaction_mapper";
 import {requestToCandid} from "../transaction/request_mapper";
+import {TransactionState} from "../enum/enums";
 
 
 export class VaultManager implements VaultManagerI {
@@ -53,7 +53,11 @@ export class VaultManager implements VaultManagerI {
     async requestTransaction(request: Array<TransactionRequest>): Promise<Array<Transaction>> {
         let trRequests: Array<TransactionRequestCandid> = request.map(l => requestToCandid(l))
         let response = await this.actor.request_transaction(trRequests);
-        return response.map(transactionCandidToTransaction)
+        let transactions = response.map(transactionCandidToTransaction)
+        if (transactions.find(t => t.state === TransactionState.Approved) !== undefined) {
+            this.execute()
+        }
+        return transactions
     }
 
     async canisterBalance(): Promise<bigint> {
@@ -69,7 +73,11 @@ export class VaultManager implements VaultManagerI {
     async approveTransaction(approves: Array<ApproveRequest>): Promise<Array<Transaction>> {
         let approveRequest: Array<TransactionApproveRequest> = approves.map(approveToCandid)
         let response = await this.actor.approve(approveRequest) as Array<TransactionCandid>;
-        return response.map(transactionCandidToTransaction)
+        let transactions = response.map(transactionCandidToTransaction)
+        if (transactions.find(t => t.state === TransactionState.Approved) !== undefined) {
+             this.execute()
+        }
+        return transactions
     }
 
     private getActor = (
