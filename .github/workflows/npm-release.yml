@@ -90,4 +90,5 @@ jobs:
       - name: 🎉 Push tags
         run: |
           git tag v$( date +%s-%Y%m%d%H%M%S )
-          git push origin --tags --follow-tags
+          git push
+          git push --tags
