@@ -80,13 +80,15 @@ jobs:
       - name: 🤖 Build
         run: npm run build-package @nfid/${{ github.event.inputs.package }}
 
-      - name: 📦 Publish package on NPM
-        working-directory: packages/${{ github.event.inputs.package }}
-        run: npx yarn publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.IL_GH_NPM_TOKEN }}
+      # - name: 📦 Publish package on NPM
+      #   working-directory: packages/${{ github.event.inputs.package }}
+      #   run: npx yarn publish --access public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.IL_GH_NPM_TOKEN }}
 
       - name: 🎉 Push tags
+        env:
+          PAT: ${{ secrets.NFID_CONTENT_RW }}
         run: |
-          git push
-          git push --tags
+          git config --global credential.helper '!f() { sleep 1; echo "username=git token=${PAT}"; }; f'
+          git push origin --tags --follow-tags
