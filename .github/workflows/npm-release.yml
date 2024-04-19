@@ -92,8 +92,20 @@ jobs:
       #   env:
       #     NODE_AUTH_TOKEN: ${{ secrets.IL_GH_NPM_TOKEN }}
 
-      - name: 🎉 Push tags
+      - name: Prepare version
         run: |
-          git tag v$( date +%s-%Y%m%d%H%M%S )
-          git push
-          git push --tags
+          TAG="v$( date +%s-%Y%m%d%H%M%S )"
+          echo "TAG=${TAG}" >&2
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+
+      - name: Create Tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {TAG} = process.env          
+            github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/tags/${TAG}`,
+                sha: context.sha
+            })
