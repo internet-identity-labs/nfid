@@ -98,14 +98,20 @@ jobs:
           echo "TAG=${TAG}" >&2
           echo "TAG=${TAG}" >> $GITHUB_ENV
 
-      - name: Create Tag
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const {TAG} = process.env          
-            github.rest.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: `refs/tags/${TAG}`,
-                sha: context.sha
-            })
+
+      - name: 🎉 Push tags
+        run: |
+          git tag ${TAG}
+          git push --tags
+
+      # - name: Create Tag
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script: |
+      #       const {TAG} = process.env          
+      #       github.rest.git.createRef({
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           ref: `refs/tags/${TAG}`,
+      #           sha: context.sha
+      #       })
