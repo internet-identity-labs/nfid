@@ -55,31 +55,31 @@ jobs:
           git config user.email "nfid-github-action@identitylabs.ooo"
           git config user.name "NFID Github Action"
 
-      # - name: 🔧 Node
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 16
-      #     registry-url: https://registry.npmjs.org/
+      - name: 🔧 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
 
-      # - name: 🔧 Yarn
-      #   run: |
-      #     npx yarn config set version-git-message "chore(${{ github.event.inputs.package }}): release v%s"
-      #     npx yarn config set version-tag-prefix "@nfid/${{ github.event.inputs.package }}-v"
+      - name: 🔧 Yarn
+        run: |
+          npx yarn config set version-git-message "chore(${{ github.event.inputs.package }}): release v%s"
+          npx yarn config set version-tag-prefix "@nfid/${{ github.event.inputs.package }}-v"
 
-      # - name: 🤖 Install
-      #   run: npm i --frozen-lockfile
+      - name: 🤖 Install
+        run: npm i --frozen-lockfile
 
-      # - name: 🤖 Increment package version
-      #   working-directory: packages/${{ github.event.inputs.package }}
-      #   run: |
-      #     if [[ ${{ github.event.inputs.level }} == "pre"* ]]; then
-      #       npx yarn version --${{ github.event.inputs.level }} --preid ${{ github.event.inputs.preid }}
-      #     else
-      #       npx yarn version --${{ github.event.inputs.level }}
-      #     fi
+      - name: 🤖 Increment package version
+        working-directory: packages/${{ github.event.inputs.package }}
+        run: |
+          if [[ ${{ github.event.inputs.level }} == "pre"* ]]; then
+            npx yarn version --${{ github.event.inputs.level }} --preid ${{ github.event.inputs.preid }}
+          else
+            npx yarn version --${{ github.event.inputs.level }}
+          fi
 
-      # - name: 🤖 Build
-      #   run: npm run build-package @nfid/${{ github.event.inputs.package }}
+      - name: 🤖 Build
+        run: npm run build-package @nfid/${{ github.event.inputs.package }}
 
       # - name: 📦 Publish package on NPM
       #   working-directory: packages/${{ github.event.inputs.package }}
