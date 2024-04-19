@@ -91,7 +91,6 @@ jobs:
         env: 
           PAT: ${{ secrets.NFID_CONTENT_RW }}
         run: |
-          git config --global credential.helper '!f() { sleep 1; echo "username=git token=${PAT}"; }; f'
           git tag v$( date +%s-%Y%m%d%H%M%S )
           git push
           git push --tags
