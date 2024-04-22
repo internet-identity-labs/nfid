@@ -13,7 +13,7 @@ import {Principal} from "@dfinity/principal";
 export interface TransferICRC1QuorumTransaction extends Transaction {
     to_principal: Principal,
     blockIndex: bigint | undefined,
-    to_subaccount: undefined | [Uint8Array | number[]],
+    to_subaccount: undefined | Uint8Array | number[],
     ledger_id: Principal,
     wallet: string,
     amount: bigint,
@@ -22,12 +22,12 @@ export interface TransferICRC1QuorumTransaction extends Transaction {
 export class TransferICRC1QuorumTransactionRequest implements TransactionRequest {
     toPrincipal: Principal;
     ledgerId: Principal;
-    toSubaccount: undefined | [Uint8Array | number[]];
+    toSubaccount: undefined | Uint8Array | number[];
     wallet: string;
     amount: bigint;
     memo: string | undefined;
 
-    constructor(toPrincipal: Principal, toSubaccount: undefined | [Uint8Array | number[]], ledgerId: Principal, wallet: string, amount: bigint, memo?: string) {
+    constructor(toPrincipal: Principal, toSubaccount: undefined | Uint8Array | number[], ledgerId: Principal, wallet: string, amount: bigint, memo?: string) {
         this.toPrincipal = toPrincipal
         this.ledgerId = ledgerId
         this.toSubaccount = toSubaccount
@@ -51,7 +51,7 @@ export class TransferICRC1QuorumTransactionMapper extends TransactionMapperAbstr
         return {
             ledger_id: candid.ledger_id,
             to_principal: candid.to_principal,
-            to_subaccount: candid.to_subaccount.length === 0 ? undefined : candid.to_subaccount,
+            to_subaccount: candid.to_subaccount.length === 0 ? undefined : candid.to_subaccount[0],
             amount: candid.amount,
             wallet: candid.wallet,
             blockIndex: candid.block_index.length === 0 ? undefined : BigInt(candid.block_index[0]),
@@ -70,7 +70,7 @@ export class TransferICRC1QuorumRequestMapper extends RequestMapperAbstract {
         return {
             TransferICRC1QuorumTransactionRequestV: {
                 to_principal: request.toPrincipal,
-                to_subaccount: request.toSubaccount === undefined ? [] : request.toSubaccount,
+                to_subaccount: request.toSubaccount === undefined ? [] : [request.toSubaccount],
                 ledger_id: request.ledgerId,
                 wallet: request.wallet,
                 amount: request.amount,
