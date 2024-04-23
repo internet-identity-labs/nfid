@@ -52,9 +52,10 @@ export class VaultManager implements VaultManagerI {
     }
 
     /**
-     * Adds ICRC1 canisters to the vault.
-     * @param canisters - The canisterIDs to be added.
-     * @returns The updated vault.
+     * Method for adding a personal list of ICRC1 canisters by the user.
+     * Returns the updated vault state.
+     * Needed for displaying the balance of ICRC1 tokens.
+     * @param canisters The array of ICRC1 canisters to be added.
      */
     async addICRC1Canisters(canisters: Principal[]): Promise<Vault> {
         let vault = await this.actor.store_icrc1_canisters(canisters)
@@ -62,8 +63,8 @@ export class VaultManager implements VaultManagerI {
     }
 
     /**
-     * Retrieves all transactions.
-     * @returns An array of all transactions.
+     * Retrieves all user transactions.
+     * In the foreseeable future, optional parameter shiner will be used for filtering/pagination.
      */
     async getTransactions(): Promise<Array<Transaction>> {
         let transactions: Array<TransactionCandid> = await this.actor.get_transactions_all()
@@ -87,10 +88,11 @@ export class VaultManager implements VaultManagerI {
     }
 
     /**
-     * Requests a transaction.
-     * Automatically executes the transaction if it is approved.
-     * @param request - The transaction request.
-     * @returns An array of processed requested transactions.
+     * Update method. Can be requested by a registered user (admin/member).
+     * Creates a transaction.
+     * If the transaction is approved, it is automatically executed.
+     * Returns an array of requested transactions with current states.
+     * @param requests The array of transaction requests.
      */
     async requestTransaction(request: Array<TransactionRequest>): Promise<Array<Transaction>> {
         let trRequests: Array<TransactionRequestCandid> = request.map(l => requestToCandid(l))
@@ -123,10 +125,10 @@ export class VaultManager implements VaultManagerI {
     }
 
     /**
-     * Approves a transaction.
-     * Automatically executes the transaction if it is approved.
-     * @param approves - The approval requests.
-     * @returns An array of transactions.
+     * Update method. Approves or rejects a transaction.
+     * If the transaction is approved, it is automatically executed.
+     * Returns an array of transactions with current states.
+     * @param approve The array of approve requests.
      */
     async approveTransaction(approves: Array<ApproveRequest>): Promise<Array<Transaction>> {
         let approveRequest: Array<TransactionApproveRequest> = approves.map(approveToCandid)
@@ -158,8 +160,9 @@ export class VaultManager implements VaultManagerI {
     };
 
     /**
-     * Executes the transaction.
-     * Can be triggered by anonymous identity.
+     * The vault is built on the CQRS approach.
+     * Executes all approved transactions (called automatically
+     * when creating or approving a transaction).
      */
     async execute(): Promise<void> {
         await this.actor.execute()
