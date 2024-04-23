@@ -111,9 +111,10 @@ export class VaultManager implements VaultManagerI {
     }
 
     /**
-     * Retrieves the state of the vault.
-     * @param id - The ID of the vault. Optional.
-     * @returns The state of the vault.
+     * Retrieves the vault state.
+     * If no id is specified, returns the current state of the vault.
+     * If id is specified, returns the state of the vault at the time of the transaction with the specified id.
+     * @param id The id of the transaction.
      */
     async getState(id?: bigint): Promise<Vault> {
         let param: [bigint] | [] = id === undefined ? [] : [id]
