@@ -3,6 +3,12 @@ import {Vault} from "./vault/vault";
 import {TransactionRequest} from "./transaction/transaction_request";
 import {ApproveRequest} from "./approve/approve";
 import {Principal} from "@dfinity/principal";
+
+
+/**
+ * Interface representing a manager for vault operations.
+ * This class provides methods for interacting with the vault canister.
+ */
 export interface VaultManagerI {
     /**
      * Retrieves all user transactions.
