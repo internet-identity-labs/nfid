@@ -9,14 +9,41 @@ import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 import {Principal} from "@dfinity/principal";
 
-
+/**
+ * Interface for a transaction that transfers ICRC1 tokens.
+ * Requires amount of approvals equal to quorum.
+ * This transaction can be created or approved only by an admin.
+ */
 export interface TransferICRC1QuorumTransaction extends Transaction {
-    to_principal: Principal,
-    blockIndex: bigint | undefined,
-    to_subaccount: undefined | Uint8Array | number[],
-    ledger_id: Principal,
-    wallet: string,
-    amount: bigint,
+    /**
+     * The principal to which the tokens are transferred.
+     */
+    to_principal: Principal
+
+    /**
+     * The block index.
+     */
+    blockIndex: bigint | undefined
+
+    /**
+     * The subaccount to which the tokens are transferred. Optional.
+     */
+    to_subaccount: undefined | Uint8Array | number[]
+
+    /**
+     * The ID of the ICRC1 ledger.
+     */
+    ledger_id: Principal
+
+    /**
+     * The walletID from which the tokens are transferred.
+     */
+    wallet: string
+
+    /**
+     * The amount of tokens to be transferred.
+     */
+    amount: bigint
 }
 
 export class TransferICRC1QuorumTransactionRequest implements TransactionRequest {

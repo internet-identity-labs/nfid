@@ -8,8 +8,16 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
-
+/**
+ * Interface for a transaction that removes an existing member.
+ * The memberId is the principal of the user with the default subaccount.
+ * This transaction can only be created or approved by an admin.
+ * This transaction can be executed in a batch
+ */
 export interface MemberRemoveTransaction extends Transaction {
+    /**
+     * The ID of the member to be removed.
+     */
     memberId: string;
 }
 

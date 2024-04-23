@@ -7,11 +7,25 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import { TransactionRequest} from "../transaction_request";
 import {Principal} from "@dfinity/principal";
 import {TransactionRequest as RequestCandid} from "../../idl/service_vault";
-import {RequestMapper, RequestMapperAbstract} from "../request_mapper";
+import {RequestMapperAbstract} from "../request_mapper";
 
 
+/**
+ * This transaction type is used for updating the vault controllers.
+ * Through this transaction, the list of vault controllers can be replaced.
+ * The vault acts as its own controller to allow version updates via the VersionUpgrade transaction.
+ * Be careful - if the vault's id is removed from the list of controllers, the upgrade transaction will throw an error.
+ * Can be requested/approved only by admins
+ */
 export interface ControllersUpdateTransaction extends Transaction {
+    /**
+     * The principals (controllers) to be added to the vault.
+     */
     principals: Array<Principal>
+
+    /**
+     * The current controllers of the vault.
+     */
     current_controllers: Array<Principal>
 }
 
@@ -48,8 +62,6 @@ export class ControllersUpdateTransactionMapper extends TransactionMapperAbstrac
 
 
 export class ControllersRequestMapper extends RequestMapperAbstract{
-
-
 
     toCandid(request: ControllersUpdateTransactionRequest): RequestCandid {
         return {

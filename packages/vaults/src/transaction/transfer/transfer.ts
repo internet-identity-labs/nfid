@@ -8,13 +8,40 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
-
+/**
+ * Interface for a transaction that transfers currency.
+ * This transaction requires created policy for the wallet.
+ * This transaction can be created or approved by an admin/member.
+ */
 export interface TransferTransaction extends Transaction {
-    currency: Currency,
-    address: string,
-    wallet: string,
-    amount: bigint,
+    /**
+     * The currency used for the transfer.
+     */
+    currency: Currency
+
+    /**
+     * The address to which the currency is transferred.
+     */
+    address: string
+
+    /**
+     * The walletID from which the currency is transferred.
+     */
+    wallet: string
+
+    /**
+     * The amount of currency to be transferred.
+     */
+    amount: bigint
+
+    /**
+     * The policy under which the transfer is made. Will be set up when transaction is unblocked.
+     */
     policy: string | undefined
+
+    /**
+     * The block index. After the execution.
+     */
     blockIndex: bigint | undefined
 }
 

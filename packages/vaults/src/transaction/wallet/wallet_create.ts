@@ -10,12 +10,29 @@ import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
 
+/**
+ * Interface for a transaction that creates a new wallet.
+ * This transaction can be created or approved by an admin.
+ * This transaction can be executed in a batch.
+ */
 export interface WalletCreateTransaction extends Transaction {
-    name: string,
-    network: Network,
+    /**
+     * The name of the wallet to be created.
+     */
+    name: string
+
+    /**
+     * The network of the wallet to be created.
+     */
+    network: Network
+
+    /**
+     * The unique identifier of the wallet to be created.
+     * It have to be a hex representation of the subaccount
+     * use generateRandomString() from helper.ts to generate uid
+     */
     uid: string
 }
-
 
 export class WalletCreateTransactionRequest implements TransactionRequest {
     network: Network

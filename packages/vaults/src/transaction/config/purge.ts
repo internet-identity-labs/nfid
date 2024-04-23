@@ -8,7 +8,12 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
-
+/**
+ * This type of transaction is used to clear the queue.
+ * All blocked transactions will be removed.
+ * The transaction is executed outside the queue.
+ * Can be requested/approved only by admins.
+ */
 export interface PurgeTransaction extends Transaction {
 }
 

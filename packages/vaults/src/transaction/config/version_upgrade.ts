@@ -8,9 +8,21 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
-
+/**
+ * Interface for a transaction that upgrades the vault version.
+ * The list of versions is located in the vault repository specified in the vault configuration.
+ * To execute the transaction, the vault must be a controller.
+ * This transaction can only be requested or approved by admins.
+ */
 export interface VersionUpgradeTransaction extends Transaction {
+    /**
+     * The new version for the vault.
+     */
     version: string
+
+    /**
+     * The initial version of the vault.
+     */
     initial_version: string
 }
 
