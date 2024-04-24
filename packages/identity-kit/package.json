@@ -13,6 +13,9 @@
     "test": "jest",
     "lint": "eslint . --max-warnings 0"
   },
+  "dependencies": {
+    "@nfid/postmessage-rpc": "*"
+  },
   "devDependencies": {
     "@babel/core": "^7.23.5",
     "@babel/preset-env": "^7.23.5",
