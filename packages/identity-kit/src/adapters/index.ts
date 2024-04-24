@@ -1,16 +1,23 @@
-import { AdapterConfig, GetSupportedStandardResponse, ICRC25Adapter, PermissionRequest, PermissionResponse, RevokePermissionRequest } from "../../standards/icrc-25"
-import { GetPrincipalResponse, ICRC31Adapter } from "../../standards/icrc-31"
-import { ICRC32Adapter, SignChallengeRequest, SignChallengeResponse } from "../../standards/icrc-32"
-import { CallCanisterRequest, CallCanisterResponse, ICRC49Adapter } from "../../standards/icrc-49"
-import { GetDelegationResponse, IRCR34Adapter } from "../../standards/icrc-34"
+import {
+  AdapterConfig,
+  GetSupportedStandardResponse,
+  ICRC25Adapter,
+  PermissionRequest,
+  PermissionResponse,
+  RevokePermissionRequest,
+} from "../standards/icrc-25"
+import { GetPrincipalResponse, ICRC31Adapter } from "../standards/icrc-31"
+import { ICRC32Adapter, SignChallengeRequest, SignChallengeResponse } from "../standards/icrc-32"
+import { CallCanisterRequest, CallCanisterResponse, ICRC49Adapter } from "../standards/icrc-49"
+import { GetDelegationResponse, IRCR34Adapter } from "../standards/icrc-34"
 
-export class IIAdapter
-  implements ICRC25Adapter<IIAdapter>, ICRC31Adapter, ICRC32Adapter, ICRC49Adapter, IRCR34Adapter
+export class NFIDAdapter
+  implements ICRC25Adapter<NFIDAdapter>, ICRC31Adapter, ICRC32Adapter, ICRC49Adapter, IRCR34Adapter
 {
   private _config: AdapterConfig | undefined
 
-  config(request: AdapterConfig): IIAdapter {
-    this._config = request
+  config(config: AdapterConfig): NFIDAdapter {
+    this._config = config
     return this
   }
   callCanister(request: CallCanisterRequest): Promise<CallCanisterResponse> {
@@ -39,4 +46,4 @@ export class IIAdapter
   }
 }
 
-export const II = new IIAdapter()
+export const NFID = new NFIDAdapter()
