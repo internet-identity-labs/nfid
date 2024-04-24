@@ -19,11 +19,12 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "npm run rollup && npm run post:build",
+    "dev": "rollup -c --bundleConfigAsCjs --watch",
+    "build": "npm run rollup",
     "post:build": "node ./scripts/frankBuild.js",
-    "rollup": "rm -rf dist && rollup -c --bundleConfigAsCjs",
+    "rollup": "rollup -c --bundleConfigAsCjs --watch",
     "test": "jest --passWithNoTests",
-    "lint": "tsdx lint",
+    "lint": "eslint . --max-warnings 0",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "storybook dev -p 6006",
@@ -33,12 +34,6 @@
     "hooks": {
       "pre-commit": "tsdx lint"
     }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
   },
   "size-limit": [
     {
