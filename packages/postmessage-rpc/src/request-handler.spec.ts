@@ -1,7 +1,7 @@
-import { request } from ".."
+import { request } from "./request-handler"
 
 describe("postmessage-rpc", () => {
-  test("request", () => {
+  test("request-handler", () => {
     expect(request).toBeDefined()
   })
 })
