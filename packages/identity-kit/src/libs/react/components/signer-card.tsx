@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, Box, Card, Flex, Text } from "@radix-ui/themes"
+import { SignerIcon } from "./signer-icon"
 
 type SignerCardProps = {
   label: string
@@ -9,15 +9,10 @@ type SignerCardProps = {
 
 export const SignerCard: React.FC<SignerCardProps> = ({ label, icon, onClick }) => {
   return (
-    <Card style={{ maxWidth: 240 }} onClick={onClick}>
-      <Flex gap="3" align="center">
-        <Avatar size="3" src={icon} radius="full" fallback={label[0]} />
-        <Box>
-          <Text as="div" size="2" weight="bold">
-            {label}
-          </Text>
-        </Box>
-      </Flex>
-    </Card>
+    <div className="flex w-full gap-2 text-center border rounded p-2 cursor-pointer" onClick={onClick}>
+      {/* <Avatar size="3" src={icon} radius="full" fallback={label[0]} /> */}
+      <SignerIcon src={icon} label={label} />
+      <span className="flex items-center justify-center">{label}</span>
+    </div>
   )
 }

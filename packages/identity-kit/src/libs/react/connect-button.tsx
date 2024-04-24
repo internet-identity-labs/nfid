@@ -20,7 +20,7 @@ export const ConnectButton = () => {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-blackA6 data-[state=open]:animate-overlayShow fixed inset-0" />
-        <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
+        <Dialog.Content className="flex flex-col gap-2 data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
           <Dialog.Title className="text-mauve12 m-0 text-[17px] font-medium">
             <Flex>
               <Box grow={"1"}>Connect your wallet</Box>
@@ -32,11 +32,11 @@ export const ConnectButton = () => {
           {showInfo ? (
             <div>This is Info</div>
           ) : (
-            <Flex>
+            <div className="flex flex-col gap-2">
               {signer.map(({ icon, label, id }) => (
-                <SignerCard icon={icon} label={label} onClick={() => handleConnect(id)} />
+                <SignerCard key={id} icon={icon} label={label} onClick={() => handleConnect(id)} />
               ))}
-            </Flex>
+            </div>
           )}
         </Dialog.Content>
       </Dialog.Portal>

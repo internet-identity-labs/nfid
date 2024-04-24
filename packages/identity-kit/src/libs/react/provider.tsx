@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react"
 import invariant from "tiny-invariant"
-import { SignerAdapter } from "../../adapters"
-import { requestFactory } from "@nfid/postmessage-rpc"
+import { Signer } from "../../signer"
+import { IdentityKit } from "../../lib/identity-kit"
 
 type SignerConfig = {
   id: string
@@ -34,29 +34,24 @@ interface IdentityKitProviderProps {
 }
 
 export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ config, children }) => {
-  const adapter = React.useMemo(
+  const signers = React.useMemo(
     () =>
       config.signer.map(
-        ({ providerUrl, id }) =>
-          new SignerAdapter({
-            id,
-            providerUrl,
-            onMessage: (message) => console.debug("onMessage", message),
-            requestFactory,
-          })
+        ({ id }) =>
+          new Signer({ id })
       ),
     [config.signer]
   )
-  console.debug("IdentityKitProvider", { adapter })
+  console.debug("IdentityKitProvider", { adapter: signers })
 
   const handleConnect = React.useCallback(
     (id: string) => {
       console.debug("IdentityKitProvider.handleConnect", { id })
-      const signer = adapter.find((signer) => signer.isSigner(id))
+      const signer = signers.find((signer) => signer.isSigner(id))
       invariant(signer, `No signer found for id: ${id}`)
-      signer.connect()
+      IdentityKit.connect({ signer })
     },
-    [adapter]
+    [signers]
   )
 
   return (
