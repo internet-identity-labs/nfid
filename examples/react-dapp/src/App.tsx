@@ -9,8 +9,8 @@ function App() {
         signer: [
           {
             providerUrl: "http://localhost:3003",
-            label: "Example Signer",
-            id: "@nfid/vue-signer",
+            label: "React Signer",
+            id: "@nfid/react-signer",
           },
         ],
       }}
