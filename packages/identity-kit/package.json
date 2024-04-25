@@ -22,7 +22,7 @@
     "dev": "rollup -c --bundleConfigAsCjs --watch",
     "build": "npm run rollup",
     "post:build": "node ./scripts/frankBuild.js",
-    "rollup": "rollup -c --bundleConfigAsCjs --watch",
+    "rollup": "rollup -c --bundleConfigAsCjs",
     "test": "jest --passWithNoTests",
     "lint": "eslint . --max-warnings 0",
     "size": "size-limit",
