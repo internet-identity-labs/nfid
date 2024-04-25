@@ -17,6 +17,15 @@
         "examples/react-dapp/dist/"
       ],
       "type": "assets"
+    },
+    "playground": {
+      "frontend": {
+        "entrypoint": "examples/e2e-dev-env/dist/index.html"
+      },
+      "source": [
+        "examples/e2e-dev-env/dist/"
+      ],
+      "type": "assets"
     }
   },
   "defaults": {

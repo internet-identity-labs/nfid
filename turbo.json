@@ -13,6 +13,16 @@
       "cache": false,
       "persistent": true
     },
-    "test": {}
+    "test": {},
+    "build-playground": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "dist/**"
+      ]
+    }
   }
 }
