@@ -14,7 +14,9 @@
   "dependencies": {
     "@radix-ui/themes": "^2.0.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@esbuild/linux-x64": "0.20.2",
+    "@napi-rs/simple-git-linux-x64-gnu": "0.1.16"
   },
   "devDependencies": {
     "@playwright/test": "^1.41.2",
