@@ -11,7 +11,7 @@ import {RequestMapperAbstract} from "../request_mapper";
 /**
  * Interface for a transaction that upgrades the vault version.
  * The list of versions is located in the vault repository specified in the vault configuration.
- * To execute the transaction, the vault must be a controller.
+ * To execute the transaction, the vault must be its own controller.
  * This transaction can only be requested or approved by admins.
  */
 export interface VersionUpgradeTransaction extends Transaction {
