@@ -13,7 +13,7 @@ import {RequestMapperAbstract} from "../request_mapper";
 /**
  * Interface for a transaction that updates role of an existing member.
  * The memberId is the principal of the user with the default subaccount.
- * This transaction can only be created or approved by an admin.
+ * This transaction can only be requested or approved only by users with the admin role.
  * This transaction can be executed in a batch
  */
 export interface MemberUpdateRoleTransaction extends Transaction {

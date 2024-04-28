@@ -11,7 +11,7 @@ import {RequestMapperAbstract} from "../request_mapper";
 
 /**
  * Interface for a transaction that removes an existing policy.
- * This transaction can only be created or approved by an admin.
+ * This transaction can only be requested or approved only by users with the admin role.
  * This transaction can be executed in a batch.
  */
 export interface PolicyRemoveTransaction extends Transaction {

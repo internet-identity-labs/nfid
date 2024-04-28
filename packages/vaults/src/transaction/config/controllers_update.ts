@@ -14,8 +14,8 @@ import {RequestMapperAbstract} from "../request_mapper";
  * This transaction type is used for updating the vault controllers.
  * Through this transaction, the list of vault controllers can be replaced.
  * The vault acts as its own controller to allow version updates via the VersionUpgrade transaction.
- * Be careful - if the vault's id is removed from the list of controllers, the upgrade transaction will throw an error.
- * Can be requested/approved only by admins
+ * Be careful - if the vault's ID is removed from the list of controllers, the upgrade transaction will throw an error.
+ * Can be requested/approved only by users with the admin role
  */
 export interface ControllersUpdateTransaction extends Transaction {
     /**

@@ -12,7 +12,8 @@ import {RequestMapperAbstract} from "../request_mapper";
 /**
  * Interface for a transaction that creates a new member.
  * The memberId is the principal of the user with the default subaccount.
- * This transaction can only be created or approved by an admin.
+ * (https://github.com/dfinity/ic-js/blob/86d0fafd012fb3c3b3ef31c8aa4000cb6ff87c28/packages/nns/src/account_identifier.ts#L67)
+ * This transaction can only be requested or approved only by users with the admin role.
  * This transaction can be executed in a batch
  */
 export interface MemberCreateTransaction extends Transaction {

@@ -9,10 +9,10 @@ import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
 /**
- * Interface for a transaction that creates a new policy.
+ * Interface for a transaction that creates a new transfer policy.
  * The policy determines the number of necessary signatures for executing
- * the transaction depending on the threshold amount.
- * This transaction can only be created or approved by an admin.
+ * the transfer transaction depending on the threshold amount.
+ * This transaction can only be requested or approved only by users with the admin role.
  * This transaction can be executed in a batch.
  */
 export interface PolicyCreateTransaction extends Transaction {

@@ -10,7 +10,7 @@ import {RequestMapperAbstract} from "../request_mapper";
 import {Principal} from "@dfinity/principal";
 
 /**
- * Interface for a transaction that transfers ICRC1 tokens.
+ * Interface for a transaction that transfers ICRC-1 tokens.
  * Requires amount of approvals equal to quorum.
  * This transaction can be created or approved only by an admin.
  */
@@ -31,7 +31,7 @@ export interface TransferICRC1QuorumTransaction extends Transaction {
     to_subaccount: undefined | Uint8Array | number[]
 
     /**
-     * The ID of the ICRC1 ledger.
+     * The ID of the ICRC-1 ledger.
      */
     ledger_id: Principal
 

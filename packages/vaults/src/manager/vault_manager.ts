@@ -29,18 +29,18 @@ export class VaultManager implements VaultManagerI {
     private actor: Agent.ActorSubclass<VaultService>;
 
     /**
-     * The ID of the canister.
+     * The principal ID of the canister.
      */
     private canisterId: String;
 
     /**
-     * The identity used for signing requests.
+     * Users identity used for signing requests.
      */
     private readonly identity: Identity;
 
     /**
      * Constructs a new VaultManager.
-     * @param canisterId - The ID of the canister.
+     * @param canisterId - The principal ID of the canister.
      * @param identity - The identity used for signing requests.
      */
     constructor(canisterId: string, identity: Identity) {
@@ -52,10 +52,10 @@ export class VaultManager implements VaultManagerI {
     }
 
     /**
-     * Method for adding a personal list of ICRC1 canisters by the user.
+     * Method for adding a personal list of ICRC-1 canisters by the user.
      * Returns the updated vault state.
-     * Needed for displaying the balance of ICRC1 tokens.
-     * @param canisters The array of ICRC1 canisters to be added.
+     * Needed for displaying the balance of ICRC-1 tokens.
+     * @param canisters The array of ICRC-1 canisters to be added.
      */
     async addICRC1Canisters(canisters: Principal[]): Promise<Vault> {
         let vault = await this.actor.store_icrc1_canisters(canisters)
@@ -64,7 +64,7 @@ export class VaultManager implements VaultManagerI {
 
     /**
      * Retrieves all user transactions.
-     * In the foreseeable future, optional parameter shiner will be used for filtering/pagination.
+     * In the foreseeable future, optional parameter will be used for filtering/pagination.
      */
     async getTransactions(): Promise<Array<Transaction>> {
         let transactions: Array<TransactionCandid> = await this.actor.get_transactions_all()
@@ -105,7 +105,7 @@ export class VaultManager implements VaultManagerI {
     }
 
     /**
-     * Retrieves the balance of the canister.
+     * Retrieves the cycles balance of the canister.
      * @returns The balance of the canister.
      */
     async canisterBalance(): Promise<bigint> {
@@ -116,7 +116,7 @@ export class VaultManager implements VaultManagerI {
      * Retrieves the vault state.
      * If no id is specified, returns the current state of the vault.
      * If id is specified, returns the state of the vault at the time of the transaction with the specified id.
-     * @param id The id of the transaction.
+     * @param id The ID of the transaction.
      */
     async getState(id?: bigint): Promise<Vault> {
         let param: [bigint] | [] = id === undefined ? [] : [id]
@@ -144,7 +144,7 @@ export class VaultManager implements VaultManagerI {
      * Retrieves the actor for interacting with the vault service.
      * Actor set up for interacting with the main network
      * to reset for local environment use resetToLocalEnv().
-     * @param imCanisterId - The ID of the canister.
+     * @param imCanisterId - The principal ID of the canister.
      * @param identity - The identity used for signing.
      * @returns The actor for interacting with the vault service.
      */

@@ -12,7 +12,7 @@ import {Principal} from "@dfinity/principal";
 export interface VaultManagerI {
     /**
      * Retrieves all user transactions.
-     * In the foreseeable future, optional parameter shiner will be used for filtering/pagination.
+     * In the foreseeable future, optional parameter will be used for filtering/pagination.
      */
     getTransactions(): Promise<Array<Transaction>>;
 
@@ -20,13 +20,13 @@ export interface VaultManagerI {
      * Retrieves the vault state.
      * If no id is specified, returns the current state of the vault.
      * If id is specified, returns the state of the vault at the time of the transaction with the specified id.
-     * @param id The id of the transaction.
+     * @param id The ID of the transaction.
      */
     getState(id?: BigInt): Promise<Vault>;
 
     /**
      * Update method. Can be requested by a registered user (admin/member).
-     * Creates a transaction.
+     * Creates a transaction. Accepts the list.
      * If the transaction is approved, it is automatically executed.
      * Returns an array of requested transactions with current states.
      * @param requests The array of transaction requests.
@@ -64,10 +64,10 @@ export interface VaultManagerI {
     getControllers(): Promise<Array<Principal>>;
 
     /**
-     * Method for adding a personal list of ICRC1 canisters by the user.
+     * Method for adding a personal list of ICRC-1 canisters by the user.
      * Returns the updated vault state.
-     * Needed for displaying the balance of ICRC1 tokens.
-     * @param canisters The array of ICRC1 canisters to be added.
+     * Needed for displaying the balance of ICRC-1 tokens.
+     * @param canisters The array of ICRC-1 canisters to be added.
      */
     addICRC1Canisters(canisters: Array<Principal>): Promise<Vault>;
 }

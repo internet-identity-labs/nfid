@@ -9,7 +9,7 @@ import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
 /**
- * Interface for a transaction that transfers currency.
+ * Interface for a transaction that transfers assets.
  * This transaction requires created policy for the wallet.
  * This transaction can be created or approved by an admin/member.
  */

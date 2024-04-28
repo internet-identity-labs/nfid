@@ -29,7 +29,7 @@ export interface WalletCreateTransaction extends Transaction {
     /**
      * The unique identifier of the wallet to be created.
      * It have to be a hex representation of the subaccount
-     * use generateRandomString() from helper.ts to generate uid
+     * use generateRandomString() from helper.ts to generate UID
      */
     uid: string
 }
@@ -37,7 +37,7 @@ export interface WalletCreateTransaction extends Transaction {
 export class WalletCreateTransactionRequest implements TransactionRequest {
     network: Network
     name: string
-    //use generateRandomString() from helper.ts to generate uid
+    //use generateRandomString() from helper.ts to generate UID
     uid: string
     batch_uid: string | undefined
 
