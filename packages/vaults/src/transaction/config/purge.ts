@@ -12,10 +12,9 @@ import {RequestMapperAbstract} from "../request_mapper";
  * Use this method to clear all transactions from the current queue of those awaiting approval.
  * It is meant to be used only in emergency situations if something unexpected happens
  * and transactions end up stuck in a non-approvable state.
- * Can be requested/approved only by users with the admin role.
  * All blocked transactions will be removed.
  * The transaction is executed outside the queue.
- * Can be requested/approved only by users with the admin role.
+ * This transaction can only be requested or approved by users with the admin role.
  */
 export interface PurgeTransaction extends Transaction {
 }

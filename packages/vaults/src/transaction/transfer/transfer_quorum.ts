@@ -20,7 +20,7 @@ export interface TransferQuorumTransaction extends Transaction {
     currency: Currency
 
     /**
-     * The address to which the currency is transferred.
+     * The address to which assets are transferred.
      */
     address: string
 
@@ -30,7 +30,7 @@ export interface TransferQuorumTransaction extends Transaction {
     wallet: string
 
     /**
-     * The amount of currency to be transferred.
+     * The amount of assets to be transferred.
      */
     amount: bigint
 

@@ -1,11 +1,11 @@
 # NFID Vault Manager
 
-This library is designed to manage volt canisters. 
+This library is designed to manage vault canisters. 
 
 ## Usage
 
-The main interface is VoltManager, which offers a set of methods for communication with the canister. 
-To create a VoltManager object, you need to pass the canister identifier and identity.
+The main interface is VaultManager, which offers a set of methods for communication with the canister. 
+To create a VaultManager object, you need to pass the canister identifier and identity.
 
 You can find descriptions of each type of possible transaction in the class files.
 
