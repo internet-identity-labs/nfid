@@ -1,4 +1,4 @@
-name: Deploy Signer and Dapp apps.
+name: Deploy Playground, Signer and Dapp apps.
 
 on:
   workflow_dispatch:
