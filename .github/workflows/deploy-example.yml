@@ -60,7 +60,7 @@ jobs:
       - name: Deploy
         run: | 
           echo "dfx deploy --network "${NETWORK}"" >&2
-          if ! result=$(dfx deploy --network "${NETWORK}"); then
+          if ! result=$(dfx deploy --yes --network "${NETWORK}"); then
             echo "Deploy failed ${result}" >&2
             exit 1
           fi
