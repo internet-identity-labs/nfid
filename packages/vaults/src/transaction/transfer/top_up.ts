@@ -8,16 +8,32 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
-
-
-
+/**
+ * Interface for a transaction that tops up the number of cycles in a vault canister.
+ * The top-up is done by converting ICP from the specified wallet.
+ * This transaction can be created or approved by an admin/member.
+ */
 export interface TopUpTransaction extends Transaction {
-    currency: Currency,
-    wallet: string,
-    amount: bigint,
+    /**
+     * The currency used for the top-up.
+     */
+    currency: Currency
+
+    /**
+     * The wallet from which the ICP is converted.
+     */
+    wallet: string
+
+    /**
+     * The amount of ICP to be converted.
+     */
+    amount: bigint
+
+    /**
+     * The block index. Optional.
+     */
     blockIndex?: bigint
 }
-
 
 export class TopUpTransactionRequest implements TransactionRequest {
     currency: Currency;

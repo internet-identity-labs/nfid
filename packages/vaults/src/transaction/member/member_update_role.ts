@@ -10,8 +10,20 @@ import {candidToRole, roleToCandid} from "../../util/helper";
 import {RequestMapperAbstract} from "../request_mapper";
 
 
+/**
+ * Interface for a transaction that updates role of an existing member.
+ * The memberId is the principal of the user with the default subaccount.
+ * This transaction can only be requested or approved only by users with the admin role.
+ * This transaction can be executed in a batch
+ */
 export interface MemberUpdateRoleTransaction extends Transaction {
+    /**
+     * The ID of the member to be updated.
+     */
     memberId: string;
+    /**
+     * The new role of the member.
+     */
     role: VaultRole;
 }
 

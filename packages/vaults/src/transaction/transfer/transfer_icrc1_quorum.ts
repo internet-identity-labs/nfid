@@ -9,25 +9,52 @@ import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 import {Principal} from "@dfinity/principal";
 
-
+/**
+ * Interface for a transaction that transfers ICRC-1 tokens.
+ * Requires amount of approvals equal to quorum.
+ * This transaction can be created or approved only by an admin.
+ */
 export interface TransferICRC1QuorumTransaction extends Transaction {
-    to_principal: Principal,
-    blockIndex: bigint | undefined,
-    to_subaccount: undefined | [Uint8Array | number[]],
-    ledger_id: Principal,
-    wallet: string,
-    amount: bigint,
+    /**
+     * The principal to which the tokens are transferred.
+     */
+    to_principal: Principal
+
+    /**
+     * The block index.
+     */
+    blockIndex: bigint | undefined
+
+    /**
+     * The subaccount to which the tokens are transferred. Optional.
+     */
+    to_subaccount: undefined | Uint8Array | number[]
+
+    /**
+     * The ID of the ICRC-1 ledger.
+     */
+    ledger_id: Principal
+
+    /**
+     * The walletID from which the tokens are transferred.
+     */
+    wallet: string
+
+    /**
+     * The amount of tokens to be transferred.
+     */
+    amount: bigint
 }
 
 export class TransferICRC1QuorumTransactionRequest implements TransactionRequest {
     toPrincipal: Principal;
     ledgerId: Principal;
-    toSubaccount: undefined | [Uint8Array | number[]];
+    toSubaccount: undefined | Uint8Array | number[];
     wallet: string;
     amount: bigint;
     memo: string | undefined;
 
-    constructor(toPrincipal: Principal, toSubaccount: undefined | [Uint8Array | number[]], ledgerId: Principal, wallet: string, amount: bigint, memo?: string) {
+    constructor(toPrincipal: Principal, toSubaccount: undefined | Uint8Array | number[], ledgerId: Principal, wallet: string, amount: bigint, memo?: string) {
         this.toPrincipal = toPrincipal
         this.ledgerId = ledgerId
         this.toSubaccount = toSubaccount
@@ -51,7 +78,7 @@ export class TransferICRC1QuorumTransactionMapper extends TransactionMapperAbstr
         return {
             ledger_id: candid.ledger_id,
             to_principal: candid.to_principal,
-            to_subaccount: candid.to_subaccount.length === 0 ? undefined : candid.to_subaccount,
+            to_subaccount: candid.to_subaccount.length === 0 ? undefined : candid.to_subaccount[0],
             amount: candid.amount,
             wallet: candid.wallet,
             blockIndex: candid.block_index.length === 0 ? undefined : BigInt(candid.block_index[0]),
@@ -70,7 +97,7 @@ export class TransferICRC1QuorumRequestMapper extends RequestMapperAbstract {
         return {
             TransferICRC1QuorumTransactionRequestV: {
                 to_principal: request.toPrincipal,
-                to_subaccount: request.toSubaccount === undefined ? [] : request.toSubaccount,
+                to_subaccount: request.toSubaccount === undefined ? [] : [request.toSubaccount],
                 ledger_id: request.ledgerId,
                 wallet: request.wallet,
                 amount: request.amount,

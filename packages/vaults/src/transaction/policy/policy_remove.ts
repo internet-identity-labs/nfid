@@ -9,10 +9,17 @@ import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
 
+/**
+ * Interface for a transaction that removes an existing policy.
+ * This transaction can only be requested or approved only by users with the admin role.
+ * This transaction can be executed in a batch.
+ */
 export interface PolicyRemoveTransaction extends Transaction {
-    uid: string,
+    /**
+     * The unique identifier of the policy to be removed.
+     */
+    uid: string
 }
-
 
 export class PolicyRemoveTransactionRequest implements TransactionRequest {
     uid: string;
