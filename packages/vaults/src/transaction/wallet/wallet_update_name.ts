@@ -9,8 +9,20 @@ import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
 
+/**
+ * Interface for a transaction that updates the name of an existing wallet.
+ * This transaction can be created or approved by an admin.
+ * This transaction can be executed in a batch.
+ */
 export interface WalletUpdateNameTransaction extends Transaction {
-    name: string,
+    /**
+     * The new name of the wallet.
+     */
+    name: string
+
+    /**
+     * The unique identifier of the wallet to be updated.
+     */
     uid: string
 }
 

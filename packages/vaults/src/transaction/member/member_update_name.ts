@@ -9,9 +9,20 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
-
+/**
+ * Interface for a transaction that updates name of an existing member.
+ * The memberId is the principal of the user with the default subaccount.
+ * This transaction can only be requested or approved only by users with the admin role.
+ * This transaction can be executed in a batch
+ */
 export interface MemberUpdateNameTransaction extends Transaction {
+    /**
+     * The ID of the member to be updated.
+     */
     memberId: string;
+    /**
+     * The new name of the member.
+     */
     name: string;
 }
 

@@ -9,11 +9,28 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
-
+/**
+ * Interface for a transaction that creates a new member.
+ * The memberId is the principal of the user with the default subaccount.
+ * (https://github.com/dfinity/ic-js/blob/86d0fafd012fb3c3b3ef31c8aa4000cb6ff87c28/packages/nns/src/account_identifier.ts#L67)
+ * This transaction can only be requested or approved only by users with the admin role.
+ * This transaction can be executed in a batch
+ */
 export interface MemberCreateTransaction extends Transaction {
-    memberId: string;
-    name: string;
-    role: VaultRole;
+    /**
+     * The ID of the member to be created.
+     */
+    memberId: string
+
+    /**
+     * The name of the member to be created.
+     */
+    name: string
+
+    /**
+     * The role of the member to be created.
+     */
+    role: VaultRole
 }
 
 export class MemberCreateTransactionRequest implements TransactionRequest {

@@ -8,13 +8,38 @@ import {TransactionMapperAbstract} from "../transaction_mapper";
 import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
-
+/**
+ * Interface for a transaction that creates a new transfer policy.
+ * The policy determines the number of necessary signatures for executing
+ * the transfer transaction depending on the threshold amount.
+ * This transaction can only be requested or approved only by users with the admin role.
+ * This transaction can be executed in a batch.
+ */
 export interface PolicyCreateTransaction extends Transaction {
-    uid: string,
-    member_threshold: number,
-    amount_threshold: bigint,
-    wallets: Array<string>,
-    currency: Currency,
+    /**
+     * The unique identifier of the policy.
+     */
+    uid: string
+
+    /**
+     * The minimum number of signatures required to execute the transaction.
+     */
+    member_threshold: number
+
+    /**
+     * The threshold amount for the transaction.
+     */
+    amount_threshold: bigint
+
+    /**
+     * The wallets associated with the policy.
+     */
+    wallets: Array<string>
+
+    /**
+     * The currency of the policy.
+     */
+    currency: Currency
 }
 
 
