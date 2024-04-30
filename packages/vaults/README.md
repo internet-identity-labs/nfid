@@ -31,3 +31,10 @@ const vm = new VaultManager(activeVaultCanisterId, memberIdentity)
 const txs =  this.vm.approveTransaction(approves)
 ``` 
 
+### Keeping the Vault Canister Topped Up with Cycles
+
+There are two methods to ensure your vault canister is always topped up with cycles:
+
+1. **Using Cycleops**: Cycleops is a proactive, automated, no-code canister management tool for the Internet Computer. You can learn more about it and how to use it [here](https://forum.dfinity.org/t/meet-cycleops-proactive-automated-no-code-canister-management-for-the-internet-computer/20969). To use Cycleops with your vault canister, you need to add the Cycleops canister through a "ControllersUpdateTransaction". And them follow the instructions provided in the link.
+
+2. **Manual Top Up**: Alternatively, you can manually top up the canister by sending cycles to the canister address.
