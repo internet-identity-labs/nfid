@@ -20,7 +20,7 @@
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
     "common-tags": "^1.8.2",
-    "eslint": "8.36.0",
+    "eslint": "9.1.1",
     "eslint-config-next": "13.2.4",
     "github-slugger": "^2.0.0",
     "gpt3-tokenizer": "^1.1.5",
