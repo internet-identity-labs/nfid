@@ -9,8 +9,22 @@ import {TransactionRequest} from "../transaction_request";
 import {RequestMapperAbstract} from "../request_mapper";
 
 
+/**
+ * Transaction for updating the name/description of the vault.
+ * Can be requested/approved only by users with the admin role.
+ * This transaction can be executed in a batch,
+ * which means either all transactions marked with a single batch_id
+ * are executed or rejected together.
+ */
 export interface VaultUpdateNamingTransaction extends Transaction {
+    /**
+     * The new name of the vault. Optional.
+     */
     name?: string
+
+    /**
+     * The new description of the vault. Optional.
+     */
     description?: string
 }
 

@@ -88,5 +88,4 @@ jobs:
 
       - name: 🎉 Push tags
         run: |
-          git push
           git push --tags
