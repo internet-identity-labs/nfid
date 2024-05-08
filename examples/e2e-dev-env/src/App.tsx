@@ -2,9 +2,6 @@ import { Flex, Heading } from "@radix-ui/themes"
 import { Header } from "./components/header"
 
 function App() {
-  // const dapp = import.meta.env.VITE_DAPP_CANISTER_ID
-  // const signer = import.meta.env.VITE_SIGNER_CANISTER_ID
-
   return (
     <Flex direction="column" height={"100%"}>
       <Header />
