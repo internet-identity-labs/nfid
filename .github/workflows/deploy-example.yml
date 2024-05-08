@@ -1,4 +1,4 @@
-name: Deploy Signer and Dapp apps.
+name: Deploy Playground, Signer and Dapp apps.
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
         type: choice
         options: 
           - dev
-          - ic
+          - prod
 env:
   NETWORK: ${{ github.event.inputs.network }}
 
@@ -44,7 +44,7 @@ jobs:
           if [[ "${NETWORK}" == 'dev' ]]; then
             ID_NAME="icrc25_dev_identity"
             IDENTITY_PEM_NAME_VAR="ICRC25_DEV_IDENTITY"
-          elif [ "${NETWORK}" == 'ic' ]; then
+          elif [ "${NETWORK}" == 'prod' ]; then
             ID_NAME="icrc25_prod_identity"
             IDENTITY_PEM_NAME_VAR="ICRC25_PROD_IDENTITY"
           fi
@@ -60,7 +60,7 @@ jobs:
       - name: Deploy
         run: | 
           echo "dfx deploy --network "${NETWORK}"" >&2
-          if ! result=$(dfx deploy --network "${NETWORK}"); then
+          if ! result=$(dfx deploy --yes --network "${NETWORK}"); then
             echo "Deploy failed ${result}" >&2
             exit 1
           fi

@@ -2,9 +2,12 @@
   "name": "@nfid/postmessage-rpc",
   "version": "0.0.0-alpha.0",
   "description": "Window.postmessage rpc handler",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "files": [
     "/dist"
   ],

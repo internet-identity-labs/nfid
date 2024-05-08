@@ -2,19 +2,28 @@
   "canisters": {
     "signer": {
       "frontend": {
-        "entrypoint": "examples/signer/dist/index.html"
+        "entrypoint": "examples/react-signer/dist/index.html"
       },
       "source": [
-        "examples/signer/dist/"
+        "examples/react-signer/dist/"
       ],
       "type": "assets"
     },
     "dapp": {
       "frontend": {
-        "entrypoint": "examples/dapp/dist/index.html"
+        "entrypoint": "examples/react-dapp/dist/index.html"
       },
       "source": [
-        "examples/dapp/dist/"
+        "examples/react-dapp/dist/"
+      ],
+      "type": "assets"
+    },
+    "playground": {
+      "frontend": {
+        "entrypoint": "examples/e2e-dev-env/dist/index.html"
+      },
+      "source": [
+        "examples/e2e-dev-env/dist/"
       ],
       "type": "assets"
     }
