@@ -4,6 +4,10 @@ const nextConfig = {
   experimental: {
     mdxRs: true,
   },
+  images: {
+    unoptimized: true,
+  },
+  output: 'export'
 }
 
 const withNextra = require('nextra')({

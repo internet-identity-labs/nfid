@@ -4,6 +4,7 @@
   "scripts": {
     "build": "echo '💀 DONT REMOVE THIS 💀'",
     "build-package": "turbo build --scope",
+    "build-docs": "turbo build --force --filter='@nfid/docs'",
     "build-example": "turbo build --force --filter='@nfid/e2e-dev-env' --filter='@nfid/react-dapp' --filter='@nfid/react-signer'",
     "dev": "turbo dev",
     "lint": "turbo lint",
