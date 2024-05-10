@@ -27,7 +27,7 @@ jobs:
         run: npm install --frozen-lockfile
 
       - name: Build
-        run: npm run build-example
+        run: npm run build-docs
 
       - name: Setup DFX Identity
         run: |
@@ -42,8 +42,8 @@ jobs:
 
       - name: Deploy
         run: | 
-          echo "dfx deploy --network prod" >&2
-          if ! result=$(dfx deploy --yes --network prod); then
+          echo "dfx deploy docs --network prod" >&2
+          if ! result=$(dfx deploy docs --yes --network prod); then
             echo "Deploy failed ${result}" >&2
             exit 1
           fi
