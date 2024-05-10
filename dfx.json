@@ -26,6 +26,13 @@
         "examples/e2e-dev-env/dist/"
       ],
       "type": "assets"
+    },
+    "docs": {
+      "frontend": {
+        "entrypoint": "docs/out/index.html"
+      },
+      "source": ["docs/out"],
+      "type": "assets"
     }
   },
   "defaults": {
