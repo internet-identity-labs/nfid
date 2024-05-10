@@ -23,7 +23,7 @@ updates:
     schedule:
       interval: "weekly"  # Check for updates every week.
     open-pull-requests-limit: 1  # Only create a maximum of 1 pull request at a time.
-    versioning-strategy: increase  # Always update to the latest recommended version.
+    # versioning-strategy: increase Always update to the latest recommended version.
     commit-message:
       prefix: "[github-actions]"  # Pull request titles will start with "[github-actions]".
     assignees:
