@@ -134,7 +134,7 @@ export class VaultManager implements VaultManagerI {
         let approveRequest: Array<TransactionApproveRequest> = approves.map(approveToCandid)
         let response = await this.actor.approve(approveRequest) as Array<TransactionCandid>;
         let transactions = response.map(transactionCandidToTransaction)
-        if (transactions.find(t => t.state === TransactionState.Approved) !== undefined) {
+        if (transactions.find(t => t.state === TransactionState.Approved || t.state === TransactionState.Rejected) !== undefined) {
             this.execute()
         }
         return transactions
