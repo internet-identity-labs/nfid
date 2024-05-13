@@ -34,10 +34,21 @@ on:
         options:
           - alpha
           - beta
+      registry:
+        type: choice
+        required: false
+        description: Select registry
+        default: 'github-packages'
+        options:
+          - github-packages
+          - npm
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -81,10 +92,22 @@ jobs:
         run: npm run build-package @nfid/${{ github.event.inputs.package }}
 
       - name: 📦 Publish package on NPM
+        if: ${{ github.event.inputs.registry == 'npm' }}
         working-directory: packages/${{ github.event.inputs.package }}
         run: npx yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.IL_GH_NPM_TOKEN }}
+
+      - name: 📦 Publish package on GPR
+        if: ${{ github.event.inputs.registry == 'github-packages' }}
+        working-directory: packages/${{ github.event.inputs.package }}
+        run: |
+          npm pkg set 'name'='@internet-identity-labs/${{ github.event.inputs.package }}'      
+          echo "registry=https://npm.pkg.github.com" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
+          yarn publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: 🎉 Push tags
         run: |
