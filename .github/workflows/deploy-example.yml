@@ -69,8 +69,3 @@ jobs:
             echo "Deploy failed ${result}" >&2
             exit 1
           fi
-          echo "dfx deploy playground --network "${NETWORK}"" >&2
-          if ! result=$(dfx deploy playground --yes --network "${NETWORK}"); then
-            echo "Deploy failed ${result}" >&2
-            exit 1
-          fi

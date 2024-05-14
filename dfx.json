@@ -18,15 +18,6 @@
       ],
       "type": "assets"
     },
-    "playground": {
-      "frontend": {
-        "entrypoint": "examples/e2e-dev-env/dist/index.html"
-      },
-      "source": [
-        "examples/e2e-dev-env/dist/"
-      ],
-      "type": "assets"
-    },
     "docs": {
       "frontend": {
         "entrypoint": "docs/out/index.html"
