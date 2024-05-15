@@ -3,7 +3,7 @@ import { IconSvgMoon, IconSvgNFID, IconSvgSun } from "../atoms/icons"
 
 export const Header = () => {
   const { theme, setTheme } = useTheme()
-  console.log({ theme })
+
   return (
     <div className="flex items-center justify-between h-[68px] mb-3">
       <img src={IconSvgNFID} alt="nfid" />
