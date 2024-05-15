@@ -41,13 +41,17 @@ export const Section: React.FC<ISection> = ({
 
   const handleSubmit = async () => {
     setIsLoading(true)
-    if (!isValidJSON(requestValue)) return toast.error("Invalid JSON")
+    if (!isValidJSON(requestValue)) {
+      setIsLoading(false)
+      return toast.error("Invalid JSON")
+    }
     const res = await onSubmit(requestValue)
     setResponseValue(JSON.stringify(JSON.parse(res), null, 2))
     setIsLoading(false)
   }
 
   const codeSection = useMemo(() => {
+    if (!isValidJSON(requestValue)) return "Invalid JSON"
     return getCodeSnippet(requestValue)
   }, [getCodeSnippet, requestValue])
 
