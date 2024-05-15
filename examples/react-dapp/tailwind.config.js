@@ -1,5 +1,21 @@
+import defaultTheme from "tailwindcss/defaultTheme"
+
 /** @type {import('tailwindcss').Config} */
 export default {
+  theme: {
+    extend: {
+      colors: {
+        primary: "#146F68",
+        dark: "#141518",
+      },
+      fontFamily: {
+        ...defaultTheme.fontFamily,
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        mono: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
+      },
+    },
+  },
+  darkMode: "class",
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
