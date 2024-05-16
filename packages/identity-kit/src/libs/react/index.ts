@@ -1,4 +1,2 @@
-export * from "./connect-button"
-export * from "./provider"
-
-import '@radix-ui/themes/styles.css'
+export { IdentityKitProvider } from "./provider"
+export { useIdentityKit } from "./context"

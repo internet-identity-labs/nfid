@@ -11,6 +11,8 @@ import { Button } from "../atoms/button"
 import { CodeSection } from "../molecules/code-section"
 import { SubTitle } from "../atoms/subtitle"
 import { DropdownSelect } from "../molecules/dropdown-select"
+import { useIdentityKit } from "@nfid/identity-kit/react"
+import { ICRC25Methods } from "@nfid/identity-kit"
 
 export interface IRequestExample {
   title: string
@@ -62,6 +64,7 @@ export const Section: React.FC<ISection> = ({
     }))
   }, [requestsExamples])
 
+  const { request } = useIdentityKit()
   return (
     <div>
       <Loader isLoading={isLoading} />
@@ -92,9 +95,13 @@ export const Section: React.FC<ISection> = ({
         <Button
           type="stroke"
           className="w-[160px] mt-5"
-          onClick={() => {
-            setRequestValue(requestsExamples[selectedRequestIndex].value)
-            setResponseValue("{}")
+          onClick={async () => {
+            const res = await request(ICRC25Methods.icrc25_granted_permissions, {
+              method: ICRC25Methods.icrc25_granted_permissions,
+            })
+            console.log({ res })
+            // setRequestValue(requestsExamples[selectedRequestIndex].value)
+            // setResponseValue("{}")
           }}
           isSmall
         >
