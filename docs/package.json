@@ -41,9 +41,9 @@
     "react-dom": "^18.2.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.5",
-    "typescript": "^5.3.3",
     "unist-util-filter": "^5.0.1",
     "unist-builder": "^4.0.0",
+    "typescript": "^5.4.5",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
