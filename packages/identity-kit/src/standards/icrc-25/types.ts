@@ -2,7 +2,6 @@ import { IdentityKitMethod, ResponseFailed } from "../../lib/types"
 
 // icrc25_request_permissions
 export interface ICRC25RequestPermissionsRequest {
-  method: ICRC25Methods.icrc25_request_permissions
   scopes: {
     method: IdentityKitMethod
   }[]
@@ -15,9 +14,7 @@ export interface ICRC25RequestPermissionsResponse {
 }
 
 // icrc25_granted_permissions
-export interface ICRC25GrantedPermissionsRequest {
-  method: ICRC25Methods.icrc25_granted_permissions
-}
+export interface ICRC25GrantedPermissionsRequest {}
 
 export interface ICRC25GrantedPermissionsResponse {
   scopes: {
@@ -39,6 +36,6 @@ export type ICRC25ResponseTypeMap = {
 }
 
 export enum ICRC25Methods {
-  "icrc25_request_permissions",
-  "icrc25_granted_permissions",
+  "icrc25_request_permissions" = "icrc25_request_permissions",
+  "icrc25_granted_permissions" = "icrc25_granted_permissions",
 }

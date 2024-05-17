@@ -25,7 +25,10 @@ export interface ISection {
   description: JSX.Element
   requestsExamples: IRequestExample[]
   getCodeSnippet: (requestJSON: string) => string
-  onSubmit: (requestJSON: string) => Promise<string>
+  getRequestObject: (requestJSON: string) => {
+    method: string
+    params: any
+  }
 }
 
 export const Section: React.FC<ISection> = ({
@@ -34,7 +37,7 @@ export const Section: React.FC<ISection> = ({
   description,
   requestsExamples,
   getCodeSnippet,
-  onSubmit,
+  getRequestObject,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [selectedRequestIndex, setSelectedRequestIndex] = useState(0)
@@ -47,8 +50,9 @@ export const Section: React.FC<ISection> = ({
       setIsLoading(false)
       return toast.error("Invalid JSON")
     }
-    const res = await onSubmit(requestValue)
-    setResponseValue(JSON.stringify(JSON.parse(res), null, 2))
+    const requestObject = getRequestObject(requestValue)
+    const res = await request(requestObject.method as ICRC25Methods, requestObject.params)
+    setResponseValue(JSON.stringify(res, null, 2))
     setIsLoading(false)
   }
 
@@ -96,13 +100,9 @@ export const Section: React.FC<ISection> = ({
         <Button
           type="stroke"
           className="w-[160px] mt-5"
-          onClick={async () => {
-            const res = await request(ICRC25Methods.icrc25_granted_permissions, {
-              method: ICRC25Methods.icrc25_granted_permissions,
-            })
-
-            // setRequestValue(requestsExamples[selectedRequestIndex].value)
-            setResponseValue(JSON.stringify(res, null, 2))
+          onClick={() => {
+            setRequestValue(requestsExamples[selectedRequestIndex].value)
+            setResponseValue("{}")
           }}
           isSmall
         >

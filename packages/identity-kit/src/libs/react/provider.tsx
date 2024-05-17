@@ -44,16 +44,17 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
           }, 500)
         })
       }
-      console.log({ selectedSigner: selectedSigner, signerIframeRef })
-      // Send RPC message to signer
 
+      // TODO: Timeout for iframe to fully load
       await new Promise((resolve) => setTimeout(resolve, 500))
+
+      // Post message to signer iframe
       const iframe = signerIframeRef.current
       if (!iframe) throw new Error("Iframe not found")
-      console.log({ request })
-      const message = { type: "RPC", method: "someMethod", params: ["param1", "param2"] }
-      iframe.contentWindow?.postMessage(message, iframe.src)
+      const message = request
+      signerIframeRef.current.contentWindow?.postMessage(message, iframe.src)
 
+      // Wait for response
       return new Promise((resolve) => {
         window.addEventListener("message", (event) => {
           setIsModalOpen(false)

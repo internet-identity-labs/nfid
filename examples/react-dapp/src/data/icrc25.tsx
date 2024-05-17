@@ -37,9 +37,11 @@ export const icrc25Section: ISection = {
     return `const identityKit = new IdentityKit().init()
 const permissions = await identityKit.requestPermissions([${basicRequest.params.scopes.map((s: any) => `"${s.method}"`).join(", ")}])`
   },
-  onSubmit: function (): Promise<string> {
-    return new Promise((resolve) => {
-      resolve(JSON.stringify({ example: "ok" }, null, 2))
-    })
+  getRequestObject: function (requestJSON: string) {
+    const basicRequest = JSON.parse(requestJSON)
+    return {
+      method: basicRequest.method,
+      params: basicRequest.params,
+    }
   },
 }
