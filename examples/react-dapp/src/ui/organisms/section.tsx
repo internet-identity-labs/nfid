@@ -65,6 +65,7 @@ export const Section: React.FC<ISection> = ({
   }, [requestsExamples])
 
   const { request } = useIdentityKit()
+
   return (
     <div>
       <Loader isLoading={isLoading} />
@@ -99,9 +100,9 @@ export const Section: React.FC<ISection> = ({
             const res = await request(ICRC25Methods.icrc25_granted_permissions, {
               method: ICRC25Methods.icrc25_granted_permissions,
             })
-            console.log({ res })
+
             // setRequestValue(requestsExamples[selectedRequestIndex].value)
-            // setResponseValue("{}")
+            setResponseValue(JSON.stringify(res, null, 2))
           }}
           isSmall
         >

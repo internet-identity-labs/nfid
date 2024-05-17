@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {
   ICRC25Methods,
   ICRC25RequestTypeMap,
@@ -6,6 +5,13 @@ import {
   ICRC25ResponseTypeMap,
   ICRC25Responses,
 } from "../standards/icrc-25/types"
+
+export type SignerConfig = {
+  id: string
+  providerUrl: string
+  label: string
+  icon?: string
+}
 
 export type IdentityKitMethod = ICRC25Methods
 

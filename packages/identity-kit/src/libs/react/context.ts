@@ -6,17 +6,12 @@ const defaultState: IdentityKitProvider = {
   signers: [],
   selectedSigner: undefined,
   isModalOpen: false,
+  signerIframeRef: undefined,
   toggleModal: () => {
     throw new Error("toggleModal not implemented")
   },
   selectSigner: () => {
     throw new Error("selectSigner not implemented")
-  },
-  reject: () => {
-    throw new Error("reject not implemented")
-  },
-  approve: async () => {
-    throw new Error("approve not implemented")
   },
   request: async () => {
     throw new Error("request not implemented")

@@ -1,9 +1,7 @@
 import React, { useState, useCallback, PropsWithChildren, useRef } from "react"
 
-import { SignerConfig } from "./types"
-import { IRequest, IRequestFunction, IResponse } from "../../lib/types"
+import { IRequestFunction, IResponse, SignerConfig } from "../../lib/types"
 import { IdentityKitContext } from "./context"
-import { IdentityKit } from "../../lib/identity-kit"
 import { IdentityKitModal } from "./modal"
 
 interface IdentityKitProviderProps extends PropsWithChildren {
@@ -12,57 +10,58 @@ interface IdentityKitProviderProps extends PropsWithChildren {
 
 export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ children, signers }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedSigner, setSelectedSigner] = useState<SignerConfig | undefined>() // TODO: validate signers
-  const [activeRequest, setActiveRequest] = useState<IRequest | undefined>(undefined) // TODO: validate request
+  const [selectedSigner, setSelectedSigner] = useState<SignerConfig | undefined>(undefined)
   const response = useRef<IResponse | undefined>(undefined)
+  const signerIframeRef = useRef<HTMLIFrameElement>(null)
 
   const toggleModal = useCallback(() => {
     setIsModalOpen((prev) => !prev)
   }, [])
 
   const selectSigner = useCallback(
-    (signerId: string) => {
+    (signerId?: string) => {
+      if (typeof signerId === "undefined") return setSelectedSigner(undefined)
       const signer = signers.find((s) => s.id === signerId)
       if (!signer) throw new Error(`Signer with id ${signerId} not found`)
       setSelectedSigner(signer)
       return signer
     },
-    [signers, setSelectedSigner]
+    [signers, selectedSigner]
   )
-
-  const reject = useCallback(() => {
-    setIsModalOpen(false)
-    response.current = { error: { code: 100, message: "Operation rejected by user" } }
-    setActiveRequest(undefined)
-  }, [setIsModalOpen, response, setActiveRequest])
-
-  const approve = useCallback(async (): Promise<void> => {
-    if (!activeRequest) throw new Error("No active request")
-    // send request to signer
-    // wait for response
-    // close modal
-    // store response for sending back to the caller
-
-    const res = await IdentityKit.request(activeRequest.method, activeRequest)
-    response.current = res
-  }, [selectedSigner, activeRequest])
 
   const request: IRequestFunction = useCallback(
     async (_, request) => {
-      setActiveRequest(request)
       setIsModalOpen(true)
+
+      // If no signer is selected, wait for the user to select one
+      if (!signerIframeRef.current) {
+        await new Promise((resolve) => {
+          const int = setInterval(() => {
+            if (signerIframeRef.current) {
+              clearInterval(int)
+              resolve(true)
+            }
+          }, 500)
+        })
+      }
+      console.log({ selectedSigner: selectedSigner, signerIframeRef })
+      // Send RPC message to signer
+
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      const iframe = signerIframeRef.current
+      if (!iframe) throw new Error("Iframe not found")
+      console.log({ request })
+      const message = { type: "RPC", method: "someMethod", params: ["param1", "param2"] }
+      iframe.contentWindow?.postMessage(message, iframe.src)
+
       return new Promise((resolve) => {
-        setInterval(() => {
-          if (response.current) {
-            const responseCopy = response.current
-            response.current = undefined
-            setIsModalOpen(false)
-            resolve(responseCopy)
-          }
-        }, 500)
+        window.addEventListener("message", (event) => {
+          setIsModalOpen(false)
+          return resolve(event.data)
+        })
       })
     },
-    [selectedSigner, response, response.current, setIsModalOpen]
+    [selectedSigner, response, signerIframeRef, response.current, setIsModalOpen]
   )
 
   return (
@@ -70,11 +69,10 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
       value={{
         signers,
         selectedSigner,
+        signerIframeRef,
         isModalOpen,
         toggleModal,
         selectSigner,
-        reject,
-        approve,
         request,
       }}
     >
