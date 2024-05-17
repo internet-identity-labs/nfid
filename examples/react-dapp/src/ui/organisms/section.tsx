@@ -9,10 +9,10 @@ import "react-toastify/dist/ReactToastify.css"
 import { Loader } from "../atoms/loader"
 import { Button } from "../atoms/button"
 import { CodeSection } from "../molecules/code-section"
-import { SubTitle } from "../atoms/subtitle"
 import { DropdownSelect } from "../molecules/dropdown-select"
 import { useIdentityKit } from "@nfid/identity-kit/react"
 import { ICRC25Methods } from "@nfid/identity-kit"
+import { getRequestObject } from "../../utils/requests"
 
 export interface IRequestExample {
   title: string
@@ -25,10 +25,6 @@ export interface ISection {
   description: JSX.Element
   requestsExamples: IRequestExample[]
   getCodeSnippet: (requestJSON: string) => string
-  getRequestObject: (requestJSON: string) => {
-    method: string
-    params: any
-  }
 }
 
 export const Section: React.FC<ISection> = ({
@@ -37,12 +33,12 @@ export const Section: React.FC<ISection> = ({
   description,
   requestsExamples,
   getCodeSnippet,
-  getRequestObject,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [selectedRequestIndex, setSelectedRequestIndex] = useState(0)
   const [requestValue, setRequestValue] = useState(requestsExamples[0].value)
   const [responseValue, setResponseValue] = useState("{}")
+  const { request } = useIdentityKit()
 
   const handleSubmit = async () => {
     setIsLoading(true)
@@ -67,8 +63,6 @@ export const Section: React.FC<ISection> = ({
       value: r.value,
     }))
   }, [requestsExamples])
-
-  const { request } = useIdentityKit()
 
   return (
     <div>

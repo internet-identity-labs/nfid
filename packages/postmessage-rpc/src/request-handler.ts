@@ -25,6 +25,7 @@ export const requestFactory =
       method,
       params,
     }
+
     console.debug("postmsg-rpc request", { ...req })
 
     return new Promise<R>((resolve, reject) => {
@@ -44,6 +45,7 @@ export const requestFactory =
       }
 
       addEventListener("message", handleEvent)
+      console.log({ req, providerUrl })
 
       postMessage(req, providerUrl)
     })

@@ -1,42 +1,43 @@
-/* eslint-disable no-unused-vars */
-import { Signer } from "../signer"
-import { ICRC25Methods } from "../standards/icrc-25/types"
-import {
-  IRequestFunction,
-  IdentityKitMethod,
-  RequestTypeMap,
-  ResponseFailed,
-  ResponseTypeMap,
-} from "./types"
+import { requestFactory } from "@nfid/postmessage-rpc"
+import { IRequest, IdentityKitMethod, ResponseFailed, ResponseTypeMap } from "./types"
 
 export class IdentityKit {
-  public static config() {
-    console.debug("IdentityKit.config()")
-    return true
-  }
+  // TODO: Handle transport selection
+  public static request = async <T extends IdentityKitMethod>({
+    iframe,
+    method,
+    params,
+  }: {
+    iframe: HTMLIFrameElement
+    method: T
+    params: IRequest
+  }): Promise<ResponseTypeMap[T] | ResponseFailed> => {
+    return new Promise((resolve) => {
+      iframe.onload = async () => {
+        try {
+          await new Promise((resolve) => setTimeout(resolve, 100))
+          const postMessage = (message: any, targetOrigin: string) => {
+            iframe.contentWindow!.postMessage(message, targetOrigin)
+          }
 
-  public static connect({ signer }: { signer: Signer }) {
-    console.debug("IdentityKit.connect", { signer })
-    return signer
-  }
+          const makeRequest = requestFactory({
+            addEventListener: window.addEventListener,
+            removeEventListener: window.removeEventListener,
+            postMessage,
+          })
 
-  public static request: IRequestFunction = async <T extends IdentityKitMethod>(
-    _method: T,
-    _params: RequestTypeMap[T]
-  ): Promise<ResponseTypeMap[T] | ResponseFailed> => {
-    // Here we send RPC request to the signer and wait for response
-    const response = await new Promise((resolve) =>
-      setTimeout(() => {
-        resolve({
-          scopes: [
-            {
-              method: ICRC25Methods.icrc25_request_permissions,
-            },
-          ],
-        })
-      }, 2000)
-    )
+          const providerUrl = iframe.src
 
-    return response as ResponseTypeMap[T]
+          const res = (await makeRequest(providerUrl, { method, params })) as
+            | ResponseTypeMap[T]
+            | ResponseFailed
+          resolve(res)
+        } catch (e) {
+          // TODO: Handle error response
+          console.error(e)
+          resolve({ error: { code: 500, message: "Internal Server Error" } })
+        }
+      }
+    })
   }
 }

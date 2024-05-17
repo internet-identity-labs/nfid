@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Flex, Heading, Code } from "@radix-ui/themes"
+import { Box, Heading, Code } from "@radix-ui/themes"
 
 function App() {
   const [messages, setMessages] = React.useState<string[]>([])
@@ -15,12 +15,25 @@ function App() {
 
   const onApprove = React.useCallback(() => {
     console.log({ messages })
-    window.parent.postMessage({ type: "APPROVE" }, "*")
+    const obj = JSON.parse(messages[messages.length - 1])
+    window.parent.postMessage(obj, "*")
   }, [messages])
 
   const onReject = React.useCallback(() => {
-    window.parent.postMessage({ type: "REJECT" }, "*")
-  }, [])
+    const obj = JSON.parse(messages[messages.length - 1])
+
+    window.parent.postMessage(
+      {
+        id: obj.id,
+        jsonrpc: obj.jsonrpc,
+        error: {
+          code: -32000,
+          message: "User rejected the request",
+        },
+      },
+      "*"
+    )
+  }, [messages])
 
   return (
     <Box>

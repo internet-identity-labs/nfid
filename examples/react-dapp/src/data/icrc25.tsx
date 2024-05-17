@@ -3,8 +3,6 @@ import { Method } from "../ui/atoms/method"
 import { ISection } from "../ui/organisms/section"
 
 export const basicRequest = {
-  id: 1,
-  jsonrpc: "2.0",
   method: "icrc25_request_permissions",
   params: {
     scopes: [
@@ -35,13 +33,6 @@ export const icrc25Section: ISection = {
   getCodeSnippet: function (requestJSON: string): string {
     const basicRequest = JSON.parse(requestJSON)
     return `const identityKit = new IdentityKit().init()
-const permissions = await identityKit.requestPermissions([${basicRequest.params.scopes.map((s: any) => `"${s.method}"`).join(", ")}])`
-  },
-  getRequestObject: function (requestJSON: string) {
-    const basicRequest = JSON.parse(requestJSON)
-    return {
-      method: basicRequest.method,
-      params: basicRequest.params,
-    }
+const permissions = await identityKit.request(ICRC25Methods.${basicRequest.method}, ${JSON.stringify(basicRequest.params, undefined, 2)}`
   },
 }
