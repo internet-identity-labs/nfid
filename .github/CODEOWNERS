@@ -1,0 +1,23 @@
+# This section is owned by the Internet Identity Labs, Inc. team
+# Each line is a file pattern followed by one or more owners.
+
+# nfid repository owner
+* @olekid
+
+# documentation owners
+docs/* @dostro @olekid
+
+# @nfid/vaults SDK owner
+packages/vaults/* @olsemeno
+
+# @nfid/postmessage-rpc SDK owners
+packages/postmessage-rpc/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
+
+# @nfid/identity-kit SDK owners
+packages/identity-kit/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
+
+# identity-kit examples owners
+examples/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
+
+# pipelines owner
+.github/workflows/* @DaniilIdentity
