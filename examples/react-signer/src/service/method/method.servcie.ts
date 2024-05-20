@@ -4,7 +4,7 @@ import { icrc25GrantedPermissionsMethodService } from "./icrc25-granted-permissi
 import { icrc25RequestPermissionsMethodService } from "./icrc25-request-permissions-method.service"
 import { icrc25RevokePermissionsMethodService } from "./icrc25-revoke-permissions-method.service"
 import { icrc25SupportedStandardsMethodService } from "./icrc25-supported-standards-method.service"
-import { icrc31GetPrincipalsMethodService } from "./icrc31-get-principals-method.service"
+import { icrc27GetAccountsMethodService } from "./icrc27-get-accounts-method.service"
 
 export interface MethodService {
     getMethod(): string,
@@ -18,5 +18,5 @@ export const methodServices: Map<string, MethodService> = utilsService.mapByKey(
     icrc25GrantedPermissionsMethodService,
     icrc25RevokePermissionsMethodService,
     icrc25SupportedStandardsMethodService,
-    icrc31GetPrincipalsMethodService
+    icrc27GetAccountsMethodService
 ])

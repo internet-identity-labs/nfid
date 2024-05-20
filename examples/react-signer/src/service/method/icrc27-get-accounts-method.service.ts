@@ -3,7 +3,7 @@ import { userInfoStorage } from "../storage.service"
 import { RPCMessage, RPCSuccessResponse, RPCErrorResponse, ButtonActions } from "../../type"
 import { MethodService } from "./method.servcie"
 
-class Icrc31GetPrincipalsMethodService implements MethodService {
+class Icrc27GetAccountsMethodService implements MethodService {
   public sendResponse(): Promise<void> {
     throw new Error("Method not implemented.")
   }
@@ -20,7 +20,7 @@ class Icrc31GetPrincipalsMethodService implements MethodService {
   }
 
   public getMethod(): string {
-    return "icrc31_get_principals"
+    return "icrc27_get_accounts"
   }
 
   private async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
@@ -67,7 +67,10 @@ class Icrc31GetPrincipalsMethodService implements MethodService {
       jsonrpc: message.data.jsonrpc,
       id: message.data.id,
       result: {
-        principals: [principal],
+        accounts: [{
+          principal,
+          subaccount: "0000000000000000000000000000000000000000000000000000000000000000"
+        }],
       },
     }
 
@@ -89,4 +92,4 @@ class Icrc31GetPrincipalsMethodService implements MethodService {
   }
 }
 
-export const icrc31GetPrincipalsMethodService = new Icrc31GetPrincipalsMethodService()
+export const icrc27GetAccountsMethodService = new Icrc27GetAccountsMethodService()

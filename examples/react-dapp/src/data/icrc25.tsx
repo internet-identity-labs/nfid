@@ -7,7 +7,7 @@ export const basicRequest = {
   params: {
     scopes: [
       {
-        method: "icrc31_get_accounts",
+        method: "icrc27_get_accounts",
       },
     ],
   },
