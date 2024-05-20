@@ -12,32 +12,28 @@ export class IdentityKit {
     method: T
     params: IRequest
   }): Promise<ResponseTypeMap[T] | ResponseFailed> => {
-    return new Promise((resolve) => {
-      iframe.onload = async () => {
-        try {
-          await new Promise((resolve) => setTimeout(resolve, 100))
-          const postMessage = (message: any, targetOrigin: string) => {
-            iframe.contentWindow!.postMessage(message, targetOrigin)
-          }
-
-          const makeRequest = requestFactory({
-            addEventListener: window.addEventListener,
-            removeEventListener: window.removeEventListener,
-            postMessage,
-          })
-
-          const providerUrl = iframe.src
-
-          const res = (await makeRequest(providerUrl, { method, params })) as
-            | ResponseTypeMap[T]
-            | ResponseFailed
-          resolve(res)
-        } catch (e) {
-          // TODO: Handle error response
-          console.error(e)
-          resolve({ error: { code: 500, message: "Internal Server Error" } })
-        }
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      const postMessage = (message: any, targetOrigin: string) => {
+        iframe.contentWindow!.postMessage(message, targetOrigin)
       }
-    })
+
+      const makeRequest = requestFactory({
+        addEventListener: window.addEventListener,
+        removeEventListener: window.removeEventListener,
+        postMessage,
+      })
+
+      const providerUrl = iframe.src
+
+      const res = (await makeRequest(providerUrl, { method, params })) as
+        | ResponseTypeMap[T]
+        | ResponseFailed
+      return res
+    } catch (e) {
+      // TODO: Handle error response
+      console.error(e)
+      return { error: { code: 500, message: "Internal Server Error" } }
+    }
   }
 }
