@@ -20,4 +20,4 @@ packages/identity-kit/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
 examples/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
 
 # pipelines owner
-.github/workflows/* @DaniilIdentity
+.github/workflows/* @DaniilIdentity @dmitriiIdentityLabs
