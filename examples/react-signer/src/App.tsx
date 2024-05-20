@@ -51,6 +51,8 @@ function App() {
   }, [])
 
   React.useEffect(() => {
+    window.addEventListener("message", handleMessage, false)
+
     async function initDb() {
       const keyPair = await userInfoStorage.get("keyPair")
       if (!keyPair) {
@@ -58,8 +60,6 @@ function App() {
       }
     }
     initDb()
-
-    window.addEventListener("message", handleMessage, false)
     return () => window.removeEventListener("message", handleMessage)
   }, [handleMessage])
 
