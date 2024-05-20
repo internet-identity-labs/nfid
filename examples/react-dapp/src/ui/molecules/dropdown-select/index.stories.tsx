@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Story, Meta } from "@storybook/react"
 import { DropdownSelect, IDropdownSelect } from "./index"
-import { IOption } from "types"
 
 export default {
   title: "Molecules/DropdownSelect",
@@ -25,7 +24,8 @@ export default {
   },
 } as Meta<IDropdownSelect>
 
-const Template: Story<IDropdownSelect> = (args) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Template: Story<IDropdownSelect> = (args: any) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([])
 
   return (
@@ -38,7 +38,7 @@ const Template: Story<IDropdownSelect> = (args) => {
 }
 
 // Example options for stories
-const optionsExample: IOption[] = [
+const optionsExample = [
   { label: "Option 1", value: "option1" },
   { label: "Option 2", value: "option2" },
   { label: "Option 3", value: "option3" },
@@ -62,7 +62,6 @@ export const WithSearch = Template.bind({})
 WithSearch.args = {
   label: "Dropdown With Search",
   options: optionsExample,
-  isSearch: true,
 }
 
 export const Disabled = Template.bind({})

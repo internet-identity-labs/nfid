@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { IdentityKitContext } from "./context"
 import * as Dialog from "@radix-ui/react-dialog"
 
-export const IdentityKitModal = () => {
+export const IdentityKitModal: React.FC = () => {
   const { isModalOpen, toggleModal, selectedSigner, signers, selectSigner, signerIframeRef } =
     useContext(IdentityKitContext)
 
