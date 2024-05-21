@@ -4,11 +4,18 @@ import { methodServices } from "./service/method/method.servcie"
 import { ButtonActions, RPCMessage } from "./type"
 import { userInfoStorage } from "./service/storage.service"
 import { Ed25519KeyIdentity } from "@dfinity/identity"
+import { Loader } from "./ui/loader"
+import { RequestPermissions } from "./methods/request-permissions"
+import { GetAccounts } from "./methods/get_accounts"
 
 function App() {
   const [buttonActions, setButtonActions] = React.useState<ButtonActions | undefined>(undefined)
+  const [handlingMessage, setHandlingMessage] = React.useState<
+    MessageEvent<RPCMessage> | undefined
+  >()
 
   const handleMessage = React.useCallback((message: MessageEvent<RPCMessage>) => {
+    setHandlingMessage(message)
     const methodService = methodServices.get(message.data.method)
 
     if (!methodService) {
@@ -66,24 +73,51 @@ function App() {
   return (
     <>
       <Box>
-        <Flex className="flex items-center justify-center h-screen">
+        <Flex className="flex justify-center h-screen flex-col">
           {buttonActions ? (
-            <div className="flex justify-center">
-              <button
-                className="px-4 py-2 mr-4 font-bold text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none"
-                onClick={buttonActions.onApprove}
-              >
-                Approve
-              </button>
-              <button
-                className="px-4 py-2 font-bold text-white bg-red-500 rounded hover:bg-red-600 focus:outline-none"
-                onClick={buttonActions.onReject}
-              >
-                Reject
-              </button>
-            </div>
+            <>
+              <div className="pt-9">
+                {handlingMessage &&
+                  handlingMessage.data.method === "icrc25_request_permissions" && (
+                    <RequestPermissions
+                      origin={handlingMessage.origin}
+                      permissions={(handlingMessage as any).data.params.scopes.map(
+                        (el: { method: string }) => el.method
+                      )}
+                    />
+                  )}
+                {handlingMessage && handlingMessage.data.method === "icrc25_revoke_permissions" && (
+                  <RequestPermissions
+                    origin={handlingMessage.origin}
+                    permissions={(handlingMessage as any).data.params.scopes.map(
+                      (el: { method: string }) => el.method
+                    )}
+                    revoke
+                  />
+                )}
+                {handlingMessage && handlingMessage.data.method === "icrc27_get_accounts" && (
+                  <GetAccounts origin={handlingMessage.origin} />
+                )}
+              </div>
+              <div className="flex justify-between mt-auto w-full">
+                <button
+                  className="px-3.5 py-3 mr-2 font-bold dark:text-white text-black text-sm dark:bg-black bg-white rounded hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black focus:outline-none flex-1 border border-black dark:border-white border-solid"
+                  onClick={buttonActions.onReject}
+                >
+                  Reject
+                </button>
+                <button
+                  className="px-3.5 py-3 font-bold text-white text-sm bg-blue-600 rounded hover:bg-blue-700 focus:outline-none flex-1"
+                  onClick={buttonActions.onApprove}
+                >
+                  Approve
+                </button>
+              </div>
+            </>
           ) : (
-            <div className="flex justify-center">Loading</div>
+            <div className="flex justify-center items-center">
+              <Loader />
+            </div>
           )}
         </Flex>
       </Box>

@@ -69,7 +69,7 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
         request,
       }}
     >
-      <IdentityKitModal />
+      {isModalOpen && <IdentityKitModal />}
       {children}
     </IdentityKitContext.Provider>
   )

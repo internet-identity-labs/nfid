@@ -1,4 +1,5 @@
 import defaultTheme from "tailwindcss/defaultTheme"
+import colors from "tailwindcss/colors"
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,6 +8,7 @@ export default {
       colors: {
         primary: "#146F68",
         dark: "#141518",
+        zinc: colors.zinc
       },
       fontFamily: {
         ...defaultTheme.fontFamily,

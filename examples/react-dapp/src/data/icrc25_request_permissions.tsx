@@ -1,6 +1,6 @@
-import { Link } from "../ui/atoms/link"
-import { Method } from "../ui/atoms/method"
-import { ISection } from "../ui/organisms/section"
+import { Link } from "../ui/atoms/link.js"
+import { Method } from "../ui/atoms/method.js"
+import { ISection } from "../ui/organisms/section.js"
 
 export const basicRequest = {
   method: "icrc25_request_permissions",
@@ -13,8 +13,8 @@ export const basicRequest = {
   },
 }
 
-export const icrc25Section: ISection = {
-  title: "icrc25_request_permissions",
+export const icrc25RequestPermissionsSection: ISection = {
+  title: "1.a icrc25_request_permissions",
   description: (
     <>
       The purpose of the <Method>icrc25_request_permissions</Method> method is for the relying party

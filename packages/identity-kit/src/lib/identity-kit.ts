@@ -13,7 +13,7 @@ export class IdentityKit {
     params: IRequest
   }): Promise<ResponseTypeMap[T] | ResponseFailed> => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await new Promise((resolve) => setTimeout(resolve, 2000))
       const postMessage = (message: any, targetOrigin: string) => {
         iframe.contentWindow!.postMessage(message, targetOrigin)
       }
