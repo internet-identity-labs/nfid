@@ -1,5 +1,5 @@
 import {Currency, Network, VaultRole} from "../enum/enums";
-import {Member, Policy as PolicyCandid, VaultState, Wallet as WalletCandid} from "../idl/service_vault";
+import {ICRC1, Member, Policy as PolicyCandid, VaultState, Wallet as WalletCandid} from "../idl/service_vault";
 import {candidToRole, candidToNetwork} from "../util/helper";
 import {Principal} from "@dfinity/principal";
 
@@ -10,7 +10,7 @@ export interface Vault {
     policies: Array<Policy>
     name?: string
     description?: string
-    icrc1_canisters : Array<Principal>
+    icrc1_canisters : Array<ICRC1>
 }
 
 export interface Quorum {

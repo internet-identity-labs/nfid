@@ -67,15 +67,16 @@ export interface VaultManagerI {
      * Method for adding a personal list of ICRC-1 canisters by the user.
      * Returns the updated vault state.
      * Needed for displaying the balance/history of ICRC-1 tokens.
-     * @param canisters The array of ICRC-1 canisters to be added.
+     * @param ledger Ledger ICRC-1 canister to be added.
+     * @param index Optional index ICRC-1 canister to be added.
      */
-    addICRC1Canisters(canisters: Array<Principal>): Promise<Vault>;
+    addICRC1Canister(ledger: Principal, index?: Principal): Promise<Vault>
 
     /**
      * Method for removing from a personal list of ICRC-1 canisters by the user.
      * Returns the updated vault state.
      * Needed for displaying the balance/history of ICRC-1 tokens.
-     * @param canisters The array of ICRC-1 canisters to be removed.
-     */
-    removeICRC1Canisters(canisters: Array<Principal>): Promise<Vault>;
+     * @param ledger Ledger ICRC-1 canister to be removed.
+     * */
+    removeICRC1Canister(ledger: Principal): Promise<Vault>
 }
