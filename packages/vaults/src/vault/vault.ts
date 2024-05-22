@@ -1,5 +1,5 @@
 import {Currency, Network, VaultRole} from "../enum/enums";
-import {ICRC1, Member, Policy as PolicyCandid, VaultState, Wallet as WalletCandid} from "../idl/service_vault";
+import {Member, ICRC1 as ICRC1Candid, Policy as PolicyCandid, VaultState, Wallet as WalletCandid} from "../idl/service_vault";
 import {candidToRole, candidToNetwork} from "../util/helper";
 import {Principal} from "@dfinity/principal";
 
@@ -11,6 +11,11 @@ export interface Vault {
     name?: string
     description?: string
     icrc1_canisters : Array<ICRC1>
+}
+
+export interface ICRC1 {
+    ledger: Principal,
+    index: Principal | undefined
 }
 
 export interface Quorum {
@@ -56,7 +61,7 @@ export function candidToVault(vaultCandid: VaultState): Vault {
     let name = vaultCandid.name.length === 0 ? undefined : vaultCandid.name[0]
     let description = vaultCandid.description.length === 0 ? undefined : vaultCandid.description[0]
     let vault: Vault = {
-        icrc1_canisters: vaultCandid.icrc1_canisters,
+        icrc1_canisters: vaultCandid.icrc1_canisters.map(mapICRC1),
         members: members, quorum: quorum, wallets, policies, name, description
     }
 
@@ -70,6 +75,13 @@ function mapMember(candid: Member): VaultMember {
         name: candid.name,
         role: candidToRole(candid.role),
         userId: candid.member_id
+    }
+}
+
+function mapICRC1(candid: ICRC1Candid): ICRC1 {
+    return {
+        ledger: candid.ledger,
+        index: candid.index.length === 0 ? undefined : candid.index[0]
     }
 }
 
