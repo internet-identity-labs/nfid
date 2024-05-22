@@ -26,7 +26,7 @@ class Icrc25SupportedStandardsMethodService implements MethodService {
             url: "https://github.com/dfinity/ICRC/blob/main/ICRCs/ICRC-25/ICRC-25.md",
           },
           {
-            name: "ICRC-31",
+            name: "ICRC-27",
             url: "https://github.com/dfinity/ICRC/blob/main/ICRCs/ICRC-31/ICRC-31.md",
           },
         ],
