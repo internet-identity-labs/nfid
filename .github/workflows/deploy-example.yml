@@ -37,7 +37,7 @@ jobs:
         run: npm install --frozen-lockfile
 
       - name: Build
-        run: npm run build-playground:"${NETWORK_NAME}"
+        run: npm run build-playground:"${NETWORK}"
 
       - name: Setup DFX Identity
         run: |
