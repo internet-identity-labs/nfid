@@ -1,3 +1,3 @@
 export { IdentityKit } from "./lib/identity-kit"
-export { NFID, MockedSigner } from "./lib/signers"
+export { type SignerConfig } from "./lib/types"
 export { ICRC25Methods } from "./standards/icrc-25/types"
