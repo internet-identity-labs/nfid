@@ -349,4 +349,5 @@ export interface _SERVICE {
         Array<TransactionCandid>
     >,
     'store_icrc1_canisters' : ActorMethod<[Array<Principal>], VaultState>,
+    'remove_icrc1_canisters' : ActorMethod<[Array<Principal>], VaultState>,
 }

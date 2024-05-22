@@ -359,6 +359,11 @@ export const idlFactory = ({ IDL } : any) => {
             [VaultState],
             [],
         ),
+        'remove_icrc1_canisters' : IDL.Func(
+            [IDL.Vec(IDL.Principal)],
+            [VaultState],
+            [],
+        ),
     });
 };
 export const init = ({ IDL } : any) => {

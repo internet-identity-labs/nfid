@@ -63,6 +63,17 @@ export class VaultManager implements VaultManagerI {
     }
 
     /**
+     * Method for removing from a personal list of ICRC-1 canisters by the user.
+     * Returns the updated vault state.
+     * Needed for displaying the balance/history of ICRC-1 tokens.
+     * @param canisters The array of ICRC-1 canisters to be removed.
+     */
+    async removeICRC1Canisters(canisters: Array<Principal>): Promise<Vault> {
+        let vault = await this.actor.remove_icrc1_canisters(canisters)
+        return candidToVault(vault)
+    }
+
+    /**
      * Retrieves all user transactions.
      * In the foreseeable future, optional parameter will be used for filtering/pagination.
      */
