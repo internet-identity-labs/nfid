@@ -55,10 +55,12 @@ export class VaultManager implements VaultManagerI {
      * Method for adding a personal list of ICRC-1 canisters by the user.
      * Returns the updated vault state.
      * Needed for displaying the balance of ICRC-1 tokens.
-     * @param canisters The array of ICRC-1 canisters to be added.
+     * @param ledger Ledger ICRC-1 canister to be added.
+     * @param index Optional index ICRC-1 canister to be added.
      */
-    async addICRC1Canisters(canisters: Principal[]): Promise<Vault> {
-        let vault = await this.actor.store_icrc1_canisters(canisters)
+    async addICRC1Canister(ledger: Principal, index?: Principal): Promise<Vault> {
+        let index_candid: [] | [Principal] = index === undefined ? [] : [index]
+        let vault = await this.actor.store_icrc1_canister(ledger, index_candid)
         return candidToVault(vault)
     }
 
@@ -66,10 +68,10 @@ export class VaultManager implements VaultManagerI {
      * Method for removing from a personal list of ICRC-1 canisters by the user.
      * Returns the updated vault state.
      * Needed for displaying the balance/history of ICRC-1 tokens.
-     * @param canisters The array of ICRC-1 canisters to be removed.
-     */
-    async removeICRC1Canisters(canisters: Array<Principal>): Promise<Vault> {
-        let vault = await this.actor.remove_icrc1_canisters(canisters)
+     * @param ledger Ledger ICRC-1 canister to be removed.
+     * */
+    async removeICRC1Canister(ledger: Principal): Promise<Vault> {
+        let vault = await this.actor.remove_icrc1_canister(ledger)
         return candidToVault(vault)
     }
 
