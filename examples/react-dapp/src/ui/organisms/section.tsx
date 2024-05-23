@@ -64,9 +64,7 @@ export const Section: React.FC<ISection> = ({
   return (
     <div>
       <Loader isLoading={isLoading} />
-      <Title>
-        {title}
-      </Title>
+      <Title>{title}</Title>
       <Text className="mb-5">{description}</Text>
       {/* <DropdownSelect
         label="Request examples"
@@ -84,7 +82,11 @@ export const Section: React.FC<ISection> = ({
       </div>
       <CodeSection value={codeSection} />
       <div className="flex gap-5">
-        <Button className="w-[160px] mt-5" onClick={handleSubmit} isSmall>
+        <Button
+          className="w-[160px] mt-5"
+          onClick={handleSubmit}
+          isSmall
+        >
           Submit
         </Button>
         <Button
