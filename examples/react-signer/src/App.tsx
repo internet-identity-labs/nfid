@@ -77,7 +77,7 @@ function App() {
   return (
     <>
       <Box>
-        <Flex className="flex justify-center h-screen flex-col">
+        <Flex className="flex flex-col justify-center h-screen">
           {buttonActions ? (
             <>
               <div className="pt-9">
@@ -100,10 +100,17 @@ function App() {
                   />
                 )}
                 {handlingMessage && handlingMessage.data.method === "icrc27_get_accounts" && (
-                  <GetAccounts origin={handlingMessage.origin} />
+                  <GetAccounts
+                    accounts={[
+                      { displayName: "Some display name 1", value: "123" },
+                      { displayName: "Some display name 2", value: "1234" },
+                      { displayName: "Some display name 3", value: "12345" },
+                    ]}
+                    origin={handlingMessage.origin}
+                  />
                 )}
               </div>
-              <div className="flex justify-between mt-auto w-full">
+              <div className="flex justify-between w-full mt-auto">
                 <button
                   className="px-3.5 py-3 mr-2 font-bold dark:text-white text-black text-sm dark:bg-black bg-white rounded hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black focus:outline-none flex-1 border border-black dark:border-white border-solid"
                   onClick={buttonActions.onReject}
@@ -119,7 +126,7 @@ function App() {
               </div>
             </>
           ) : (
-            <div className="flex justify-center items-center">
+            <div className="flex items-center justify-center">
               <Loader />
             </div>
           )}
