@@ -1,4 +1,4 @@
-import React, { useState, useCallback, PropsWithChildren, useRef, useEffect } from "react"
+import React, { useState, useCallback, PropsWithChildren, useRef } from "react"
 
 import { IRequestFunction, IResponse, SignerConfig } from "../../lib/types"
 import { IdentityKitContext } from "./context"
