@@ -3,7 +3,31 @@ import { IRequest, IdentityKitMethod, ResponseFailed, ResponseTypeMap } from "./
 
 export class IdentityKit {
   // TODO: Handle transport selection
-  public static request = async <T extends IdentityKitMethod>({
+
+  public static init = async (): Promise<IdentityKit> => {
+    return await new Promise((resolve, reject) => {
+      const removeEventListener = () => {
+        window.removeEventListener("message", handleReadyEvent)
+      }
+      const timeout = setTimeout(() => {
+        removeEventListener()
+        reject(new Error("Signer iframe did not respond in time"))
+      }, 30000)
+
+      const handleReadyEvent = (event: MessageEvent<string>) => {
+        if (event.data === "ready") {
+          removeEventListener()
+          console.debug("Signer iframe ready")
+          clearTimeout(timeout)
+          resolve(new this())
+        }
+      }
+
+      window.addEventListener("message", handleReadyEvent)
+    })
+  }
+
+  public request = async <T extends IdentityKitMethod>({
     iframe,
     method,
     params,
@@ -13,7 +37,6 @@ export class IdentityKit {
     params: IRequest
   }): Promise<ResponseTypeMap[T] | ResponseFailed> => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
       const postMessage = (message: any, targetOrigin: string) => {
         iframe.contentWindow!.postMessage(message, targetOrigin)
       }
@@ -26,10 +49,7 @@ export class IdentityKit {
 
       const providerUrl = iframe.src
 
-      const res = (await makeRequest(providerUrl, { method, params })) as
-        | ResponseTypeMap[T]
-        | ResponseFailed
-      return res
+      return makeRequest(providerUrl, { method, params })
     } catch (e) {
       // TODO: Handle error response
       console.error(e)

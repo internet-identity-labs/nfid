@@ -70,6 +70,10 @@ function App() {
     return () => window.removeEventListener("message", handleMessage)
   }, [handleMessage])
 
+  React.useEffect(() => {
+    window.parent.postMessage("ready", "*")
+  }, [])
+
   return (
     <>
       <Box>
