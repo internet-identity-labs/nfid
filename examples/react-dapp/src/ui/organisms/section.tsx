@@ -9,8 +9,9 @@ import "react-toastify/dist/ReactToastify.css"
 import { Loader } from "../atoms/loader"
 import { Button } from "../atoms/button"
 import { CodeSection } from "../molecules/code-section"
-import { SubTitle } from "../atoms/subtitle"
-import { DropdownSelect } from "../molecules/dropdown-select"
+import { useIdentityKit } from "@nfid/identity-kit/react"
+import { ICRC25Methods } from "@nfid/identity-kit"
+import { getRequestObject } from "../../utils/requests"
 
 export interface IRequestExample {
   title: string
@@ -18,26 +19,23 @@ export interface IRequestExample {
 }
 
 export interface ISection {
-  index?: number
   title: string
   description: JSX.Element
   requestsExamples: IRequestExample[]
   getCodeSnippet: (requestJSON: string) => string
-  onSubmit: (requestJSON: string) => Promise<string>
 }
 
 export const Section: React.FC<ISection> = ({
-  index,
   title,
   description,
   requestsExamples,
   getCodeSnippet,
-  onSubmit,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [selectedRequestIndex, setSelectedRequestIndex] = useState(0)
+  const [selectedRequestIndex] = useState(0)
   const [requestValue, setRequestValue] = useState(requestsExamples[0].value)
   const [responseValue, setResponseValue] = useState("{}")
+  const { request } = useIdentityKit()
 
   const handleSubmit = async () => {
     setIsLoading(true)
@@ -45,8 +43,9 @@ export const Section: React.FC<ISection> = ({
       setIsLoading(false)
       return toast.error("Invalid JSON")
     }
-    const res = await onSubmit(requestValue)
-    setResponseValue(JSON.stringify(JSON.parse(res), null, 2))
+    const requestObject = getRequestObject(requestValue)
+    const res = await request(requestObject.method as ICRC25Methods, requestObject.params)
+    setResponseValue(JSON.stringify(res, null, 2))
     setIsLoading(false)
   }
 
@@ -55,22 +54,21 @@ export const Section: React.FC<ISection> = ({
     return getCodeSnippet(requestValue)
   }, [getCodeSnippet, requestValue])
 
-  const requestsOptions = useMemo(() => {
-    return requestsExamples.map((r) => ({
-      label: r.title,
-      value: r.value,
-    }))
-  }, [requestsExamples])
+  // const requestsOptions = useMemo(() => {
+  //   return requestsExamples.map((r) => ({
+  //     label: r.title,
+  //     value: r.value,
+  //   }))
+  // }, [requestsExamples])
 
   return (
     <div>
       <Loader isLoading={isLoading} />
       <Title>
-        {index ? `${index}. ` : ""}
         {title}
       </Title>
       <Text className="mb-5">{description}</Text>
-      <DropdownSelect
+      {/* <DropdownSelect
         label="Request examples"
         isMultiselect={false}
         options={requestsOptions}
@@ -79,7 +77,7 @@ export const Section: React.FC<ISection> = ({
           setSelectedRequestIndex(requestsOptions.findIndex((o) => o.value === values[0]))
           setRequestValue(values[0])
         }}
-      />
+      /> */}
       <div className="grid grid-cols-2 gap-[30px] my-3">
         <RequestSection value={requestValue} setValue={setRequestValue} />
         <ResponseSection value={responseValue} />

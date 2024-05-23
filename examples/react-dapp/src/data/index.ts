@@ -1,0 +1,5 @@
+export { icrc25RequestPermissionsSection } from "./icrc25_request_permissions"
+export { icrc25GrantedPermissionsSection } from "./icrc25_granted_permissions"
+export { icrc25RevokePermissionsSection } from "./icrc25_revoke_permissions"
+export { icrc25SupportedStandardsSection } from "./icrc25_supported_standards"
+export { icrc27GetAccountsSection } from "./icrc27_get_accounts"

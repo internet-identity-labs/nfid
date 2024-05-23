@@ -1,22 +1,20 @@
-import { Link } from "../ui/atoms/link"
-import { Method } from "../ui/atoms/method"
-import { ISection } from "../ui/organisms/section"
+import { Link } from "../ui/atoms/link.js"
+import { Method } from "../ui/atoms/method.js"
+import { ISection } from "../ui/organisms/section.js"
 
 export const basicRequest = {
-  id: 1,
-  jsonrpc: "2.0",
   method: "icrc25_request_permissions",
   params: {
     scopes: [
       {
-        method: "icrc31_get_accounts",
+        method: "icrc27_get_accounts",
       },
     ],
   },
 }
 
-export const icrc25Section: ISection = {
-  title: "icrc25_request_permissions",
+export const icrc25RequestPermissionsSection: ISection = {
+  title: "1.a icrc25_request_permissions",
   description: (
     <>
       The purpose of the <Method>icrc25_request_permissions</Method> method is for the relying party
@@ -35,11 +33,6 @@ export const icrc25Section: ISection = {
   getCodeSnippet: function (requestJSON: string): string {
     const basicRequest = JSON.parse(requestJSON)
     return `const identityKit = new IdentityKit().init()
-const permissions = await identityKit.requestPermissions([${basicRequest.params.scopes.map((s: any) => `"${s.method}"`).join(", ")}])`
-  },
-  onSubmit: function (): Promise<string> {
-    return new Promise((resolve) => {
-      resolve(JSON.stringify({ example: "ok" }, null, 2))
-    })
+const permissions = await identityKit.request(ICRC25Methods.${basicRequest.method}, ${JSON.stringify(basicRequest.params, undefined, 2)}`
   },
 }

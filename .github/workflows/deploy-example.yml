@@ -9,7 +9,7 @@ on:
         type: choice
         options: 
           - dev
-          - prod
+          - ic
 env:
   NETWORK: ${{ github.event.inputs.network }}
 
@@ -37,14 +37,14 @@ jobs:
         run: npm install --frozen-lockfile
 
       - name: Build
-        run: npm run build-example
+        run: npm run build-playground:"${NETWORK}"
 
       - name: Setup DFX Identity
         run: |
           if [[ "${NETWORK}" == 'dev' ]]; then
             ID_NAME="icrc25_dev_identity"
             IDENTITY_PEM_NAME_VAR="ICRC25_DEV_IDENTITY"
-          elif [ "${NETWORK}" == 'prod' ]; then
+          elif [ "${NETWORK}" == 'ic' ]; then
             ID_NAME="icrc25_prod_identity"
             IDENTITY_PEM_NAME_VAR="ICRC25_PROD_IDENTITY"
           fi

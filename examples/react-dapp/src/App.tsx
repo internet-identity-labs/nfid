@@ -1,9 +1,22 @@
 import { Header } from "./ui/molecules/header"
-import { icrc25Section } from "./data/icrc25"
+import {
+  icrc25RequestPermissionsSection,
+  icrc25GrantedPermissionsSection,
+  icrc25RevokePermissionsSection,
+  icrc25SupportedStandardsSection,
+  icrc27GetAccountsSection,
+} from "./data"
 import { Section } from "./ui/organisms/section"
 import { ToastContainer } from "react-toastify"
+import { SectionContainer } from "./ui/organisms/section-container"
 
-const data = [icrc25Section, icrc25Section]
+const icrc25data = [
+  icrc25RequestPermissionsSection,
+  icrc25GrantedPermissionsSection,
+  icrc25RevokePermissionsSection,
+  icrc25SupportedStandardsSection,
+]
+const icrc27data = [icrc27GetAccountsSection]
 
 function App() {
   return (
@@ -11,9 +24,16 @@ function App() {
       <ToastContainer />
       <Header />
       <div className="flex flex-col space-y-20">
-        {data.map((section, index) => (
-          <Section index={index + 1} {...section} />
-        ))}
+        <SectionContainer title="1. ICRC-25: Signer Interaction Standard">
+          {icrc25data.map((section, index) => (
+            <Section key={index} {...section} />
+          ))}
+        </SectionContainer>
+        <SectionContainer title="2. ICRC-27: Get Accounts">
+          {icrc27data.map((section, index) => (
+            <Section key={index} {...section} />
+          ))}
+        </SectionContainer>
       </div>
     </div>
   )

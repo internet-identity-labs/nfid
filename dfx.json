@@ -36,7 +36,7 @@
       "bind": "127.0.0.1:8000",
       "type": "ephemeral"
     },
-    "prod": {
+    "ic": {
       "providers": [
         "https://icp0.io"
       ],

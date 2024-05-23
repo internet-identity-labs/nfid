@@ -1,0 +1,28 @@
+import { Method } from "../ui/atoms/method.js"
+import { ISection } from "../ui/organisms/section.js"
+
+export const basicRequest = {
+  method: "icrc25_supported_standards",
+}
+
+export const icrc25SupportedStandardsSection: ISection = {
+  title: "1.d icrc25_supported_standards",
+  description: (
+    <>
+      To understand what standards are supported on a user selected signer, you will be able to call{" "}
+      <Method>icrc25_supported_standards</Method> which returns the list of strings representing the
+      standard references.
+    </>
+  ),
+  requestsExamples: [
+    {
+      title: "Basic",
+      value: JSON.stringify(basicRequest, null, 2),
+    },
+  ],
+  getCodeSnippet: function (requestJSON: string): string {
+    const basicRequest = JSON.parse(requestJSON)
+    return `const identityKit = new IdentityKit().init()
+const permissions = await identityKit.request(ICRC25Methods.${basicRequest.method})`
+  },
+}

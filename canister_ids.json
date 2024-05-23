@@ -1,13 +1,13 @@
 {
   "signer": {
     "dev": "uimp7-mqaaa-aaaag-qc5ka-cai",
-    "prod": "vdgqs-nqaaa-aaaag-aciua-cai"
+    "ic": "vdgqs-nqaaa-aaaag-aciua-cai"
   },
   "dapp": {
     "dev": "mquaw-4yaaa-aaaap-abwlq-cai",
-    "prod": "vehwg-aiaaa-aaaag-aciuq-cai"
+    "ic": "vehwg-aiaaa-aaaag-aciuq-cai"
   },
   "docs": {
-    "prod": "tw2bn-caaaa-aaaap-ahfea-cai"
+    "ic": "tw2bn-caaaa-aaaap-ahfea-cai"
   }
 }

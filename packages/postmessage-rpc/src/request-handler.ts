@@ -25,26 +25,30 @@ export const requestFactory =
       method,
       params,
     }
+
     console.debug("postmsg-rpc request", { ...req })
 
     return new Promise<R>((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        removeEventListener("message", handleEvent)
-        reject(new Error("Request timed out"))
-        // TODO: improve timeout handling
-      }, 60000)
-
-      const handleEvent = (event: MessageEvent) => {
-        if (event.data && event.data.id === requestId) {
-          console.debug(`resolve id: ${requestId}`, { event })
-          resolve(event.data)
+      setTimeout(() => {
+        const timeout = setTimeout(() => {
           removeEventListener("message", handleEvent)
-          timeout && clearTimeout(timeout)
+          reject(new Error("Request timed out"))
+          // TODO: improve timeout handling
+        }, 60000)
+
+        const handleEvent = (event: MessageEvent) => {
+          if (event.data && event.data.id === requestId) {
+            console.debug(`resolve id: ${requestId}`, { event })
+            resolve(event.data)
+            removeEventListener("message", handleEvent)
+            timeout && clearTimeout(timeout)
+          }
         }
-      }
 
-      addEventListener("message", handleEvent)
+        addEventListener("message", handleEvent)
+        console.log({ req, providerUrl })
 
-      postMessage(req, providerUrl)
+        postMessage(req, providerUrl)
+      }, 500)
     })
   }

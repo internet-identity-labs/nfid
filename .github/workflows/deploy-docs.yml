@@ -1,4 +1,4 @@
-name: Deploy docs to prod.
+name: Deploy docs to ic
 
 on:
   workflow_dispatch:
@@ -42,8 +42,8 @@ jobs:
 
       - name: Deploy
         run: | 
-          echo "dfx deploy docs --network prod" >&2
-          if ! result=$(dfx deploy docs --yes --network prod); then
+          echo "dfx deploy docs --network ic" >&2
+          if ! result=$(dfx deploy docs --yes --network ic); then
             echo "Deploy failed ${result}" >&2
             exit 1
           fi

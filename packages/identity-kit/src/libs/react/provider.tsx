@@ -1,61 +1,75 @@
-import React, { createContext, useContext } from "react"
-import invariant from "tiny-invariant"
-import { Signer } from "../../signer"
+import React, { useState, useCallback, PropsWithChildren, useRef } from "react"
+
+import { IRequestFunction, IResponse, SignerConfig } from "../../lib/types"
+import { IdentityKitContext } from "./context"
+import { IdentityKitModal } from "./modal"
 import { IdentityKit } from "../../lib/identity-kit"
 
-type SignerConfig = {
-  id: string
-  providerUrl: string
-  label: string
-  icon?: string
+interface IdentityKitProviderProps extends PropsWithChildren {
+  signers: SignerConfig[]
 }
 
-interface IdentityKitConfig {
-  signer: SignerConfig[]
-}
+export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ children, signers }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedSigner, setSelectedSigner] = useState<SignerConfig | undefined>(undefined)
+  const response = useRef<IResponse | undefined>(undefined)
+  const signerIframeRef = useRef<HTMLIFrameElement>(null)
 
-type IdentityKitContextProps = IdentityKitConfig & {
-  handleConnect: (id: string) => void
-}
+  const toggleModal = useCallback(() => {
+    setIsModalOpen((prev) => !prev)
+  }, [])
 
-const IdentityKitContext = createContext<IdentityKitContextProps | null>(null)
-
-export function useIdentityKit(): IdentityKitContextProps {
-  const identity = useContext(IdentityKitContext)
-  if (!identity) {
-    throw new Error("useIdentityKitConfig must be used within an IdentityKitProvider")
-  }
-  return identity
-}
-
-interface IdentityKitProviderProps {
-  config: IdentityKitConfig
-  children: React.ReactNode
-}
-
-export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ config, children }) => {
-  const signers = React.useMemo(
-    () =>
-      config.signer.map(
-        ({ id }) =>
-          new Signer({ id })
-      ),
-    [config.signer]
-  )
-  console.debug("IdentityKitProvider", { adapter: signers })
-
-  const handleConnect = React.useCallback(
-    (id: string) => {
-      console.debug("IdentityKitProvider.handleConnect", { id })
-      const signer = signers.find((signer) => signer.isSigner(id))
-      invariant(signer, `No signer found for id: ${id}`)
-      IdentityKit.connect({ signer })
+  const selectSigner = useCallback(
+    (signerId?: string) => {
+      if (typeof signerId === "undefined") return setSelectedSigner(undefined)
+      const signer = signers.find((s) => s.id === signerId)
+      if (!signer) throw new Error(`Signer with id ${signerId} not found`)
+      setSelectedSigner(signer)
+      return signer
     },
-    [signers]
+    [signers, selectedSigner]
+  )
+
+  // TODO: Maybe split this into multiple functions
+  const request: IRequestFunction = useCallback(
+    async (method, request) => {
+      setIsModalOpen(true)
+
+      // If no signer is selected, wait for the user to select one
+      if (!signerIframeRef.current) {
+        await new Promise((resolve) => {
+          const int = setInterval(() => {
+            if (signerIframeRef.current) {
+              clearInterval(int)
+              resolve(true)
+            }
+          }, 500)
+        })
+      }
+
+      const iframe = signerIframeRef.current
+      if (!iframe) throw new Error("Iframe not found")
+
+      const res = await IdentityKit.request({ iframe, method, params: request })
+      setIsModalOpen(false)
+      return res
+    },
+    [selectedSigner, response, signerIframeRef, response.current, setIsModalOpen]
   )
 
   return (
-    <IdentityKitContext.Provider value={{ ...config, handleConnect }}>
+    <IdentityKitContext.Provider
+      value={{
+        signers,
+        selectedSigner,
+        signerIframeRef,
+        isModalOpen,
+        toggleModal,
+        selectSigner,
+        request,
+      }}
+    >
+      {isModalOpen && <IdentityKitModal />}
       {children}
     </IdentityKitContext.Provider>
   )
