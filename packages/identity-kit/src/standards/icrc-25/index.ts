@@ -43,7 +43,7 @@ export type AdapterConfig = {
    * Handler transporting the messages
    */
   // FIXME:
-  // @ts-ignore
+  // @ts-expect-error err
   requestHandler?: (rpcMessage: RPCMessage) => RPCResponse
 }
 

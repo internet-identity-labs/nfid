@@ -4,6 +4,7 @@ import { RPC_BASE } from "./constants"
 
 type addEventListener = (type: string, listener: (event: MessageEvent) => void) => void
 type removeEventListener = (type: string, listener: (event: MessageEvent) => void) => void
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type postMessage = (message: any, targetOrigin: string) => void
 
 export type RequestFactoryProps = {

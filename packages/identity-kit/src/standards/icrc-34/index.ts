@@ -1,4 +1,4 @@
-import { Version } from "../ version";
+import { Version } from "../ version"
 
 /**
  * Represents the response to getting delegation information, including the version, identities, and optional delegation details.
@@ -7,7 +7,7 @@ export type GetDelegationResponse = Version & {
   /**
    * A list of identities the user has selected to share with the relying party.
    */
-  identities: string[];
+  identities: string[]
 
   /**
    * An optional field representing delegation information.
@@ -19,20 +19,20 @@ export type GetDelegationResponse = Version & {
     /**
      * Public key as described in the IC interface specification.
      */
-    pubkey: Blob;
+    pubkey: Blob
 
     /**
      * Expiration of the delegation, in nanoseconds since 1970-01-01, as a base-10 string.
      */
-    expiration: string;
+    expiration: string
 
     /**
      * A list of target canister ids (textual representation) the delegation is restricted to making canister calls to.
      * If the list is not present, the delegation applies to all canisters (i.e. it is not restricted).
      */
-    targets: string[];
-  };
-};
+    targets: string[]
+  }
+}
 
 /**
  * Interface for ICRC34 adapters.
@@ -46,5 +46,5 @@ export interface IRCR34Adapter {
    *
    * @returns A Promise resolving to the GetDelegationResponse containing the response to the delegation request.
    */
-  getDelegation(): Promise<GetDelegationResponse>;
+  getDelegation(): Promise<GetDelegationResponse>
 }

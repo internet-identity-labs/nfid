@@ -37,6 +37,7 @@ export class IdentityKit {
     params: IRequest
   }): Promise<ResponseTypeMap[T] | ResponseFailed> => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const postMessage = (message: any, targetOrigin: string) => {
         iframe.contentWindow!.postMessage(message, targetOrigin)
       }

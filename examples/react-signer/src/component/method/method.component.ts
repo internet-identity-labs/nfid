@@ -15,6 +15,6 @@ export const methodComponents: Map<string, MethodComponent> = utilsService.mapBy
   [
     icrc25RequestPermissionsMethodComponent,
     icrc25RevokePermissionsMethodComponent,
-    icrc27GetAccountsMethodComponent
+    icrc27GetAccountsMethodComponent,
   ]
 )

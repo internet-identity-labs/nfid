@@ -27,6 +27,6 @@ export function useIdentityKit(): {
   if (!request) throw new Error("useIdentityKit must be used within an IdentityKitProvider")
 
   return {
-    request
+    request,
   }
 }

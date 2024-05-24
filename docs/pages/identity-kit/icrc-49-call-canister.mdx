@@ -17,8 +17,8 @@ import { Tabs } from "nextra/components"
 [![Extension Badge](https://img.shields.io/badge/Extends-ICRC--25-ffcc222.svg)](https://github.com/dfinity/wg-identity-authentication/blob/main/topics/icrc_25_signer_interaction_standard.md)
 
 [![Standard Issue](https://img.shields.io/badge/ISSUE-ICRC--49-blue?logo=github)](https://github.com/dfinity/wg-identity-authentication/issues/114)
-</Stack>
 
+</Stack>
 
 This standard allows applications to request the execution of calls to third-party canisters by the
 signer. By using the `icrc49_call_canister` method, applications can interact with a broader range
@@ -40,8 +40,8 @@ const response: Response = await connection.callCanister({
   "contentMap": "2dn3p2NhcmdYTkRJREwEbXtuAGwCs7DawwNorYbKgwUBbAP7ygECot6U6wYB2KOMqA19AQMBHVfs7SoKuxOJdX37k7sBJsPALWEo5ayflizuaH0CAADIAWtjYW5pc3Rlcl9pZEoAAAAAAcDR1wEBbmluZ3Jlc3NfZXhwaXJ5GxeNX/65y4YAa21ldGhvZF9uYW1laHRyYW5zZmVyZW5vbmNlUFF4+hAimFhoqkdUcIchz0xscmVxdWVzdF90eXBlZGNhbGxmc2VuZGVyWB1q63Snu+4C5/fpWFu4nq1IpZxCYDEYA8XSPqPfAg==",
   "certificate": "2dn3omR0cmVlgwGDAYIEWCAPzKZJY/emKhi2GGtBrnHh4cdttATd4+9GtJrNCBepb4MBgwJOcmVxdWVzdF9zdGF0dXODAYIEWCCCgynUaonrKCCywghWCSk9BeDqMoI4yf15nxyU/5JZv4MBggRYIDG7WdzQ9sGWI1MpxizUzxubsEBuNkTT94UOZ9USbzNvgwGCBFggawwbTHxnPUzBAUhWBRjk0nzPs2fPpJlaIYtj5AvcX+ODAYIEWCDiFLyaWuMWjtVurCQcSgny/cqfM8S6qrdihVq7nPz1FoMCWCD/8jdeccvqHVYf06Hw7qPXIDNimC1Uyf47VsvgqKpPiIMBgwJFcmVwbHmCA1RESURMAWsCvIoBfcX+0gFxAQAABIMCRnN0YXR1c4IDR3JlcGxpZWSCBFgg7qZngcNt2+B/RuF44W3LRsKWXG6QQg2L6GdZgJ6Nb3+DAYIEWCAx3tU/mhHfX+wDzF003eSJYN8Nebou8rTeGyxr/rUa1YMCRHRpbWWCA0nw9+r88fjXxhdpc2lnbmF0dXJlWDCXNshvwWG1jGViP7ELePGHCThBw9mts45FxIy4gZATkUEsPeJ6y+cjbn2REmB0Soo="
 }
-
 ```
+
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -53,7 +53,7 @@ type Request = {
   arg: string
 }
 
-```
+````
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -64,5 +64,6 @@ type Response = {
   certificate: string
 }
 
-```
+````
+
 </Tabs.Tab></Tabs>

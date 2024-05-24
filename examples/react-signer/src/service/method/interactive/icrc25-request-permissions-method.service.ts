@@ -36,7 +36,6 @@ class Icrc25RequestPermissionsMethodService extends InteractiveMethodService {
       permissions,
     }
   }
-
 }
 
 export const icrc25RequestPermissionsMethodService = new Icrc25RequestPermissionsMethodService()

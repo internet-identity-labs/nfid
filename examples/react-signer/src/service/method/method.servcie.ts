@@ -21,6 +21,6 @@ export const methodServices: Map<string, MethodService> = utilsService.mapByKey(
     icrc25RevokePermissionsMethodService,
     icrc25SupportedStandardsMethodService,
     icrc27GetAccountsMethodService,
-    icrc29GetStatusMethodService
+    icrc29GetStatusMethodService,
   ]
 )

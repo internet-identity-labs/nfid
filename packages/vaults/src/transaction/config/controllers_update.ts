@@ -1,14 +1,11 @@
-import {TransactionType} from "../../enum/enums";
-import {Transaction} from "../transaction";
-import {
-    ControllersUpdateTransaction as TransactionCandid
-} from "../../idl/service_vault";
-import {TransactionMapperAbstract} from "../transaction_mapper";
-import { TransactionRequest} from "../transaction_request";
-import {Principal} from "@dfinity/principal";
-import {TransactionRequest as RequestCandid} from "../../idl/service_vault";
-import {RequestMapperAbstract} from "../request_mapper";
-
+import { TransactionType } from "../../enum/enums"
+import { Transaction } from "../transaction"
+import { ControllersUpdateTransaction as TransactionCandid } from "../../idl/service_vault"
+import { TransactionMapperAbstract } from "../transaction_mapper"
+import { TransactionRequest } from "../transaction_request"
+import { Principal } from "@dfinity/principal"
+import { TransactionRequest as RequestCandid } from "../../idl/service_vault"
+import { RequestMapperAbstract } from "../request_mapper"
 
 /**
  * This transaction type is used for updating the vault controllers.
@@ -18,64 +15,57 @@ import {RequestMapperAbstract} from "../request_mapper";
  * Can be requested/approved only by users with the admin role
  */
 export interface ControllersUpdateTransaction extends Transaction {
-    /**
-     * The principals (controllers) to be added to the vault.
-     */
-    principals: Array<Principal>
+  /**
+   * The principals (controllers) to be added to the vault.
+   */
+  principals: Array<Principal>
 
-    /**
-     * The current controllers of the vault.
-     */
-    current_controllers: Array<Principal>
+  /**
+   * The current controllers of the vault.
+   */
+  current_controllers: Array<Principal>
 }
 
 export class ControllersUpdateTransactionRequest implements TransactionRequest {
-    principals: Array<Principal>
+  principals: Array<Principal>
 
-    constructor(principals: Array<Principal>) {
-        this.principals = principals
-    }
+  constructor(principals: Array<Principal>) {
+    this.principals = principals
+  }
 
-    getType(): string {
-        return "ControllersUpdateTransactionRequest";
-    }
+  getType(): string {
+    return "ControllersUpdateTransactionRequest"
+  }
 }
 
-export class ControllersUpdateTransactionMapper extends TransactionMapperAbstract<TransactionCandid, ControllersUpdateTransaction> {
-    getVariant(): PropertyKey {
-        return "ControllersUpdateTransactionV";
-    }
+export class ControllersUpdateTransactionMapper extends TransactionMapperAbstract<TransactionCandid> {
+  getVariant(): PropertyKey {
+    return "ControllersUpdateTransactionV"
+  }
 
-    convert(candid: TransactionCandid): ControllersUpdateTransaction {
-        return {
-            principals: candid.principals,
-            current_controllers: candid.current_controllers,
-            ...this.basicFieldsConvert(candid.common)
-        };
+  convert(candid: TransactionCandid): ControllersUpdateTransaction {
+    return {
+      principals: candid.principals,
+      current_controllers: candid.current_controllers,
+      ...this.basicFieldsConvert(candid.common),
     }
+  }
 
-    getType(): TransactionType {
-        return TransactionType.ControllerUpdate;
-    }
-
+  getType(): TransactionType {
+    return TransactionType.ControllerUpdate
+  }
 }
 
-
-export class ControllersRequestMapper extends RequestMapperAbstract{
-
-    toCandid(request: ControllersUpdateTransactionRequest): RequestCandid {
-        return {
-            ControllersUpdateTransactionRequestV: {
-                principals: request.principals
-            }
-        }
+export class ControllersRequestMapper extends RequestMapperAbstract {
+  toCandid(request: ControllersUpdateTransactionRequest): RequestCandid {
+    return {
+      ControllersUpdateTransactionRequestV: {
+        principals: request.principals,
+      },
     }
+  }
 
-    getMappedRequestType(): string {
-        return "ControllersUpdateTransactionRequest";
-    }
+  getMappedRequestType(): string {
+    return "ControllersUpdateTransactionRequest"
+  }
 }
-
-
-
-

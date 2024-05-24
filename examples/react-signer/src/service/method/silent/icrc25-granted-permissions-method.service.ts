@@ -11,7 +11,7 @@ class Icrc25GrantedPermissionsMethodService extends SilentMethodService {
     const permissions = await authService.getPermissions()
     const scopes: Scope[] = permissions.map(x => { return { method: x } })
     const icrc25: Icrc25Dto = {
-      scopes
+      scopes,
     }
 
     const response: RPCSuccessResponse = {
@@ -23,7 +23,6 @@ class Icrc25GrantedPermissionsMethodService extends SilentMethodService {
 
     window.parent.postMessage(response, message.origin)
   }
-
 }
 
 export const icrc25GrantedPermissionsMethodService = new Icrc25GrantedPermissionsMethodService()

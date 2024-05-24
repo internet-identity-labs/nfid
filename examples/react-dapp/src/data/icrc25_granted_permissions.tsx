@@ -9,8 +9,8 @@ export const icrc25GrantedPermissionsSection: ISection = {
   title: "1.b icrc25_granted_permissions",
   description: (
     <>
-      The purpose of the <Method>icrc25_granted_permissions</Method> method is for the relying party to
-      query the granted permission scopes on the active session.
+      The purpose of the <Method>icrc25_granted_permissions</Method> method is for the relying party
+      to query the granted permission scopes on the active session.
     </>
   ),
   requestsExamples: [

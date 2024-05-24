@@ -15,6 +15,7 @@ import { Tabs } from "nextra/components"
 [![Status Badge](https://img.shields.io/badge/STATUS-DRAFT-ffcc00.svg)](https://github.com/dfinity/wg-identity-authentication/blob/main/topics/icrc_25_signer_interaction_standard.md)
 
 [![Standard Issue](https://img.shields.io/badge/ISSUE-ICRC--25-blue?logo=github)](https://github.com/dfinity/wg-identity-authentication/issues/94)
+
 </Stack>
 
 This standard outlines a foundational protocol for communication between decentralized apps (dApps)
@@ -22,8 +23,8 @@ and signers. It specifies a set of messages to facilitate this interaction, ensu
 secure exchange of information. ICRC-25 aims to create a uniform language for dApps and signers,
 enhancing interoperability and simplifying the development process.
 
-We invite the community to contribute adapters for other signers to `@nfid/identity-kit`, but
-you can also use custom adapters from your own or other external packages.
+We invite the community to contribute adapters for other signers to `@nfid/identity-kit`, but you
+can also use custom adapters from your own or other external packages.
 
 ```typescript filename="Import and configure Signer"
 import * as IdentityKit from "@nfid/identity-kit"
@@ -73,26 +74,27 @@ references.
 ```typescript filename="Method Call"
 const supported: SupportedStandards = await connection.getSupportedStandards()
 
-```
+````
 
 ```json filename="response data"
 ["ICRC-25", "ICRC-31", "ICRC-32"]
 //^^^^^^^ has to be supported by all signers!
-```
+````
+
 </Tabs.Tab>
 
 <Tabs.Tab>
 ```typescript filename="Responst Type"
 type Response = string[]
 
-```
+````
 </Tabs.Tab>
 
 </Tabs>
 
 ### Request Permissions:
 
-The purpose of the `requestPermissions` method is for the relying party to request permission scopes to perform further actions. 
+The purpose of the `requestPermissions` method is for the relying party to request permission scopes to perform further actions.
 If the set of granted scopes is not empty and there was no session before, a new session is created.
 
 <Tabs items={['Method Call', 'Request Type', 'Response Type']} defaultIndex="0">
@@ -110,7 +112,7 @@ const response: Response = await nfid.requestPermissions({
     }
   ]
 })
-```
+````
 
 ```json filename="Response Data"
 {
@@ -126,8 +128,8 @@ const response: Response = await nfid.requestPermissions({
     }
   ]
 }
-
 ```
+
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -141,7 +143,7 @@ type Request = {
   ]
 }
 
-```
+````
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -157,14 +159,16 @@ type Response = {
   ]
 }
 
-```
+````
+
 </Tabs.Tab>
 
 </Tabs>
 
 ### Granted Permissions Method:
 
-The purpose of the `grantedPermissions` method is for the relying party to query the granted permission scopes on the active session.
+The purpose of the `grantedPermissions` method is for the relying party to query the granted
+permission scopes on the active session.
 
 <Tabs items={['Method Call', 'Response Type']} defaultIndex="0">
 
@@ -187,8 +191,8 @@ const response: Response = await nfid.grantedPermissions()
     }
   ]
 }
-
 ```
+
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -204,7 +208,7 @@ type Response = {
   ]
 }
 
-```
+````
 </Tabs.Tab>
 
 </Tabs>
@@ -224,15 +228,15 @@ const response: Response = await nfid.revokePermissions({
     }
   ]
 })
-```
+````
 
 ```json filename="Response Data"
 {
   "version": "1",
   "scopes": []
 }
-
 ```
+
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -245,7 +249,7 @@ type Request = {
   ]
 }
 
-```
+````
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -261,7 +265,8 @@ type Response = {
   ]
 }
 
-```
+````
+
 </Tabs.Tab>
 
 </Tabs>

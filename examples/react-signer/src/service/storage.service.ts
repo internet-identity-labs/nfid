@@ -49,11 +49,7 @@ export class IdbRepository {
 
 export const idbRepository = new IdbRepository()
 
-const _openDbStore = async (
-  dbName = DB_NAME,
-  storeName = OBJECT_STORE_NAME,
-  version: number,
-) => {
+const _openDbStore = async (dbName = DB_NAME, storeName = OBJECT_STORE_NAME, version: number) => {
   console.debug("_openDbStore", { dbName, storeName, version })
   return await openDB(dbName, version, {
     upgrade: (database) => {
@@ -69,7 +65,7 @@ const _openDbStore = async (
 async function _getValue<T>(
   db: Database,
   storeName: string,
-  key: IDBValidKey,
+  key: IDBValidKey
 ): Promise<T | undefined> {
   return await db.get(storeName, key)
 }
@@ -78,16 +74,12 @@ async function _setValue<T>(
   db: Database,
   storeName: string,
   key: IDBValidKey,
-  value: T,
+  value: T
 ): Promise<IDBValidKey> {
   return await db.put(storeName, value, key)
 }
 
-async function _removeValue(
-  db: Database,
-  storeName: string,
-  key: IDBValidKey,
-): Promise<void> {
+async function _removeValue(db: Database, storeName: string, key: IDBValidKey): Promise<void> {
   return await db.delete(storeName, key)
 }
 
@@ -119,17 +111,16 @@ export class IdbKeyVal implements KeyValueStore {
    */
   public static async create(options?: DBCreateOptions): Promise<IdbKeyVal> {
     console.debug("IdbKeyVal.create", { options })
-    const {
-      dbName = DB_NAME,
-      storeName = OBJECT_STORE_NAME,
-      version = 1,
-    } = options ?? {}
+    const { dbName = DB_NAME, storeName = OBJECT_STORE_NAME, version = 1 } = options ?? {}
     const db = await _openDbStore(dbName, storeName, version)
     return new IdbKeyVal(db, storeName)
   }
 
   // Do not use - instead prefer create
-  private constructor(private _db: Database, private _storeName: string) {}
+  private constructor(
+    private _db: Database,
+    private _storeName: string
+  ) {}
 
   /**
    * Basic setter
@@ -205,4 +196,3 @@ export class MemoryKeyVal implements KeyValueStore {
     this._map.delete(key)
   }
 }
-

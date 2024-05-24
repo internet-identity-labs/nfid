@@ -22,7 +22,11 @@ export const IdentityKitModal: React.FC = () => {
               >
                 Back
               </div> */}
-              <iframe className="min-h-[640px]" ref={signerIframeRef} src={selectedSigner?.providerUrl + "?theme=" + theme} />
+              <iframe
+                className="min-h-[640px]"
+                ref={signerIframeRef}
+                src={selectedSigner?.providerUrl + "?theme=" + theme}
+              />
             </>
           ) : (
             <>

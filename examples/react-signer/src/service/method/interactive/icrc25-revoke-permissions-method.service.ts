@@ -43,7 +43,7 @@ class Icrc25RevokePermissionsMethodService extends InteractiveMethodService {
 
     const scopes: Scope[] = permissions.map(x => { return { method: x } })
     const icrc25: Icrc25Dto = {
-      scopes
+      scopes,
     }
 
     const response: RPCSuccessResponse = {

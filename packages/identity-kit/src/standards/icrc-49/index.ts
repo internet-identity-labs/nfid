@@ -1,4 +1,4 @@
-import { Version } from "../ version";
+import { Version } from "../ version"
 
 /**
  * Represents a request to call a canister, specifying the version, canister id, sender, method, and arguments.
@@ -7,23 +7,23 @@ export type CallCanisterRequest = {
   /**
    * The id of the canister on which the call should be executed.
    */
-  canisterId: string;
+  canisterId: string
 
   /**
    * The principal (textual representation) requested to execute the call.
    */
-  sender: string;
+  sender: string
 
   /**
    * The name of the call method to be executed.
    */
-  method: string;
+  method: string
 
   /**
    * The arguments for the call.
    */
-  arg: string;
-};
+  arg: string
+}
 
 /**
  * Represents the response to calling a canister, including the version, content map, and certificate.
@@ -32,13 +32,13 @@ export type CallCanisterResponse = Version & {
   /**
    * The CBOR-encoded content map of the actual request.
    */
-  contentMap: string;
+  contentMap: string
 
   /**
    * The certificate returned by the read_state call. The value is CBOR-encoded.
    */
-  certificate: string;
-};
+  certificate: string
+}
 
 /**
  * Interface for ICRC49 adapters.

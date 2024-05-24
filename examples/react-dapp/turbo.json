@@ -1,0 +1,11 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": [
+    "//"
+  ],
+  "pipeline": {
+    "build": {
+      "env": ["VITE_MOCKED_SIGNER_PROVIDER_URL"]
+    }
+  }
+}
