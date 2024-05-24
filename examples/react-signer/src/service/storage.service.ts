@@ -6,7 +6,7 @@ type IDBValidKey = string | number | Date | BufferSource | IDBValidKey[]
 const DB_NAME = "signer"
 const OBJECT_STORE_NAME = "permissions"
 
-export class IdbStorage {
+export class IdbRepository {
   private initializedDb: IdbKeyVal | undefined
 
   get _db(): Promise<KeyValueStore> {
@@ -47,7 +47,7 @@ export class IdbStorage {
   }
 }
 
-export const userInfoStorage = new IdbStorage()
+export const idbRepository = new IdbRepository()
 
 const _openDbStore = async (
   dbName = DB_NAME,

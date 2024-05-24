@@ -4,7 +4,7 @@ import { MethodService } from "../method.servcie"
 export interface ComponentData {
   method: string
   origin: string
-  onApprove: () => Promise<void>
+  onApprove: (data?: unknown) => Promise<void>
   onReject: () => Promise<void>
 }
 
@@ -30,13 +30,13 @@ export abstract class InteractiveMethodService implements MethodService {
   }
 
   public abstract getMethod(): string
-  public abstract onApprove(message: MessageEvent<RPCMessage>): Promise<void>
+  public abstract onApprove(message: MessageEvent<RPCMessage>, data?: unknown): Promise<void>
 
-  public getСomponentData(message: MessageEvent<RPCMessage>): ComponentData {
+  public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<ComponentData> {
     return {
       method: message.data.method,
       origin: message.origin,
-      onApprove: () => this.onApprove(message),
+      onApprove: (data?: unknown) => this.onApprove(message, data),
       onReject: () => this.onReject(message),
     }
   }

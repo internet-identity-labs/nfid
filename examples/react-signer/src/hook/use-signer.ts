@@ -1,18 +1,15 @@
-import { Ed25519KeyIdentity } from "@dfinity/identity"
-import React from "react"
+import React, { ReactNode } from "react"
 import { methodServices } from "../service/method/method.servcie"
-import { userInfoStorage } from "../service/storage.service"
 import { RPCMessage } from "../type"
-import {
-  ComponentData,
-} from "../service/method/interactive/interactive-method.service"
+import { methodComponents } from "../component/method/method.component"
+import { accountService } from "../service/account.service"
 
 export type UseSignerResponse = {
-  componentData?: ComponentData
+  component?: ReactNode
 }
 
 export const useSigner = (): UseSignerResponse => {
-  const [componentData, setComponentData] = React.useState<ComponentData | undefined>(undefined)
+  const [component, setComponent] = React.useState<ReactNode | undefined>(undefined)
 
   const handleMessage = React.useCallback(async (message: MessageEvent<RPCMessage>) => {
     const methodService = methodServices.get(message.data.method)
@@ -34,19 +31,14 @@ export const useSigner = (): UseSignerResponse => {
     }
 
     const componentData = await methodService.invokeAndGetComponentData(message)
-    setComponentData(componentData)
+    const methodComponent = componentData && methodComponents.get(componentData.method)
+    const component = componentData && methodComponent?.getComponent(componentData)
+    setComponent(component)
   }, [])
 
   React.useEffect(() => {
     window.addEventListener("message", handleMessage, false)
-
-    async function initDb() {
-      const keyPair = await userInfoStorage.get("keyPair")
-      if (!keyPair) {
-        userInfoStorage.set("keyPair", JSON.stringify(Ed25519KeyIdentity.generate().toJSON()))
-      }
-    }
-    initDb()
+    accountService.initWithPredefinedUsers()
     return () => window.removeEventListener("message", handleMessage)
   }, [handleMessage])
 
@@ -55,6 +47,6 @@ export const useSigner = (): UseSignerResponse => {
   }, [])
 
   return {
-    componentData
+    component,
   }
 }
