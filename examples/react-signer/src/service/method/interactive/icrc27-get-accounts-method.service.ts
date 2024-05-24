@@ -1,29 +1,19 @@
 import { Ed25519KeyIdentity } from "@dfinity/identity"
-import { userInfoStorage } from "../storage.service"
-import { RPCMessage, RPCSuccessResponse, RPCErrorResponse, ButtonActions } from "../../type"
-import { MethodService } from "./method.servcie"
+import { userInfoStorage } from "../../storage.service"
+import { RPCMessage, RPCSuccessResponse } from "../../../type"
+import { ComponentData, InteractiveMethodService } from "./interactive-method.service"
+import { IAccount } from "../../../methods/get_accounts"
 
-class Icrc27GetAccountsMethodService implements MethodService {
-  public sendResponse(): Promise<void> {
-    throw new Error("Method not implemented.")
-  }
+export interface AccountsComponentData extends ComponentData {
+  accounts: IAccount[]
+}
 
-  public isUserApprovalNeeded(): boolean {
-    return true
-  }
-
-  public getButtonActions(message: MessageEvent<RPCMessage>): ButtonActions {
-    return {
-      onApprove: () => this.onApprove(message),
-      onReject: () => this.onReject(message),
-    }
-  }
-
+class Icrc27GetAccountsMethodService extends InteractiveMethodService {
   public getMethod(): string {
     return "icrc27_get_accounts"
   }
 
-  private async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
+  public async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
     const permissionsJson = await userInfoStorage.get("permissions")
 
     if (!permissionsJson || !(JSON.parse(permissionsJson) as string[]).includes(this.getMethod())) {
@@ -67,28 +57,28 @@ class Icrc27GetAccountsMethodService implements MethodService {
       jsonrpc: message.data.jsonrpc,
       id: message.data.id,
       result: {
-        accounts: [{
-          principal,
-          subaccount: "0000000000000000000000000000000000000000000000000000000000000000"
-        }],
+        accounts: [
+          {
+            principal,
+            subaccount: "0000000000000000000000000000000000000000000000000000000000000000",
+          },
+        ],
       },
     }
 
     window.parent.postMessage(response, message.origin)
   }
 
-  private onReject(message: MessageEvent<RPCMessage>): void {
-    const response: RPCErrorResponse = {
-      origin: message.origin,
-      jsonrpc: message.data.jsonrpc,
-      id: message.data.id,
-      error: {
-        code: 3001,
-        message: "Action aborted",
-      },
+  public getСomponentData(message: MessageEvent<RPCMessage>): AccountsComponentData {
+    const accounts = [
+      { displayName: "Some display name 1", value: "123" },
+      { displayName: "Some display name 2", value: "1234" },
+      { displayName: "Some display name 3", value: "12345" },
+    ]
+    return {
+      accounts,
+      ...super.getСomponentData(message),
     }
-
-    window.parent.postMessage(response, message.origin)
   }
 }
 

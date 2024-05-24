@@ -1,35 +1,19 @@
-import { userInfoStorage } from "../storage.service"
+import { userInfoStorage } from "../../storage.service"
 import {
   RPCMessage,
   RPCSuccessResponse,
-  RPCErrorResponse,
   Icrc25Dto,
-  ButtonActions,
   Scope,
-} from "../../type"
-import { MethodService } from "./method.servcie"
+} from "../../../type"
+import { InteractiveMethodService } from "./interactive-method.service"
+import { PermissionsComponentData } from "./icrc25-request-permissions-method.service"
 
-class Icrc25RevokePermissionsMethodService implements MethodService {
-  public sendResponse(): Promise<void> {
-    throw new Error("Method not implemented.")
-  }
-
-  public isUserApprovalNeeded(): boolean {
-    return true
-  }
-
-  public getButtonActions(message: MessageEvent<RPCMessage>): ButtonActions {
-    return {
-      onApprove: () => this.onApprove(message),
-      onReject: () => this.onReject(message),
-    }
-  }
-
+class Icrc25RevokePermissionsMethodService extends InteractiveMethodService {
   public getMethod(): string {
     return "icrc25_revoke_permissions"
   }
 
-  private async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
+  public async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
     const icrc25Message = message.data.params as unknown as Icrc25Dto
 
     if (!icrc25Message.scopes) {
@@ -76,18 +60,13 @@ class Icrc25RevokePermissionsMethodService implements MethodService {
     window.parent.postMessage(response, message.origin)
   }
 
-  private onReject(message: MessageEvent<RPCMessage>): void {
-    const response: RPCErrorResponse = {
-      origin: message.origin,
-      jsonrpc: message.data.jsonrpc,
-      id: message.data.id,
-      error: {
-        code: 3001,
-        message: "Action aborted",
-      },
+  public getСomponentData(message: MessageEvent<RPCMessage>): PermissionsComponentData {
+    const icrc25Message = message.data.params as unknown as Icrc25Dto
+    const permissions = icrc25Message.scopes.map((el) => el.method)
+    return {
+      permissions,
+      ...super.getСomponentData(message)
     }
-
-    window.parent.postMessage(response, message.origin)
   }
 }
 

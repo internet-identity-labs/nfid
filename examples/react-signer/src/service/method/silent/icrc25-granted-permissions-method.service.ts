@@ -1,18 +1,10 @@
-import { userInfoStorage } from "../storage.service"
-import { ButtonActions, Icrc25Dto, RPCMessage, RPCSuccessResponse, Scope } from "../../type"
-import { MethodService } from "./method.servcie"
+import { userInfoStorage } from "../../storage.service"
+import { Icrc25Dto, RPCMessage, RPCSuccessResponse, Scope } from "../../../type"
+import { SilentMethodService } from "./silent-method.service"
 
-class Icrc25GrantedPermissionsMethodService implements MethodService {
-  public isUserApprovalNeeded(): boolean {
-    return false
-  }
-
+class Icrc25GrantedPermissionsMethodService extends SilentMethodService {
   public getMethod(): string {
     return "icrc25_granted_permissions"
-  }
-
-  public getButtonActions(): ButtonActions {
-    throw Error("Not supported")
   }
 
   public async sendResponse(message: MessageEvent<RPCMessage>): Promise<void> {
