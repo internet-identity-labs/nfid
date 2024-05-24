@@ -28,8 +28,3 @@ export interface Icrc25Dto {
 export interface Scope {
   method: string
 }
-
-export interface ButtonActions {
-  onApprove: () => void
-  onReject: () => void
-}

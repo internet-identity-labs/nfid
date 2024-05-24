@@ -1,22 +1,26 @@
-import { ButtonActions, RPCMessage } from "../../type"
 import { utilsService } from "../utils.service"
-import { icrc25GrantedPermissionsMethodService } from "./icrc25-granted-permissions-method.service"
-import { icrc25RequestPermissionsMethodService } from "./icrc25-request-permissions-method.service"
-import { icrc25RevokePermissionsMethodService } from "./icrc25-revoke-permissions-method.service"
-import { icrc25SupportedStandardsMethodService } from "./icrc25-supported-standards-method.service"
-import { icrc27GetAccountsMethodService } from "./icrc27-get-accounts-method.service"
+import { icrc25GrantedPermissionsMethodService } from "./silent/icrc25-granted-permissions-method.service"
+import { icrc25RequestPermissionsMethodService } from "./interactive/icrc25-request-permissions-method.service"
+import { icrc25RevokePermissionsMethodService } from "./interactive/icrc25-revoke-permissions-method.service"
+import { icrc25SupportedStandardsMethodService } from "./silent/icrc25-supported-standards-method.service"
+import { icrc27GetAccountsMethodService } from "./interactive/icrc27-get-accounts-method.service"
+import { ComponentData } from "./interactive/interactive-method.service"
+import { RPCMessage } from "../../type"
+import { icrc29GetStatusMethodService } from "./silent/icrc29-get-status-method.service"
 
 export interface MethodService {
-    getMethod(): string,
-    isUserApprovalNeeded(): boolean,
-    sendResponse(message: MessageEvent<RPCMessage>): Promise<void>,
-    getButtonActions(message: MessageEvent<RPCMessage>): ButtonActions
+  getMethod(): string
+  invokeAndGetComponentData(message: MessageEvent<RPCMessage>): Promise<ComponentData | undefined>
 }
 
-export const methodServices: Map<string, MethodService> = utilsService.mapByKey(x => x.getMethod(), [
+export const methodServices: Map<string, MethodService> = utilsService.mapByKey(
+  (x) => x.getMethod(),
+  [
     icrc25RequestPermissionsMethodService,
     icrc25GrantedPermissionsMethodService,
     icrc25RevokePermissionsMethodService,
     icrc25SupportedStandardsMethodService,
-    icrc27GetAccountsMethodService
-])
+    icrc27GetAccountsMethodService,
+    icrc29GetStatusMethodService
+  ]
+)

@@ -1,17 +1,9 @@
-import { ButtonActions, RPCMessage, RPCSuccessResponse } from "../../type"
-import { MethodService } from "./method.servcie"
+import { RPCMessage, RPCSuccessResponse } from "../../../type"
+import { SilentMethodService } from "./silent-method.service"
 
-class Icrc25SupportedStandardsMethodService implements MethodService {
-  public isUserApprovalNeeded(): boolean {
-    return false
-  }
-
+class Icrc25SupportedStandardsMethodService extends SilentMethodService {
   public getMethod(): string {
     return "icrc25_supported_standards"
-  }
-
-  public getButtonActions(): ButtonActions {
-    throw Error("Not supported")
   }
 
   public async sendResponse(message: MessageEvent<RPCMessage>): Promise<void> {
