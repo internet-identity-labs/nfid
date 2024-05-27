@@ -17,12 +17,12 @@ import { Tabs } from "nextra/components"
 [![Extension Badge](https://img.shields.io/badge/Extends-ICRC--25-ffcc222.svg)](https://github.com/dfinity/wg-identity-authentication/blob/main/topics/icrc_25_signer_interaction_standard.md)
 
 [![Standard Issue](https://img.shields.io/badge/ISSUE-ICRC--34-blue?logo=github)](https://github.com/dfinity/wg-identity-authentication/issues/115)
+
 </Stack>
 
-
-The `icrc34_get_delegation` method is designed to facilitate the request for an identity's delegation.
-This process allows users to securely manage their identities and permissions, providing a flexible
-and secure framework for identity delegation within the ICP ecosystem.
+The `icrc34_get_delegation` method is designed to facilitate the request for an identity's
+delegation. This process allows users to securely manage their identities and permissions, providing
+a flexible and secure framework for identity delegation within the ICP ecosystem.
 
 <Tabs items={['Method Call', 'Response Type']} defaultIndex="0"><Tabs.Tab>
 ```typescript filename="Method Call"
@@ -38,8 +38,8 @@ const response: Response = await connection.getDelegation()
     }
   ]
 }
-
 ```
+
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -55,3 +55,4 @@ type Response = {
 
 ```
 </Tabs.Tab></Tabs>
+```

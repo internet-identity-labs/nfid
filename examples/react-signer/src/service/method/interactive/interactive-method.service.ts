@@ -9,23 +9,25 @@ export interface ComponentData {
 }
 
 export abstract class InteractiveMethodService implements MethodService {
-  public async invokeAndGetComponentData(message: MessageEvent<RPCMessage>): Promise<ComponentData | undefined> {
-      const componentData = this.getСomponentData(message)
-      if (!componentData) {
-        window.parent.postMessage(
-          {
-            origin: message.data.origin,
-            jsonrpc: message.data.jsonrpc,
-            id: message.data.id,
-            error: {
-              code: 2000,
-              message: "Not supported",
-            },
+  public async invokeAndGetComponentData(
+    message: MessageEvent<RPCMessage>
+  ): Promise<ComponentData | undefined> {
+    const componentData = this.getСomponentData(message)
+    if (!componentData) {
+      window.parent.postMessage(
+        {
+          origin: message.data.origin,
+          jsonrpc: message.data.jsonrpc,
+          id: message.data.id,
+          error: {
+            code: 2000,
+            message: "Not supported",
           },
-          message.origin
-        )
-      }
-    
+        },
+        message.origin
+      )
+    }
+
     return componentData
   }
 

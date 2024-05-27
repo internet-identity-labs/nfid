@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { GitHubLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons'
+import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
 
 import LogoLight from "./public/img/logo-light.png"
 import LogoDark from "./public/img/logo-dark.png"

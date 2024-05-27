@@ -1,4 +1,3 @@
-
 type SignerAdapterConfig = {
   id: string
 }

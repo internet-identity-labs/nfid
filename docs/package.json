@@ -6,10 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "format": "prettier .",
-    "format:check": "npm run format --check",
-    "format:write": "npm run format --write"
+    "lint": "next lint"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.3",
@@ -20,7 +17,6 @@
     "clsx": "^2.1.1",
     "cmdk": "^0.2.0",
     "common-tags": "^1.8.2",
-    "eslint": "9.2.0",
     "eslint-config-next": "13.2.4",
     "github-slugger": "^2.0.0",
     "gpt3-tokenizer": "^1.1.5",

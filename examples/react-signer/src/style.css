@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-    --theme-main-color: #000000;
+  --theme-main-color: #000000;
 }
 
 ul.themed li::before {
-    content: "• ";
-    color: var(--theme-main-color); 
+  content: "• ";
+  color: var(--theme-main-color);
 }

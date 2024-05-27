@@ -17,8 +17,8 @@ import { Tabs } from "nextra/components"
 [![Extension Badge](https://img.shields.io/badge/Extends-ICRC--25-ffcc222.svg)](https://github.com/dfinity/wg-identity-authentication/blob/main/topics/icrc_25_signer_interaction_standard.md)
 
 [![Standard Issue](https://img.shields.io/badge/ISSUE-ICRC--32-blue?logo=github)](https://github.com/dfinity/wg-identity-authentication/issues/113)
-</Stack>
 
+</Stack>
 
 The `icrc32_sign_challenge` method provides a secure mechanism for verifying ownership of user
 identities. By facilitating cryptographic proofs, this standard strengthens the security framework
@@ -43,6 +43,7 @@ const response: Response = await connection.signChallange({
   }
 }
 ```
+
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -52,7 +53,7 @@ type Request = {
   challenge: string
 }
 
-```
+````
 </Tabs.Tab>
 
 <Tabs.Tab>
@@ -64,7 +65,8 @@ type Response = {
   }
 }
 
-```
+````
+
 </Tabs.Tab>
 
 </Tabs>

@@ -11,20 +11,21 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "test": "turbo test",
-    "format": "prettier '**/*.{ts,tsx,md,mdx,css}'",
-    "format:write": "npm run format --write ",
-    "format:check": "npm run format --check"
+    "format:write": "prettier --write '**/*.{ts,tsx,md,mdx,css}'",
+    "format:check": "prettier --check '**/*.{ts,tsx,md,mdx,css}'",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@nfid/eslint-config": "*",
     "@nfid/typescript-config": "*",
+    "dotenv-cli": "latest",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
     "prettier": "^3.1.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "turbo": "latest",
-    "typescript": "^5.4.5",
-    "dotenv-cli": "latest"
+    "typescript": "^5.4.5"
   },
   "workspaces": [
     "config/*",

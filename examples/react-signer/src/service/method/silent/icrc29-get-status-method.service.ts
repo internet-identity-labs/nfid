@@ -11,7 +11,7 @@ class Icrc29GetStatusMethodService extends SilentMethodService {
       origin: message.origin,
       jsonrpc: message.data.jsonrpc,
       id: message.data.id,
-      result: "ready"
+      result: "ready",
     }
 
     window.parent.postMessage(response, message.origin)

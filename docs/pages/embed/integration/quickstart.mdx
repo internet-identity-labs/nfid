@@ -2,6 +2,7 @@
 title: "Quickstart"
 description: "The complete guide to NFID"
 ---
+
 import { Steps } from "nextra/components"
 
 ## Installation
@@ -17,10 +18,11 @@ npm i @nfid/embed @dfinity/agent @dfinity/identity @dfinity/auth-client @dfinity
 ### Import NFID class
 
 ```tsx copy
-import { NFID } from "@nfid/embed";
+import { NFID } from "@nfid/embed"
 ```
 
-The static `NFID.init()` method returns a promise that resolves as soon as the mounted NFID iframe is ready to use. You can use the `await` keyword to wait for the promise to resolve:
+The static `NFID.init()` method returns a promise that resolves as soon as the mounted NFID iframe
+is ready to use. You can use the `await` keyword to wait for the promise to resolve:
 
 ```tsx copy
 type IdleOptions = {
@@ -56,5 +58,5 @@ const nfid = await NFID.init({
 
 </Steps>
 
-
-> Sample implementation to demonstrate how this could look in your app: [NFID Playground](https://playground.nfid.one)
+> Sample implementation to demonstrate how this could look in your app:
+> [NFID Playground](https://playground.nfid.one)

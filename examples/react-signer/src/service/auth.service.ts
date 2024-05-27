@@ -37,7 +37,7 @@ export const authService = {
     }
 
     const auth = JSON.parse(authJson) as Auth
-    const newPermissions = auth.permissions.filter(x => !permissions.includes(x))
+    const newPermissions = auth.permissions.filter((x) => !permissions.includes(x))
     await idbRepository.set(key, JSON.stringify({ permissions: newPermissions }))
     return newPermissions
   },
@@ -51,6 +51,5 @@ export const authService = {
 
     const auth = JSON.parse(authJson) as Auth
     return auth.permissions.includes(permission)
-  }
-
+  },
 }

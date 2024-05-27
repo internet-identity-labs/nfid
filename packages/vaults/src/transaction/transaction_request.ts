@@ -1,8 +1,3 @@
 export interface TransactionRequest {
-    getType: () => string
+  getType: () => string
 }
-
-
-
-
-

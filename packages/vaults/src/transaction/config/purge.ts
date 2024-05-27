@@ -1,12 +1,12 @@
-import {TransactionType} from "../../enum/enums";
-import {Transaction} from "../transaction";
+import { TransactionType } from "../../enum/enums"
+import { Transaction } from "../transaction"
 import {
-    PurgeTransaction as TransactionCandid,
-    TransactionRequest as TransactionRequestCandid
-} from "../../idl/service_vault";
-import {TransactionMapperAbstract} from "../transaction_mapper";
-import {TransactionRequest} from "../transaction_request";
-import {RequestMapperAbstract} from "../request_mapper";
+  PurgeTransaction as TransactionCandid,
+  TransactionRequest as TransactionRequestCandid,
+} from "../../idl/service_vault"
+import { TransactionMapperAbstract } from "../transaction_mapper"
+import { TransactionRequest } from "../transaction_request"
+import { RequestMapperAbstract } from "../request_mapper"
 
 /**
  * Use this method to clear all transactions from the current queue of those awaiting approval.
@@ -16,45 +16,37 @@ import {RequestMapperAbstract} from "../request_mapper";
  * The transaction is executed outside the queue.
  * This transaction can only be requested or approved by users with the admin role.
  */
-export interface PurgeTransaction extends Transaction {
-}
-
+export interface PurgeTransaction extends Transaction {}
 
 export class PurgeTransactionRequest implements TransactionRequest {
-    getType(): string {
-        return "PurgeTransactionRequest";
-    }
+  getType(): string {
+    return "PurgeTransactionRequest"
+  }
 }
 
-export class PurgeTransactionMapper extends TransactionMapperAbstract<TransactionCandid, PurgeTransaction> {
-    getVariant(): PropertyKey {
-        return "PurgeTransactionV";
-    }
+export class PurgeTransactionMapper extends TransactionMapperAbstract<TransactionCandid> {
+  getVariant(): PropertyKey {
+    return "PurgeTransactionV"
+  }
 
-    convert(candid: TransactionCandid): PurgeTransaction {
-        return {
-            ...this.basicFieldsConvert(candid.common)
-        };
+  convert(candid: TransactionCandid): PurgeTransaction {
+    return {
+      ...this.basicFieldsConvert(candid.common),
     }
+  }
 
-    getType(): TransactionType {
-        return TransactionType.Purge;
-    }
-
+  getType(): TransactionType {
+    return TransactionType.Purge
+  }
 }
 
-export class PurgeRequestMapper extends RequestMapperAbstract{
-    toCandid(request: PurgeTransactionRequest): TransactionRequestCandid {
-        return {
-            PurgeTransactionRequestV: {
-            }
-        }
+export class PurgeRequestMapper extends RequestMapperAbstract {
+  toCandid(): TransactionRequestCandid {
+    return {
+      PurgeTransactionRequestV: {},
     }
-    getMappedRequestType(): string {
-        return "PurgeTransactionRequest";
-    }
+  }
+  getMappedRequestType(): string {
+    return "PurgeTransactionRequest"
+  }
 }
-
-
-
-

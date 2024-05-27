@@ -4,7 +4,7 @@ module.exports = {
   extends: ["@nfid/eslint-config/library.js"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: "./tsconfig.lint.json",
+    project: "./tsconfig.json",
   },
   plugins: ["jest"],
   env: {
