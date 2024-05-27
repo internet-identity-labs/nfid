@@ -12,6 +12,7 @@ import { CodeSection } from "../molecules/code-section"
 import { useIdentityKit } from "@nfid/identity-kit/react"
 import { ICRC25Methods } from "@nfid/identity-kit"
 import { getRequestObject } from "../../utils/requests"
+import { DropdownSelect } from "../molecules/dropdown-select"
 
 export interface IRequestExample {
   title: string
@@ -32,8 +33,8 @@ export const Section: React.FC<ISection> = ({
   getCodeSnippet,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [selectedRequestIndex] = useState(0)
-  const [requestValue, setRequestValue] = useState(requestsExamples[0].value)
+  const [selectedRequestIndex, setSelectedRequestIndex] = useState(0)
+  const [requestValue, setRequestValue] = useState(requestsExamples[selectedRequestIndex].value)
   const [responseValue, setResponseValue] = useState("{}")
   const { request } = useIdentityKit()
 
@@ -54,28 +55,30 @@ export const Section: React.FC<ISection> = ({
     return getCodeSnippet(requestValue)
   }, [getCodeSnippet, requestValue])
 
-  // const requestsOptions = useMemo(() => {
-  //   return requestsExamples.map((r) => ({
-  //     label: r.title,
-  //     value: r.value,
-  //   }))
-  // }, [requestsExamples])
+  const requestsOptions = useMemo(() => {
+    return requestsExamples.map((r) => ({
+      label: r.title,
+      value: r.value,
+    }))
+  }, [requestsExamples])
 
   return (
     <div>
       <Loader isLoading={isLoading} />
       <Title>{title}</Title>
       <Text className="mb-5">{description}</Text>
-      {/* <DropdownSelect
-        label="Request examples"
-        isMultiselect={false}
-        options={requestsOptions}
-        selectedValues={[requestsOptions[selectedRequestIndex].value]}
-        setSelectedValues={(values) => {
-          setSelectedRequestIndex(requestsOptions.findIndex((o) => o.value === values[0]))
-          setRequestValue(values[0])
-        }}
-      /> */}
+      {requestsOptions.length > 1 ? (
+        <DropdownSelect
+          label="Request examples"
+          isMultiselect={false}
+          options={requestsOptions}
+          selectedValues={[requestsOptions[selectedRequestIndex].value]}
+          setSelectedValues={(values) => {
+            setSelectedRequestIndex(requestsOptions.findIndex((o) => o.value === values[0]))
+            setRequestValue(values[0])
+          }}
+        />
+      ) : null}
       <div className="grid grid-cols-2 gap-[30px] my-3">
         <RequestSection value={requestValue} setValue={setRequestValue} />
         <ResponseSection value={responseValue} />

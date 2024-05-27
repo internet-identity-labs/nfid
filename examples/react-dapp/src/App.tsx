@@ -9,6 +9,9 @@ import {
 import { Section } from "./ui/organisms/section"
 import { ToastContainer } from "react-toastify"
 import { SectionContainer } from "./ui/organisms/section-container"
+import { icrc29StatusSection } from "./data/icrc29_status"
+import { icrc34SGetDelegationSection } from "./data/icrc34_get_delegation"
+import { icrc49CallCanisterSection } from "./data/icrc49_call_canister"
 
 const icrc25data = [
   icrc25RequestPermissionsSection,
@@ -17,6 +20,9 @@ const icrc25data = [
   icrc25SupportedStandardsSection,
 ]
 const icrc27data = [icrc27GetAccountsSection]
+const icrc29data = [icrc29StatusSection]
+const icrc34data = [icrc34SGetDelegationSection]
+const icrc49data = [icrc49CallCanisterSection]
 
 function App() {
   return (
@@ -31,6 +37,21 @@ function App() {
         </SectionContainer>
         <SectionContainer title="2. ICRC-27: Get Accounts">
           {icrc27data.map((section, index) => (
+            <Section key={index} {...section} />
+          ))}
+        </SectionContainer>
+        <SectionContainer title="3. ICRC-29: Status">
+          {icrc29data.map((section, index) => (
+            <Section key={index} {...section} />
+          ))}
+        </SectionContainer>
+        <SectionContainer title="4. ICRC-34: Get delegation">
+          {icrc34data.map((section, index) => (
+            <Section key={index} {...section} />
+          ))}
+        </SectionContainer>
+        <SectionContainer title="5. ICRC-49: Call canister">
+          {icrc49data.map((section, index) => (
             <Section key={index} {...section} />
           ))}
         </SectionContainer>
