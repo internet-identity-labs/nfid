@@ -1,6 +1,6 @@
-import { userInfoStorage } from "../../storage.service"
 import { Icrc25Dto, RPCMessage, RPCSuccessResponse, Scope } from "../../../type"
 import { SilentMethodService } from "./silent-method.service"
+import { authService } from "../../auth.service"
 
 class Icrc25GrantedPermissionsMethodService extends SilentMethodService {
   public getMethod(): string {
@@ -8,9 +8,7 @@ class Icrc25GrantedPermissionsMethodService extends SilentMethodService {
   }
 
   public async sendResponse(message: MessageEvent<RPCMessage>): Promise<void> {
-    const permissionsEntity = await userInfoStorage.get("permissions")
-
-    const permissions = permissionsEntity ? JSON.parse(permissionsEntity) as string[] : []
+    const permissions = await authService.getPermissions()
     const scopes: Scope[] = permissions.map(x => { return { method: x } })
     const icrc25: Icrc25Dto = {
       scopes

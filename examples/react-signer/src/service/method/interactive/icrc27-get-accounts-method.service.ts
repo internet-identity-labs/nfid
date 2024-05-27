@@ -1,11 +1,10 @@
-import { Ed25519KeyIdentity } from "@dfinity/identity"
-import { userInfoStorage } from "../../storage.service"
 import { RPCMessage, RPCSuccessResponse } from "../../../type"
 import { ComponentData, InteractiveMethodService } from "./interactive-method.service"
-import { IAccount } from "../../../methods/get_accounts"
+import { Account, accountService } from "../../account.service"
+import { authService } from "../../auth.service"
 
 export interface AccountsComponentData extends ComponentData {
-  accounts: IAccount[]
+  accounts: Account[]
 }
 
 class Icrc27GetAccountsMethodService extends InteractiveMethodService {
@@ -13,10 +12,32 @@ class Icrc27GetAccountsMethodService extends InteractiveMethodService {
     return "icrc27_get_accounts"
   }
 
-  public async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
-    const permissionsJson = await userInfoStorage.get("permissions")
+  public async onApprove(message: MessageEvent<RPCMessage>, data?: unknown): Promise<void> {
+    const accounts = data as Account[]
 
-    if (!permissionsJson || !(JSON.parse(permissionsJson) as string[]).includes(this.getMethod())) {
+    const accountsResponse = accounts.map((x) => {
+      return {
+        principal: x.principal,
+        subaccount: x.subaccount,
+      }
+    })
+
+    const response: RPCSuccessResponse = {
+      origin: message.origin,
+      jsonrpc: message.data.jsonrpc,
+      id: message.data.id,
+      result: {
+        accounts: accountsResponse,
+      },
+    }
+
+    window.parent.postMessage(response, message.origin)
+  }
+
+  public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<AccountsComponentData> {
+    const authorized = await authService.hasPermission(this.getMethod())
+
+    if (!authorized) {
       window.parent.postMessage(
         {
           origin: message.data.origin,
@@ -29,11 +50,11 @@ class Icrc27GetAccountsMethodService extends InteractiveMethodService {
         },
         message.origin
       )
-      return
+      throw Error("Permission not granted")
     }
 
-    const keyPairJson = await userInfoStorage.get("keyPair")
-    if (!keyPairJson) {
+    const accounts = await accountService.getAccounts()
+    if (!accounts) {
       window.parent.postMessage(
         {
           origin: message.data.origin,
@@ -47,37 +68,13 @@ class Icrc27GetAccountsMethodService extends InteractiveMethodService {
         },
         message.origin
       )
-      return
+      throw Error("User is not found")
     }
 
-    const principal = Ed25519KeyIdentity.fromJSON(keyPairJson).getPrincipal().toText()
-
-    const response: RPCSuccessResponse = {
-      origin: message.origin,
-      jsonrpc: message.data.jsonrpc,
-      id: message.data.id,
-      result: {
-        accounts: [
-          {
-            principal,
-            subaccount: "0000000000000000000000000000000000000000000000000000000000000000",
-          },
-        ],
-      },
-    }
-
-    window.parent.postMessage(response, message.origin)
-  }
-
-  public getСomponentData(message: MessageEvent<RPCMessage>): AccountsComponentData {
-    const accounts = [
-      { displayName: "Some display name 1", value: "123" },
-      { displayName: "Some display name 2", value: "1234" },
-      { displayName: "Some display name 3", value: "12345" },
-    ]
+    const baseData = await super.getСomponentData(message)
     return {
+      ...baseData,
       accounts,
-      ...super.getСomponentData(message),
     }
   }
 }

@@ -1,4 +1,3 @@
-import { userInfoStorage } from "../../storage.service"
 import {
   RPCMessage,
   RPCSuccessResponse,
@@ -7,6 +6,7 @@ import {
 } from "../../../type"
 import { InteractiveMethodService } from "./interactive-method.service"
 import { PermissionsComponentData } from "./icrc25-request-permissions-method.service"
+import { authService } from "../../auth.service"
 
 class Icrc25RevokePermissionsMethodService extends InteractiveMethodService {
   public getMethod(): string {
@@ -17,7 +17,7 @@ class Icrc25RevokePermissionsMethodService extends InteractiveMethodService {
     const icrc25Message = message.data.params as unknown as Icrc25Dto
 
     if (!icrc25Message.scopes) {
-      await userInfoStorage.remove("permissions")
+      await authService.revokePermissions()
       const response: RPCSuccessResponse = {
         origin: message.origin,
         jsonrpc: message.data.jsonrpc,
@@ -28,8 +28,9 @@ class Icrc25RevokePermissionsMethodService extends InteractiveMethodService {
       return
     }
 
-    const permissionEntity = await userInfoStorage.get("permissions")
-    if (!permissionEntity) {
+    const revokePermissions = icrc25Message.scopes.map(x => x.method)
+    const permissions = await authService.revokePermissions(revokePermissions)
+    if (!permissions || permissions.length === 0) {
       const response: RPCSuccessResponse = {
         origin: message.origin,
         jsonrpc: message.data.jsonrpc,
@@ -40,12 +41,7 @@ class Icrc25RevokePermissionsMethodService extends InteractiveMethodService {
       return
     }
 
-    const revokePermission = icrc25Message.scopes.map(x => x.method)
-    const permissions = JSON.parse(permissionEntity) as string[]
-    const newPermissions = permissions.filter(x => !revokePermission.includes(x))
-    await userInfoStorage.set("permissions", JSON.stringify(newPermissions))
-
-    const scopes: Scope[] = newPermissions.map(x => { return { method: x } })
+    const scopes: Scope[] = permissions.map(x => { return { method: x } })
     const icrc25: Icrc25Dto = {
       scopes
     }
@@ -60,12 +56,13 @@ class Icrc25RevokePermissionsMethodService extends InteractiveMethodService {
     window.parent.postMessage(response, message.origin)
   }
 
-  public getСomponentData(message: MessageEvent<RPCMessage>): PermissionsComponentData {
+  public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<PermissionsComponentData> {
     const icrc25Message = message.data.params as unknown as Icrc25Dto
     const permissions = icrc25Message.scopes.map((el) => el.method)
+    const baseData = await super.getСomponentData(message)
     return {
-      permissions,
-      ...super.getСomponentData(message)
+      ...baseData,
+      permissions
     }
   }
 }
