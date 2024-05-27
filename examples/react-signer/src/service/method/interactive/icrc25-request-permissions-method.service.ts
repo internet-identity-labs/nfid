@@ -13,7 +13,7 @@ class Icrc25RequestPermissionsMethodService extends InteractiveMethodService {
 
   public async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
     const icrc25Message = message.data.params as unknown as Icrc25Dto
-    const permissions = icrc25Message.scopes.map(x => x.method)
+    const permissions = icrc25Message.scopes.map((x) => x.method)
 
     await authService.savePermissions(permissions)
 
@@ -27,7 +27,9 @@ class Icrc25RequestPermissionsMethodService extends InteractiveMethodService {
     window.parent.postMessage(response, message.origin)
   }
 
-  public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<PermissionsComponentData> {
+  public async getСomponentData(
+    message: MessageEvent<RPCMessage>
+  ): Promise<PermissionsComponentData> {
     const icrc25Message = message.data.params as unknown as Icrc25Dto
     const permissions = icrc25Message.scopes.map((el) => el.method)
     const baseData = await super.getСomponentData(message)
