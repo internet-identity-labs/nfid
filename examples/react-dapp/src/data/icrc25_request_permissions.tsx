@@ -14,6 +14,7 @@ export const basicRequest = {
 }
 
 export const icrc25RequestPermissionsSection: ISection = {
+  id: "icrc25_request_permissions",
   title: "1.a icrc25_request_permissions",
   description: (
     <>

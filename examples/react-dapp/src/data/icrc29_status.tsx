@@ -5,6 +5,7 @@ export const basicRequest = {
 }
 
 export const icrc29StatusSection: ISection = {
+  id: "icrc29_status",
   title: "3.a icrc29_status",
   description: (
     <>

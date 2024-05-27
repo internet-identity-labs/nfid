@@ -12,6 +12,7 @@ export const basicRequest = {
 }
 
 export const icrc34SGetDelegationSection: ISection = {
+  id: "icrc34_get_delegation",
   title: "4.a icrc34_get_delegation",
   description: (
     <>

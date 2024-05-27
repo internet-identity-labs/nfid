@@ -12,6 +12,7 @@ export const basicRequest = {
 }
 
 export const icrc25RevokePermissionsSection: ISection = {
+  id: "icrc25_revoke_permissions",
   title: "1.c icrc25_revoke_permissions",
   description: (
     <>
