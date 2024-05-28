@@ -3,11 +3,13 @@ import { IdentityKitContext } from "./context"
 import * as Dialog from "@radix-ui/react-dialog"
 import { useTheme } from "next-themes"
 
-export const IdentityKitModal = ({
-  onIframeLoad,
-}: {
+interface IdentityKitModalRequest {
   onIframeLoad: HTMLAttributes<HTMLIFrameElement>["onLoad"]
-}) => {
+}
+
+export const IdentityKitModal: React.FC<IdentityKitModalRequest> = ({
+  onIframeLoad,
+}: IdentityKitModalRequest) => {
   const { isModalOpen, selectedSigner, signers, selectSigner, signerIframeRef } =
     useContext(IdentityKitContext)
 
