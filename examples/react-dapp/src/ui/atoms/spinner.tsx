@@ -6,7 +6,7 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {}
 export const Spinner: React.FC<SpinnerProps> = ({ className }) => {
   return (
     <svg
-      className={clsx("animate-spin", className ?? "h-5 w-5 text-primary")}
+      className={clsx("animate-spin", "h-5 w-5 text-primary", className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

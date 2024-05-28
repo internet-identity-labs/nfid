@@ -1,5 +1,6 @@
 import clsx from "clsx"
 import React from "react"
+import { Spinner } from "./spinner"
 
 export type ButtonType = "primary" | "secondary" | "stroke" | "ghost" | "red"
 
@@ -12,6 +13,7 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   type?: ButtonType
   isSmall?: boolean
   isSubmit?: boolean
+  loading?: boolean
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -24,6 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
   isSmall,
   block,
   isSubmit = true,
+  loading,
   ...buttonProps
 }: ButtonProps) => {
   const isPrimary = type === "primary"
@@ -35,7 +38,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       id={id}
-      disabled={disabled}
+      disabled={disabled || loading}
       type={isSubmit ? "submit" : "button"}
       className={clsx(
         "transition duration-75",
@@ -97,8 +100,12 @@ export const Button: React.FC<ButtonProps> = ({
       {...buttonProps}
     >
       <div className="flex items-center justify-center space-x-2">
-        {icon ? <div className="flex items-center justify-center w-6 h-6">{icon}</div> : null}
-        {children ? <div className="text-center">{children}</div> : null}
+        {loading ? (
+          <Spinner className="mr-2 text-white" />
+        ) : (
+          icon && <div className="flex items-center justify-center w-6 h-6">{icon}</div>
+        )}
+        {children}
       </div>
     </button>
   )

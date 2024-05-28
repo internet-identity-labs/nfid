@@ -9,12 +9,14 @@ interface IdentityKitProviderProps extends PropsWithChildren {
   signers: SignerConfig[]
 }
 
+// may be better to add silent flag to such methods in constants
+const SILENT_METHODS = ["icrc25_granted_permissions", "icrc25_supported_standards", "icrc29_status"]
+
 export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ children, signers }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedSigner, setSelectedSigner] = useState<SignerConfig | undefined>(undefined)
   const response = useRef<IResponse | undefined>(undefined)
   const signerIframeRef = useRef<HTMLIFrameElement>(null)
-  const [identityKit, setIdentityKit] = useState<IdentityKit | undefined>()
 
   const toggleModal = useCallback(() => {
     setIsModalOpen((prev) => !prev)
@@ -34,8 +36,7 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
   // TODO: Maybe split this into multiple functions
   const request: IRequestFunction = useCallback(
     async (method, request) => {
-      let ik = identityKit
-      setIsModalOpen(true)
+      if (!selectedSigner || !SILENT_METHODS.includes(method)) setIsModalOpen(true)
 
       // If no signer is selected, wait for the user to select one
       if (!signerIframeRef.current) {
@@ -50,19 +51,25 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
       }
 
       // if signer is selected wait for iframe to be ready
-      if (!ik) {
-        ik = await IdentityKit.init()
-        setIdentityKit(ik)
+      if (!Number(signerIframeRef.current?.getAttribute("ready"))) {
+        await new Promise((resolve) => {
+          const int = setInterval(() => {
+            if (Number(signerIframeRef.current?.getAttribute("ready"))) {
+              clearInterval(int)
+              resolve(true)
+            }
+          }, 500)
+        })
       }
 
       const iframe = signerIframeRef.current
       if (!iframe) throw new Error("Iframe not found")
 
-      const res = await ik.request({ iframe, method, params: request })
+      const res = await IdentityKit.request({ iframe, method, params: request })
       setIsModalOpen(false)
       return res
     },
-    [selectedSigner, response, signerIframeRef, response.current, setIsModalOpen, identityKit]
+    [selectedSigner, response, signerIframeRef, response.current, setIsModalOpen]
   )
 
   return (
@@ -77,7 +84,14 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
         request,
       }}
     >
-      <IdentityKitModal />
+      <IdentityKitModal
+        onIframeLoad={async function (e) {
+          if (!e.currentTarget.getAttribute("ready")) {
+            await IdentityKit.init()
+            signerIframeRef.current?.setAttribute("ready", "1")
+          }
+        }}
+      />
       {children}
     </IdentityKitContext.Provider>
   )

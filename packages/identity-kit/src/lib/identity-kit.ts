@@ -27,7 +27,7 @@ export class IdentityKit {
     })
   }
 
-  public request = async <T extends IdentityKitMethod>({
+  public static request = async <T extends IdentityKitMethod>({
     iframe,
     method,
     params,
