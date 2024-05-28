@@ -1,5 +1,5 @@
 import { Box, Flex } from "@radix-ui/themes"
-import { Loader } from "./ui/loader"
+import { Loader } from "./component/loader.component"
 import { useSigner } from "./hook/use-signer"
 
 function App() {

@@ -1,4 +1,5 @@
 import { RPCMessage, RPCErrorResponse } from "../../../type"
+import { authService } from "../../auth.service"
 import { MethodService } from "../method.servcie"
 
 export interface ComponentData {
@@ -12,6 +13,24 @@ export abstract class InteractiveMethodService implements MethodService {
   public async invokeAndGetComponentData(
     message: MessageEvent<RPCMessage>
   ): Promise<ComponentData | undefined> {
+    const authorized = await this.isAuthorized()
+
+    if (!authorized) {
+      window.parent.postMessage(
+        {
+          origin: message.data.origin,
+          jsonrpc: message.data.jsonrpc,
+          id: message.data.id,
+          error: {
+            code: 3000,
+            message: "Permission not granted",
+          },
+        },
+        message.origin
+      )
+      throw Error("Permission not granted")
+    }
+
     const componentData = this.getСomponentData(message)
     if (!componentData) {
       window.parent.postMessage(
@@ -33,6 +52,10 @@ export abstract class InteractiveMethodService implements MethodService {
 
   public abstract getMethod(): string
   public abstract onApprove(message: MessageEvent<RPCMessage>, data?: unknown): Promise<void>
+
+  protected async isAuthorized(): Promise<boolean> {
+    return await authService.hasPermission(this.getMethod())
+  }
 
   public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<ComponentData> {
     return {

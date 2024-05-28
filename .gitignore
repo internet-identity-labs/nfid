@@ -6,6 +6,7 @@ TODO.md
 node_modules
 .pnp
 .pnp.js
+/target/
 
 # Local env files
 .env.local

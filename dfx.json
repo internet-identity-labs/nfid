@@ -24,10 +24,16 @@
       },
       "source": ["docs/out"],
       "type": "assets"
+    },
+    "target": {
+      "candid": "examples/target/src/target/target.did",
+      "package": "target",
+      "type": "rust"
     }
   },
   "defaults": {
     "build": {
+      "args": "",
       "packtool": ""
     }
   },

@@ -8,14 +8,11 @@ export interface Auth {
 
 export const authService = {
   async savePermissions(permissions: string[]): Promise<void> {
-    console.log("debug save", permissions)
     await idbRepository.set(key, JSON.stringify({ permissions }))
   },
 
   async getPermissions(): Promise<string[]> {
     const authJson = await idbRepository.get(key)
-
-    console.log("result", authJson)
 
     if (!authJson) {
       return []

@@ -4,6 +4,7 @@ import { icrc25RequestPermissionsMethodComponent } from "./icrc25-request-permis
 import { icrc25RevokePermissionsMethodComponent } from "./icrc25-revoke-permissions-method.component"
 import { ComponentData } from "../../service/method/interactive/interactive-method.service"
 import { utilsService } from "../../service/utils.service"
+import { icrc34GetDelegationMethodComponent } from "./icrc34-get-delegation-method.component"
 
 export interface MethodComponent {
   getMethod(): string
@@ -16,5 +17,6 @@ export const methodComponents: Map<string, MethodComponent> = utilsService.mapBy
     icrc25RequestPermissionsMethodComponent,
     icrc25RevokePermissionsMethodComponent,
     icrc27GetAccountsMethodComponent,
+    icrc34GetDelegationMethodComponent,
   ]
 )

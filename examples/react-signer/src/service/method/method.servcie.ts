@@ -7,6 +7,7 @@ import { icrc27GetAccountsMethodService } from "./interactive/icrc27-get-account
 import { ComponentData } from "./interactive/interactive-method.service"
 import { RPCMessage } from "../../type"
 import { icrc29GetStatusMethodService } from "./silent/icrc29-get-status-method.service"
+import { icrc34GetDelegationMethodService } from "./interactive/icrc34-get-delegation-method.service"
 
 export interface MethodService {
   getMethod(): string
@@ -22,5 +23,6 @@ export const methodServices: Map<string, MethodService> = utilsService.mapByKey(
     icrc25SupportedStandardsMethodService,
     icrc27GetAccountsMethodService,
     icrc29GetStatusMethodService,
+    icrc34GetDelegationMethodService,
   ]
 )

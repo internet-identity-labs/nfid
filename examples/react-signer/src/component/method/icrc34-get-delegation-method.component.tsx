@@ -3,14 +3,20 @@ import { ComponentData } from "../../service/method/interactive/interactive-meth
 import { GetAccounts } from "../get-accounts.component"
 import { MethodComponent } from "./method.component"
 
-export const icrc27GetAccountsMethodComponent: MethodComponent = {
+export const icrc34GetDelegationMethodComponent: MethodComponent = {
   getMethod(): string {
-    return "icrc27_get_accounts"
+    return "icrc34_get_delegation"
   },
   getComponent(componentData: ComponentData) {
     const { origin, accounts, onApprove, onReject } = componentData as AccountsComponentData
     return (
-      <GetAccounts accounts={accounts} origin={origin} onApprove={onApprove} onReject={onReject} />
+      <GetAccounts
+        accounts={accounts}
+        origin={origin}
+        onApprove={onApprove}
+        onReject={onReject}
+        singleChoice
+      />
     )
   },
 }
