@@ -20,6 +20,7 @@ export interface IRequestExample {
 }
 
 export interface ISection {
+  id: string
   title: string
   description: JSX.Element
   requestsExamples: IRequestExample[]
@@ -27,6 +28,7 @@ export interface ISection {
 }
 
 export const Section: React.FC<ISection> = ({
+  id,
   title,
   description,
   requestsExamples,
@@ -63,7 +65,7 @@ export const Section: React.FC<ISection> = ({
   }, [requestsExamples])
 
   return (
-    <div>
+    <div id={id}>
       <Loader isLoading={isLoading} />
       <Title>{title}</Title>
       <Text className="mb-5">{description}</Text>
@@ -85,7 +87,7 @@ export const Section: React.FC<ISection> = ({
       </div>
       <CodeSection value={codeSection} />
       <div className="flex gap-5">
-        <Button className="w-[160px] mt-5" onClick={handleSubmit} isSmall>
+        <Button id="submit" className="w-[160px] mt-5" onClick={handleSubmit} isSmall>
           Submit
         </Button>
         <Button

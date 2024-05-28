@@ -6,6 +6,7 @@ export const basicRequest = {
 }
 
 export const icrc27GetAccountsSection: ISection = {
+  id: "icrc27_get_accounts",
   title: "2.a icrc27_get_accounts",
   description: (
     <>

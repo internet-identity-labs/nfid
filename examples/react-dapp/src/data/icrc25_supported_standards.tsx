@@ -6,6 +6,7 @@ export const basicRequest = {
 }
 
 export const icrc25SupportedStandardsSection: ISection = {
+  id: "icrc25_supported_standards",
   title: "1.d icrc25_supported_standards",
   description: (
     <>

@@ -6,6 +6,7 @@ export const basicRequest = {
 }
 
 export const icrc25GrantedPermissionsSection: ISection = {
+  id: "icrc25_granted_permissions",
   title: "1.b icrc25_granted_permissions",
   description: (
     <>

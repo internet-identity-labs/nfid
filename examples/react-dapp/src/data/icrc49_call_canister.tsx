@@ -23,6 +23,7 @@ export const withConsentMessage = {
 }
 
 export const icrc49CallCanisterSection: ISection = {
+  id: "icrc49_call_canister",
   title: "5.a icrc49_call_canister",
   description: (
     <>
