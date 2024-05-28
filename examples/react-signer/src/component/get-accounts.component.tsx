@@ -1,22 +1,44 @@
 import { useState } from "react"
 import { InteractivePanel } from "./interactive-panel.component"
 import { Account } from "../service/account.service"
+import { Loader } from "./loader.component"
 
 interface GetAccountsRequest {
   origin: string
   accounts: Account[]
+  singleChoice?: boolean
   onReject: () => void
-  onApprove: (accounts: Account[]) => void
+  onApprove: (accounts: Account[]) => Promise<void>
 }
 
-export const GetAccounts = ({ origin, accounts, onApprove, onReject }: GetAccountsRequest) => {
-  const [selectedAccounts, setSelectedAccounts] = useState<Account[]>(accounts)
+export const GetAccounts = ({
+  origin,
+  accounts,
+  singleChoice,
+  onApprove,
+  onReject,
+}: GetAccountsRequest) => {
+  const [selectedAccounts, setSelectedAccounts] = useState<Account[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSelect = (acc: Account) => {
+    if (singleChoice) {
+      setSelectedAccounts([acc])
+      return
+    }
+
     if (selectedAccounts.includes(acc))
       return setSelectedAccounts(selectedAccounts.filter((a) => a !== acc))
 
     setSelectedAccounts([...selectedAccounts, acc])
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center">
+        <Loader />
+      </div>
+    )
   }
 
   return (
@@ -45,7 +67,14 @@ export const GetAccounts = ({ origin, accounts, onApprove, onReject }: GetAccoun
           ))}
         </div>
       </div>
-      <InteractivePanel onApprove={() => onApprove(selectedAccounts)} onReject={onReject} />
+      <InteractivePanel
+        onApprove={async () => {
+          setIsLoading(true)
+          await onApprove(selectedAccounts)
+          setIsLoading(false)
+        }}
+        onReject={onReject}
+      />
     </>
   )
 }

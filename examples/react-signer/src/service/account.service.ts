@@ -1,5 +1,5 @@
 import { Ed25519KeyIdentity } from "@dfinity/identity"
-import { SubAccount } from "@dfinity/ledger-icp"
+import { AccountIdentifier, SubAccount } from "@dfinity/ledger-icp"
 import { idbRepository } from "./storage.service"
 import { uint8ArrayToHexString } from "@dfinity/utils"
 
@@ -53,8 +53,6 @@ export const accountService = {
   async getAccounts(): Promise<Account[]> {
     const accountsJson = await idbRepository.get(key)
 
-    console.log("result", accountsJson)
-
     if (!accountsJson) {
       return []
     }
@@ -64,14 +62,33 @@ export const accountService = {
     const accounts: Account[] = accountEntities.map((account) => {
       const keyIdentity = Ed25519KeyIdentity.fromJSON(account.keyIdentity)
       const subAccount = SubAccount.fromID(account.subaccount)
+      const principal = keyIdentity.getPrincipal()
+      const accountIdentifier = AccountIdentifier.fromPrincipal({ principal, subAccount }).toHex()
       return {
         id: account.id,
-        displayName: account.displayName,
-        principal: keyIdentity.getPrincipal().toText(),
+        displayName: `${accountIdentifier.slice(0, 10)}...${accountIdentifier.slice(53, accountIdentifier.length - 1)}`,
+        principal: principal.toText(),
         subaccount: uint8ArrayToHexString(subAccount.toUint8Array()),
       }
     })
 
     return accounts
+  },
+
+  async getAccountKeyIdentityById(id: number): Promise<Ed25519KeyIdentity | undefined> {
+    const accountsJson = await idbRepository.get(key)
+
+    if (!accountsJson) {
+      return undefined
+    }
+
+    const accountEntities = JSON.parse(accountsJson) as AccountEntity[]
+    const accountEntity = accountEntities.find((x) => x.id === id)
+
+    if (!accountEntity) {
+      return undefined
+    }
+
+    return Ed25519KeyIdentity.fromJSON(accountEntity.keyIdentity)
   },
 }

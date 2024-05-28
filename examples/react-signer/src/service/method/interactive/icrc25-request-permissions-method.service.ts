@@ -11,6 +11,10 @@ class Icrc25RequestPermissionsMethodService extends InteractiveMethodService {
     return "icrc25_request_permissions"
   }
 
+  protected async isAuthorized(): Promise<boolean> {
+    return true
+  }
+
   public async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
     const icrc25Message = message.data.params as unknown as Icrc25Dto
     const permissions = icrc25Message.scopes.map((x) => x.method)

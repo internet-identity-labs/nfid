@@ -32,7 +32,7 @@ export const useSigner = (): UseSignerResponse => {
 
     const componentData = await methodService.invokeAndGetComponentData(message)
     const methodComponent = componentData && methodComponents.get(componentData.method)
-    const component = componentData && methodComponent?.getComponent(componentData)
+    const component = methodComponent && methodComponent.getComponent(componentData)
     setComponent(component)
   }, [])
 

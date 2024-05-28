@@ -1,7 +1,6 @@
 import { RPCMessage, RPCSuccessResponse } from "../../../type"
 import { ComponentData, InteractiveMethodService } from "./interactive-method.service"
 import { Account, accountService } from "../../account.service"
-import { authService } from "../../auth.service"
 
 export interface AccountsComponentData extends ComponentData {
   accounts: Account[]
@@ -35,24 +34,6 @@ class Icrc27GetAccountsMethodService extends InteractiveMethodService {
   }
 
   public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<AccountsComponentData> {
-    const authorized = await authService.hasPermission(this.getMethod())
-
-    if (!authorized) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 3000,
-            message: "Permission not granted",
-          },
-        },
-        message.origin
-      )
-      throw Error("Permission not granted")
-    }
-
     const accounts = await accountService.getAccounts()
     if (!accounts) {
       window.parent.postMessage(
