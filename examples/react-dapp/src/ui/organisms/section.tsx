@@ -6,7 +6,6 @@ import { useMemo, useState } from "react"
 import { toast } from "react-toastify"
 import { isValidJSON } from "../../utils/json"
 import "react-toastify/dist/ReactToastify.css"
-import { Loader } from "../atoms/loader"
 import { Button } from "../atoms/button"
 import { CodeSection } from "../molecules/code-section"
 import { useIdentityKit } from "@nfid/identity-kit/react"
@@ -66,7 +65,6 @@ export const Section: React.FC<ISection> = ({
 
   return (
     <div id={id}>
-      <Loader isLoading={isLoading} />
       <Title>{title}</Title>
       <Text className="mb-5">{description}</Text>
       {requestsOptions.length > 1 ? (
@@ -87,7 +85,7 @@ export const Section: React.FC<ISection> = ({
       </div>
       <CodeSection value={codeSection} />
       <div className="flex gap-5">
-        <Button id="submit" className="w-[160px] mt-5" onClick={handleSubmit} isSmall>
+        <Button loading={isLoading} className="w-[160px] mt-5" onClick={handleSubmit} isSmall>
           Submit
         </Button>
         <Button
