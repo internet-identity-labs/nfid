@@ -51,6 +51,7 @@ test.describe("icrc34", () => {
       expect(responseSection).toContainText(`"delegations": [`)
       expect(responseSection).toContainText(`"delegation": `)
       expect(responseSection).toContainText(`"signature": `)
+      expect(responseSection).toContainText(`"targets": `)
     })
   })
 
@@ -87,7 +88,7 @@ test.describe("icrc34", () => {
       expect(responseSection).toContainText(`"delegations": [`)
       expect(responseSection).toContainText(`"delegation": `)
       expect(responseSection).toContainText(`"signature": `)
-      expect(responseSection).toContainText(`"targets": []`)
+      expect(responseSection).not.toContainText(`"targets":`)
     })
   })
 })

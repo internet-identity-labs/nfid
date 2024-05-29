@@ -29,9 +29,6 @@ test.describe("icrc25", () => {
             method: "icrc27_get_accounts",
           },
           {
-            method: "icrc25_revoke_permissions",
-          },
-          {
             method: "icrc34_get_delegation",
           },
         ],
@@ -73,35 +70,29 @@ test.describe("icrc25", () => {
   })
 
   test("Revoke permissions", async ({ page }) => {
-    await test.step("icrc25_request_permissions", async () => {
-      await getPermissions(page)
-    })
+    const sectionId = "icrc25_revoke_permissions"
 
-    await test.step("icrc25_revoke_permissions", async () => {
-      const sectionId = "icrc25_revoke_permissions"
+    await verifySectionVisibility(page, sectionId)
+    await verifyRequestSection(page, sectionId, icrc25RevokeRequest)
+    await verifyResponseSection(page, sectionId, "{}")
 
-      await verifySectionVisibility(page, sectionId)
-      await verifyRequestSection(page, sectionId, icrc25RevokeRequest)
-      await verifyResponseSection(page, sectionId, "{}")
+    await submitRequest(page, sectionId)
+    await approveWithDefaultSigner(page, sectionId)
 
-      await submitRequest(page, sectionId)
-      await approveWithDefaultSigner(page, sectionId)
+    const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
+    expect(responseSection).toContainText(`"origin": "${origin}"`)
+    expect(responseSection).not.toContainText(`icrc27_get_accounts`)
 
-      const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
-      expect(responseSection).toContainText(`"origin": "${origin}"`)
-      expect(responseSection).not.toContainText(`icrc27_get_accounts`)
+    // Check that the permissions were revoked in granted permissions
+    await verifySectionVisibility(page, "icrc25_granted_permissions")
+    await verifyRequestSection(page, "icrc25_granted_permissions", icrc25GrantedRequest)
+    await verifyResponseSection(page, "icrc25_granted_permissions", "{}")
+    await submitRequest(page, "icrc25_granted_permissions", true)
 
-      // Check that the permissions were revoked in granted permissions
-      await verifySectionVisibility(page, "icrc25_granted_permissions")
-      await verifyRequestSection(page, "icrc25_granted_permissions", icrc25GrantedRequest)
-      await verifyResponseSection(page, "icrc25_granted_permissions", "{}")
-      await submitRequest(page, "icrc25_granted_permissions", true)
-
-      const grantedResponse = page.locator(`#icrc25_granted_permissions #response-section-e2e`)
-      expect(grantedResponse).toContainText(`"origin": "${origin}"`)
-      expect(grantedResponse).toContainText(`"scopes": [`)
-      expect(grantedResponse).not.toContainText(`"method": "icrc27_get_accounts"`)
-    })
+    const grantedResponse = page.locator(`#icrc25_granted_permissions #response-section-e2e`)
+    expect(grantedResponse).toContainText(`"origin": "${origin}"`)
+    expect(grantedResponse).toContainText(`"scopes": [`)
+    expect(grantedResponse).not.toContainText(`"method": "icrc27_get_accounts"`)
   })
 
   test("Check supported standards", async ({ page }) => {
