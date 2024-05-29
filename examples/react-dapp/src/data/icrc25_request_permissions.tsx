@@ -9,6 +9,9 @@ export const basicRequest = {
       {
         method: "icrc27_get_accounts",
       },
+      {
+        method: "icrc34_get_delegation",
+      },
     ],
   },
 }

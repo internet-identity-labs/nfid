@@ -28,7 +28,7 @@ export abstract class InteractiveMethodService implements MethodService {
         },
         message.origin
       )
-      throw Error("Permission not granted")
+      return undefined
     }
 
     const componentData = this.getСomponentData(message)

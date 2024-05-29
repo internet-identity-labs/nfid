@@ -1,22 +1,30 @@
 import { Box, Flex } from "@radix-ui/themes"
 import { Loader } from "./component/loader.component"
-import { useSigner } from "./hook/use-signer"
+import { State, useSigner } from "./hook/use-signer"
 
 function App() {
-  const { component } = useSigner()
+  const { component, state } = useSigner()
+
+  if (State.READY == state || !component) {
+    return
+  }
+
+  if (State.LOADING === state) {
+    return (
+      <Box>
+        <Flex className="flex flex-col justify-center h-screen">
+          <div className="flex items-center justify-center">
+            <Loader />
+          </div>
+        </Flex>
+      </Box>
+    )
+  }
 
   return (
     <>
       <Box>
-        <Flex className="flex flex-col justify-center h-screen">
-          {component ? (
-            component
-          ) : (
-            <div className="flex items-center justify-center">
-              <Loader />
-            </div>
-          )}
-        </Flex>
+        <Flex className="flex flex-col justify-center h-screen">{component}</Flex>
       </Box>
     </>
   )
