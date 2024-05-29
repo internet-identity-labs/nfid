@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test"
-import { basicRequest } from "../src/data/icrc34_get_delegation"
 import {
   verifySectionVisibility,
   verifyRequestSection,
@@ -10,6 +9,16 @@ import {
 } from "./utils"
 
 const origin = "http://localhost:3001"
+
+export const basicRequest = {
+  method: "icrc34_get_delegation",
+  params: {
+    publicKey:
+      "302a300506032b65700321000da059000c5e09ab2ebd5f0c72e3f08899c37ab057262db7211b6bc890d8f861",
+    targets: ["do25a-dyaaa-aaaak-qifua-cai"], // should be the same as in the .env.dev
+    maxTimeToLive: "28800000000000",
+  },
+}
 
 test.describe("icrc34", () => {
   test.beforeEach(async ({ page }) => {
@@ -35,8 +44,7 @@ test.describe("icrc34", () => {
       await page.waitForTimeout(250)
       await frame!.click("#acc_0")
       await page.waitForTimeout(250)
-      await approveWithDefaultSigner(page)
-      await page.waitForTimeout(5000)
+      await approveWithDefaultSigner(page, sectionId)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       expect(responseSection).toContainText(`"origin": "${origin}"`)
@@ -72,8 +80,7 @@ test.describe("icrc34", () => {
       await page.waitForTimeout(250)
       await frame!.click("#acc_0")
       await page.waitForTimeout(250)
-      await approveWithDefaultSigner(page)
-      await page.waitForTimeout(5000)
+      await approveWithDefaultSigner(page, sectionId)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       expect(responseSection).toContainText(`"origin": "${origin}"`)

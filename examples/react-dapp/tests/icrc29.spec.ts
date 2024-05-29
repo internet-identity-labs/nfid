@@ -24,7 +24,10 @@ test.describe("icrc29", () => {
 
     await submitRequest(page, sectionId)
     await chooseWallet(page)
-    await page.waitForTimeout(3000)
+    await page.waitForFunction((sectionId) => {
+      const responseSection = document.querySelector(`#${sectionId} #response-section-e2e`)
+      return responseSection && responseSection.textContent !== "{}"
+    }, sectionId)
 
     const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
     expect(responseSection).toContainText(`"result": "ready"`) // Check actual method

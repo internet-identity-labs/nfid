@@ -45,7 +45,7 @@ test.describe("icrc25", () => {
     await verifyResponseSection(page, sectionId, "{}")
 
     await submitRequest(page, sectionId)
-    await approveWithDefaultSigner(page)
+    await approveWithDefaultSigner(page, sectionId)
 
     const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
     expect(responseSection).toContainText(`"origin": "${origin}"`)
@@ -63,9 +63,8 @@ test.describe("icrc25", () => {
       await verifySectionVisibility(page, sectionId)
       await verifyRequestSection(page, sectionId, icrc25GrantedRequest)
       await verifyResponseSection(page, sectionId, "{}")
+      await submitRequest(page, sectionId, true)
 
-      await submitRequest(page, sectionId)
-      await page.waitForTimeout(1000)
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       expect(responseSection).toContainText(`"origin": "${origin}"`)
       expect(responseSection).toContainText(`"scopes": [`)
@@ -86,8 +85,7 @@ test.describe("icrc25", () => {
       await verifyResponseSection(page, sectionId, "{}")
 
       await submitRequest(page, sectionId)
-      await approveWithDefaultSigner(page)
-      await page.waitForTimeout(1000)
+      await approveWithDefaultSigner(page, sectionId)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       expect(responseSection).toContainText(`"origin": "${origin}"`)
@@ -97,9 +95,8 @@ test.describe("icrc25", () => {
       await verifySectionVisibility(page, "icrc25_granted_permissions")
       await verifyRequestSection(page, "icrc25_granted_permissions", icrc25GrantedRequest)
       await verifyResponseSection(page, "icrc25_granted_permissions", "{}")
+      await submitRequest(page, "icrc25_granted_permissions", true)
 
-      await submitRequest(page, "icrc25_granted_permissions")
-      await page.waitForTimeout(1000)
       const grantedResponse = page.locator(`#icrc25_granted_permissions #response-section-e2e`)
       expect(grantedResponse).toContainText(`"origin": "${origin}"`)
       expect(grantedResponse).toContainText(`"scopes": [`)
@@ -117,7 +114,10 @@ test.describe("icrc25", () => {
 
       await submitRequest(page, sectionId)
       await chooseWallet(page)
-      await page.waitForTimeout(1000)
+      await page.waitForFunction((sectionId) => {
+        const responseSection = document.querySelector(`#${sectionId} #response-section-e2e`)
+        return responseSection && responseSection.textContent !== "{}"
+      }, sectionId)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       expect(responseSection).toContainText(`"ICRC-25"`)

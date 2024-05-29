@@ -1,14 +1,14 @@
 import { Method } from "../ui/atoms/method.js"
 import { ISection } from "../ui/organisms/section.js"
 
-// const targetCanister = import.meta.env.VITE_TARGET_CANISTER
+const targetCanister = import.meta.env.VITE_TARGET_CANISTER
 
 export const basicRequest = {
   method: "icrc34_get_delegation",
   params: {
     publicKey:
       "302a300506032b65700321000da059000c5e09ab2ebd5f0c72e3f08899c37ab057262db7211b6bc890d8f861",
-    targets: ["do25a-dyaaa-aaaak-qifua-cai"],
+    targets: [targetCanister],
     maxTimeToLive: "28800000000000",
   },
 }

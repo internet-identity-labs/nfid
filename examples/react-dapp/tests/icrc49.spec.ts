@@ -5,7 +5,6 @@ import {
   verifyRequestSection,
   verifyResponseSection,
   submitRequest,
-  approveWithDefaultSigner,
   getPermissions,
   selectRequestTemplate,
 } from "./utils"
@@ -29,11 +28,10 @@ test.describe("icrc49", () => {
       await verifyRequestSection(page, sectionId, basicRequest)
       await verifyResponseSection(page, sectionId, "{}")
 
-      await submitRequest(page, sectionId)
+      await submitRequest(page, sectionId, true)
       // TODO: Uncomment when method is implemented
       // await page.waitForTimeout(250)
       // await approveWithDefaultSigner(page)
-      await page.waitForTimeout(1000)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       // TODO: Verify response when method is implemented
@@ -54,11 +52,10 @@ test.describe("icrc49", () => {
       await verifyRequestSection(page, sectionId, withConsentMessage)
       await verifyResponseSection(page, sectionId, "{}")
 
-      await submitRequest(page, sectionId)
+      await submitRequest(page, sectionId, true)
       // TODO: Uncomment when method is implemented
       // await page.waitForTimeout(250)
       // await approveWithDefaultSigner(page)
-      await page.waitForTimeout(1000)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       // TODO: Verify response when method is implemented

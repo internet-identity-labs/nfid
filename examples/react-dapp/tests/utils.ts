@@ -25,8 +25,15 @@ export async function verifyResponseSection(page, sectionId, expectedResponse) {
   await expect(responseSection).toHaveText(expectedResponse)
 }
 
-export async function submitRequest(page, sectionId) {
+export async function submitRequest(page, sectionId, isSilent = false) {
   await page.locator(`#${sectionId} #submit`).click()
+
+  if (isSilent) {
+    await page.waitForFunction((sectionId) => {
+      const responseSection = document.querySelector(`#${sectionId} #response-section-e2e`)
+      return responseSection && responseSection.textContent !== "{}"
+    }, sectionId)
+  }
 }
 
 export async function chooseWallet(page) {
@@ -37,7 +44,7 @@ export async function chooseWallet(page) {
   }
 }
 
-export async function approveWithDefaultSigner(page) {
+export async function approveWithDefaultSigner(page, sectionId) {
   await chooseWallet(page)
 
   const iframeElement = await page.$("#signer-iframe")
@@ -45,9 +52,13 @@ export async function approveWithDefaultSigner(page) {
 
   const approveButton = await frame!.waitForSelector("#approve", { timeout: 10000 })
   if (!approveButton) throw new Error("Approve button not found within 10 seconds")
-  await page.waitForTimeout(500)
+  await page.waitForTimeout(300)
 
   await approveButton!.click()
+  await page.waitForFunction((sectionId) => {
+    const responseSection = document.querySelector(`#${sectionId} #response-section-e2e`)
+    return responseSection && responseSection.textContent !== "{}"
+  }, sectionId)
 }
 
 export async function getPermissions(page) {
@@ -58,7 +69,5 @@ export async function getPermissions(page) {
   await verifyResponseSection(page, sectionId, "{}")
 
   await submitRequest(page, sectionId)
-  await approveWithDefaultSigner(page)
-
-  await page.waitForTimeout(1000)
+  await approveWithDefaultSigner(page, sectionId)
 }
