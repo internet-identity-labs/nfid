@@ -5,8 +5,6 @@ import {
   verifyRequestSection,
   verifyResponseSection,
   submitRequest,
-  approveWithDefaultSigner,
-  getPermissions,
   chooseWallet,
 } from "./utils"
 
@@ -26,7 +24,7 @@ test.describe("icrc29", () => {
 
     await submitRequest(page, sectionId)
     await chooseWallet(page)
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(3000)
 
     const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
     expect(responseSection).toContainText(`"result": "ready"`) // Check actual method

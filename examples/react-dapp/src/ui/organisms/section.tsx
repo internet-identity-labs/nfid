@@ -69,6 +69,7 @@ export const Section: React.FC<ISection> = ({
       <Text className="mb-5">{description}</Text>
       {requestsOptions.length > 1 ? (
         <DropdownSelect
+          id="select-request"
           label="Request examples"
           isMultiselect={false}
           options={requestsOptions}

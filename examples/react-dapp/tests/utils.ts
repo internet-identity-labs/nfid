@@ -9,6 +9,11 @@ export async function verifySectionVisibility(page, sectionId) {
   await expect(page.locator(`#${sectionId}`)).toBeVisible()
 }
 
+export async function selectRequestTemplate(page, sectionId, index) {
+  await page.locator("#select-request").click()
+  await page.locator(`#dropdown-options label:nth-child(${index})`).click()
+}
+
 export async function verifyRequestSection(page, sectionId, request) {
   const jsonInput = JSON.stringify(request, null, 2)
   const requestSection = page.locator(`#${sectionId} #request-section-e2e`)
