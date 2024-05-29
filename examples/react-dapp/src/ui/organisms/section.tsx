@@ -69,6 +69,7 @@ export const Section: React.FC<ISection> = ({
       <Text className="mb-5">{description}</Text>
       {requestsOptions.length > 1 ? (
         <DropdownSelect
+          id="select-request"
           label="Request examples"
           isMultiselect={false}
           options={requestsOptions}
@@ -85,7 +86,13 @@ export const Section: React.FC<ISection> = ({
       </div>
       <CodeSection value={codeSection} />
       <div className="flex gap-5">
-        <Button loading={isLoading} className="w-[160px] mt-5" onClick={handleSubmit} isSmall>
+        <Button
+          id="submit"
+          loading={isLoading}
+          className="w-[160px] mt-5"
+          onClick={handleSubmit}
+          isSmall
+        >
           Submit
         </Button>
         <Button

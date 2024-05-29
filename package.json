@@ -16,7 +16,7 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.18.0",
+
     "@nfid/eslint-config": "*",
     "@nfid/typescript-config": "*",
     "dotenv-cli": "latest",
