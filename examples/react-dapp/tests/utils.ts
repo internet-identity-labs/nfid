@@ -40,6 +40,8 @@ export async function approveWithDefaultSigner(page) {
 
   const approveButton = await frame!.waitForSelector("#approve", { timeout: 10000 })
   if (!approveButton) throw new Error("Approve button not found within 10 seconds")
+  await page.waitForTimeout(500)
+
   await approveButton!.click()
 }
 

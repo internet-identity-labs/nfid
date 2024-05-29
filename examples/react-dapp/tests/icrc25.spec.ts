@@ -23,7 +23,19 @@ test.describe("icrc25", () => {
   test("Request permissions", async ({ page }) => {
     const sectionId = "icrc25_request_permissions"
     const expectedResponse = JSON.stringify(
-      { scopes: [{ method: "icrc27_get_accounts" }] },
+      {
+        scopes: [
+          {
+            method: "icrc27_get_accounts",
+          },
+          {
+            method: "icrc25_revoke_permissions",
+          },
+          {
+            method: "icrc34_get_delegation",
+          },
+        ],
+      },
       null,
       2
     )
@@ -61,8 +73,7 @@ test.describe("icrc25", () => {
     })
   })
 
-  // E2E - Expected to fail
-  test.skip("Revoke permissions", async ({ page }) => {
+  test("Revoke permissions", async ({ page }) => {
     await test.step("icrc25_request_permissions", async () => {
       await getPermissions(page)
     })
@@ -76,10 +87,23 @@ test.describe("icrc25", () => {
 
       await submitRequest(page, sectionId)
       await approveWithDefaultSigner(page)
+      await page.waitForTimeout(1000)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       expect(responseSection).toContainText(`"origin": "${origin}"`)
-      expect(responseSection).toContainText(`"scopes": [`)
+      expect(responseSection).not.toContainText(`icrc27_get_accounts`)
+
+      // Check that the permissions were revoked in granted permissions
+      await verifySectionVisibility(page, "icrc25_granted_permissions")
+      await verifyRequestSection(page, "icrc25_granted_permissions", icrc25GrantedRequest)
+      await verifyResponseSection(page, "icrc25_granted_permissions", "{}")
+
+      await submitRequest(page, "icrc25_granted_permissions")
+      await page.waitForTimeout(1000)
+      const grantedResponse = page.locator(`#icrc25_granted_permissions #response-section-e2e`)
+      expect(grantedResponse).toContainText(`"origin": "${origin}"`)
+      expect(grantedResponse).toContainText(`"scopes": [`)
+      expect(grantedResponse).not.toContainText(`"method": "icrc27_get_accounts"`)
     })
   })
 
