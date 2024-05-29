@@ -24,7 +24,7 @@ export const authService = {
 
   async revokePermissions(permissions?: string[]): Promise<string[]> {
     if (!permissions) {
-      idbRepository.remove(key)
+      await idbRepository.remove(key)
       return []
     }
     const authJson = await idbRepository.get(key)

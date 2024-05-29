@@ -5,11 +5,7 @@ import { State, useSigner } from "./hook/use-signer"
 function App() {
   const { component, state } = useSigner()
 
-  if (State.READY == state || !component) {
-    return
-  }
-
-  if (State.LOADING === state) {
+  if (State.LOADING === state || State.READY == state || !component) {
     return (
       <Box>
         <Flex className="flex flex-col justify-center h-screen">

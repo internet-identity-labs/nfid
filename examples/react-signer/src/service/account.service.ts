@@ -46,7 +46,7 @@ export const accountService = {
         },
       ]
 
-      idbRepository.set(key, JSON.stringify(accountEntities))
+      await idbRepository.set(key, JSON.stringify(accountEntities))
     }
   },
 
