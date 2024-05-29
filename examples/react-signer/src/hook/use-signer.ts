@@ -6,12 +6,21 @@ import { accountService } from "../service/account.service"
 
 export type UseSignerResponse = {
   component?: ReactNode
+  state: State
+}
+
+export enum State {
+  READY,
+  LOADING,
+  PROCESSING,
 }
 
 export const useSigner = (): UseSignerResponse => {
   const [component, setComponent] = React.useState<ReactNode | undefined>(undefined)
+  const [state, setState] = React.useState<State>(State.READY)
 
   const handleMessage = React.useCallback(async (message: MessageEvent<RPCMessage>) => {
+    setState(State.PROCESSING)
     const methodService = methodServices.get(message.data.method)
 
     if (!methodService) {
@@ -32,8 +41,9 @@ export const useSigner = (): UseSignerResponse => {
 
     const componentData = await methodService.invokeAndGetComponentData(message)
     const methodComponent = componentData && methodComponents.get(componentData.method)
-    const component = methodComponent && methodComponent.getComponent(componentData)
+    const component = methodComponent && methodComponent.getComponent(componentData, setState)
     setComponent(component)
+    setState(State.PROCESSING)
   }, [])
 
   React.useEffect(() => {
@@ -48,5 +58,6 @@ export const useSigner = (): UseSignerResponse => {
 
   return {
     component,
+    state,
   }
 }

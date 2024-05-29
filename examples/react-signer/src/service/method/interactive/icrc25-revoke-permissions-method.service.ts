@@ -8,6 +8,10 @@ class Icrc25RevokePermissionsMethodService extends InteractiveMethodService {
     return "icrc25_revoke_permissions"
   }
 
+  protected async isAuthorized(): Promise<boolean> {
+    return true
+  }
+
   public async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
     const icrc25Message = message.data.params as unknown as Icrc25Dto
 

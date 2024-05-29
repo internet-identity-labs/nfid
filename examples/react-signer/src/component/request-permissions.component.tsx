@@ -1,11 +1,14 @@
+import { Dispatch, SetStateAction } from "react"
 import { InteractivePanel } from "./interactive-panel.component"
+import { State } from "../hook/use-signer"
 
 interface RequestPermissionsRequest {
   origin: string
   permissions: string[]
   revoke?: boolean
-  onReject: () => void
-  onApprove: () => void
+  onReject: () => Promise<void>
+  onApprove: () => Promise<void>
+  setState: Dispatch<SetStateAction<State>>
 }
 
 export const RequestPermissions = ({
@@ -14,16 +17,18 @@ export const RequestPermissions = ({
   revoke,
   onApprove,
   onReject,
+  setState,
 }: RequestPermissionsRequest) => {
+  const text = revoke ? "Revoke" : "Request"
   return (
     <>
       <div className="pt-9">
-        <div className="mb-2 text-xl font-bold text-center">Request Permission</div>
+        <div className="mb-2 text-xl font-bold text-center">{text} Permission</div>
         <small className="block text-center">
           <a className="text-blue-500" target="_blank" href={origin}>
             {origin}
           </a>{" "}
-          wants permission to {revoke ? "revoke" : "request"} the following methods:
+          wants permission to {text.toLowerCase()} the following methods:
         </small>
         <div className="rounded border border-solid border-neutral-600 py-2.5 px-5 mt-8">
           <ul className="themed">
@@ -35,7 +40,7 @@ export const RequestPermissions = ({
           </ul>
         </div>
       </div>
-      <InteractivePanel onApprove={onApprove} onReject={onReject} />
+      <InteractivePanel onApprove={onApprove} onReject={onReject} setState={setState} />
     </>
   )
 }

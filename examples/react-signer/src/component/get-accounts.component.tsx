@@ -1,14 +1,15 @@
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { InteractivePanel } from "./interactive-panel.component"
 import { Account } from "../service/account.service"
-import { Loader } from "./loader.component"
+import { State } from "../hook/use-signer"
 
 interface GetAccountsRequest {
   origin: string
   accounts: Account[]
   singleChoice?: boolean
-  onReject: () => void
+  onReject: () => Promise<void>
   onApprove: (accounts: Account[]) => Promise<void>
+  setState: Dispatch<SetStateAction<State>>
 }
 
 export const GetAccounts = ({
@@ -17,9 +18,9 @@ export const GetAccounts = ({
   singleChoice,
   onApprove,
   onReject,
+  setState,
 }: GetAccountsRequest) => {
   const [selectedAccounts, setSelectedAccounts] = useState<Account[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSelect = (acc: Account) => {
     if (singleChoice) {
@@ -31,14 +32,6 @@ export const GetAccounts = ({
       return setSelectedAccounts(selectedAccounts.filter((a) => a !== acc))
 
     setSelectedAccounts([...selectedAccounts, acc])
-  }
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center">
-        <Loader />
-      </div>
-    )
   }
 
   return (
@@ -69,11 +62,10 @@ export const GetAccounts = ({
       </div>
       <InteractivePanel
         onApprove={async () => {
-          setIsLoading(true)
           await onApprove(selectedAccounts)
-          setIsLoading(false)
         }}
         onReject={onReject}
+        setState={setState}
       />
     </>
   )

@@ -25,6 +25,7 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
     const icrc34Dto = message.data.params as unknown as Icrc34Dto
     const account = (data as Account[])[0]
     const key = await accountService.getAccountKeyIdentityById(account.id)
+    let targets
 
     if (!key) {
       window.parent.postMessage(
@@ -45,26 +46,28 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
 
     const sessionPublicKey = Ed25519PublicKey.fromDer(fromHex(icrc34Dto.publicKey))
 
-    try {
-      await targetService.validateTargets(icrc34Dto.targets, message.origin)
-    } catch (e: unknown) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 1000,
-            message: "Generic error",
-            text: (e as Error).message,
+    if (icrc34Dto.targets && icrc34Dto.targets.length != 0) {
+      try {
+        await targetService.validateTargets(icrc34Dto.targets, message.origin)
+      } catch (e: unknown) {
+        window.parent.postMessage(
+          {
+            origin: message.data.origin,
+            jsonrpc: message.data.jsonrpc,
+            id: message.data.id,
+            error: {
+              code: 1000,
+              message: "Generic error",
+              text: (e as Error).message,
+            },
           },
-        },
-        message.origin
-      )
-      throw e
+          message.origin
+        )
+        throw e
+      }
+      targets = icrc34Dto.targets.map((x) => Principal.fromText(x))
     }
 
-    const targets = icrc34Dto.targets.map((x) => Principal.fromText(x))
     const chain = await DelegationChain.create(
       key,
       sessionPublicKey,
