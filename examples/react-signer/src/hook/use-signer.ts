@@ -15,7 +15,9 @@ export enum State {
   PROCESSING,
 }
 
-await accountService.initWithPredefinedUsers()
+;(async () => {
+  await accountService.initWithPredefinedUsers()
+})()
 
 export const useSigner = (): UseSignerResponse => {
   const [component, setComponent] = React.useState<ReactNode | undefined>(undefined)
