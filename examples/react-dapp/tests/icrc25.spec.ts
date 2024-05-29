@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test"
 import { basicRequest } from "../src/data/icrc25_request_permissions"
 import { basicRequest as icrc25GrantedRequest } from "../src/data/icrc25_granted_permissions"
+import { basicRequest as icrc25RevokeRequest } from "../src/data/icrc25_revoke_permissions"
+import { basicRequest as icrc25SupportedRequest } from "../src/data/icrc25_supported_standards"
 import {
   verifySectionVisibility,
   verifyRequestSection,
@@ -8,6 +10,7 @@ import {
   submitRequest,
   approveWithDefaultSigner,
   getPermissions,
+  chooseWallet,
 } from "./utils"
 
 const origin = "http://localhost:3001"
@@ -55,6 +58,49 @@ test.describe("icrc25", () => {
       expect(responseSection).toContainText(`"origin": "${origin}"`)
       expect(responseSection).toContainText(`"scopes": [`)
       expect(responseSection).toContainText(`"method": "icrc27_get_accounts"`)
+    })
+  })
+
+  // E2E - Expected to fail
+  test.skip("Revoke permissions", async ({ page }) => {
+    await test.step("icrc25_request_permissions", async () => {
+      await getPermissions(page)
+    })
+
+    await test.step("icrc25_revoke_permissions", async () => {
+      const sectionId = "icrc25_revoke_permissions"
+
+      await verifySectionVisibility(page, sectionId)
+      await verifyRequestSection(page, sectionId, icrc25RevokeRequest)
+      await verifyResponseSection(page, sectionId, "{}")
+
+      await submitRequest(page, sectionId)
+      await approveWithDefaultSigner(page)
+
+      const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
+      expect(responseSection).toContainText(`"origin": "${origin}"`)
+      expect(responseSection).toContainText(`"scopes": [`)
+    })
+  })
+
+  test("Check supported standards", async ({ page }) => {
+    await test.step("icrc25_supported_standards", async () => {
+      const sectionId = "icrc25_supported_standards"
+
+      await verifySectionVisibility(page, sectionId)
+      await verifyRequestSection(page, sectionId, icrc25SupportedRequest)
+      await verifyResponseSection(page, sectionId, "{}")
+
+      await submitRequest(page, sectionId)
+      await chooseWallet(page)
+      await page.waitForTimeout(1000)
+
+      const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
+      expect(responseSection).toContainText(`"ICRC-25"`)
+      expect(responseSection).toContainText(`"ICRC-27"`)
+      expect(responseSection).toContainText(`"ICRC-28"`)
+      expect(responseSection).toContainText(`"ICRC-29"`)
+      expect(responseSection).toContainText(`"ICRC-34"`)
     })
   })
 })

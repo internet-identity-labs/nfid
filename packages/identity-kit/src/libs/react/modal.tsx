@@ -33,6 +33,7 @@ export const IdentityKitModal: React.FC<IdentityKitModalRequest> = ({
           className={`${isModalOpen ? "block" : "hidden"} bg-black bg-opacity-25 backdrop-blur-[2px] fixed inset-0 z-[1009]`}
         />
         <Dialog.Content
+          id="identity-kit-modal"
           className={`${isModalOpen ? "flex" : "hidden"} flex-col gap-2 fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white dark:bg-black p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none z-[1010]`}
         >
           {selectedSigner ? (
@@ -44,6 +45,7 @@ export const IdentityKitModal: React.FC<IdentityKitModalRequest> = ({
                 Back
               </div> */}
               <iframe
+                id="signer-iframe"
                 onLoad={onIframeLoad}
                 className="min-h-[640px]"
                 ref={signerIframeRef}

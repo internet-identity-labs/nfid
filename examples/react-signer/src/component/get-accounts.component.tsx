@@ -46,11 +46,12 @@ export const GetAccounts = ({
         </small>
 
         <div className="flex flex-col p-5 mt-5 space-y-4">
-          {accounts.map((acc) => (
+          {accounts.map((acc, index) => (
             <div
               onClick={() => handleSelect(acc)}
               key={`acc_${acc.displayName}`}
               className="flex items-center space-x-2.5 cursor-pointer"
+              id={`acc_${index}`}
             >
               <div
                 className={`w-6 h-6 border border-black rounded-sm ${selectedAccounts.includes(acc) ? "bg-blue-500" : "bg-none"}`}

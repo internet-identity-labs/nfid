@@ -24,12 +24,16 @@ export async function submitRequest(page, sectionId) {
   await page.locator(`#${sectionId} #submit`).click()
 }
 
-export async function approveWithDefaultSigner(page) {
+export async function chooseWallet(page) {
   await page.waitForSelector(`#identity-kit-modal`)
   const mockedSigner = page.locator(`#identity-kit-modal #signer_MockedSigner`)
   if (await mockedSigner.isVisible()) {
     await mockedSigner.click()
   }
+}
+
+export async function approveWithDefaultSigner(page) {
+  await chooseWallet(page)
 
   const iframeElement = await page.$("#signer-iframe")
   const frame = await iframeElement!.contentFrame()

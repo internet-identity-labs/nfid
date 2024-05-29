@@ -29,6 +29,10 @@ test.describe("icrc27", () => {
       await verifyResponseSection(page, sectionId, "{}")
 
       await submitRequest(page, sectionId)
+
+      const iframeElement = await page.$("#signer-iframe")
+      const frame = await iframeElement!.contentFrame()
+      await frame!.click("#acc_0")
       await approveWithDefaultSigner(page)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
