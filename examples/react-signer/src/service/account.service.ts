@@ -10,6 +10,12 @@ export interface Account {
   displayName: string
   principal: string
   subaccount: string
+  type: AccountType
+}
+
+export enum AccountType {
+  GLOBAL = "GLOBAL",
+  SESSION = "SESSION",
 }
 
 interface AccountEntity {
@@ -17,6 +23,7 @@ interface AccountEntity {
   displayName: string
   subaccount: number
   keyIdentity: string
+  type: AccountType
 }
 
 export const accountService = {
@@ -31,18 +38,21 @@ export const accountService = {
           displayName: "Account #1",
           keyIdentity: JSON.stringify(key1.toJSON()),
           subaccount: 0,
+          type: AccountType.GLOBAL,
         },
         {
-          id: 1,
+          id: 2,
           displayName: "Account #2",
           keyIdentity: JSON.stringify(key1.toJSON()),
           subaccount: 1,
+          type: AccountType.SESSION,
         },
         {
-          id: 1,
+          id: 3,
           displayName: "Account #3",
           keyIdentity: JSON.stringify(key2.toJSON()),
           subaccount: 0,
+          type: AccountType.SESSION,
         },
       ]
 
@@ -69,6 +79,7 @@ export const accountService = {
         displayName: `${accountIdentifier.slice(0, 10)}...${accountIdentifier.slice(53, accountIdentifier.length - 1)}`,
         principal: principal.toText(),
         subaccount: uint8ArrayToHexString(subAccount.toUint8Array()),
+        type: account.type,
       }
     })
 

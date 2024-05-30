@@ -30,7 +30,7 @@ export const RequestPermissions = ({
           </a>{" "}
           wants permission to {text.toLowerCase()} the following methods:
         </small>
-        <div className="rounded border border-solid border-neutral-600 py-2.5 px-5 mt-8">
+        <div className="rounded border border-solid border-neutral-300 py-2.5 px-5 mt-8">
           <ul className="themed">
             {permissions.map((p) => (
               <li key={p}>

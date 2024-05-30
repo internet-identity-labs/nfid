@@ -5,9 +5,15 @@ interface InteractivePanelRequest {
   onReject: () => Promise<void>
   onApprove: () => Promise<void>
   setState: Dispatch<SetStateAction<State>>
+  approveDisabled?: boolean
 }
 
-export const InteractivePanel = ({ onReject, onApprove, setState }: InteractivePanelRequest) => {
+export const InteractivePanel = ({
+  onReject,
+  onApprove,
+  setState,
+  approveDisabled,
+}: InteractivePanelRequest) => {
   return (
     <div className="flex justify-between w-full mt-auto">
       <button
@@ -29,6 +35,7 @@ export const InteractivePanel = ({ onReject, onApprove, setState }: InteractiveP
           setState(State.READY)
         }}
         id="approve"
+        disabled={approveDisabled}
       >
         Approve
       </button>
