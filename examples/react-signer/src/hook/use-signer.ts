@@ -15,10 +15,6 @@ export enum State {
   PROCESSING,
 }
 
-;(async () => {
-  await accountService.initWithPredefinedUsers()
-})()
-
 export const useSigner = (): UseSignerResponse => {
   const [component, setComponent] = React.useState<ReactNode | undefined>(undefined)
   const [state, setState] = React.useState<State>(State.READY)
@@ -54,9 +50,13 @@ export const useSigner = (): UseSignerResponse => {
   }, [])
 
   React.useEffect(() => {
-    window.addEventListener("message", handleMessage)
-    window.parent.postMessage("ready", "*")
-    console.debug("useSigner useEffect: The Ready message has been sent.")
+    ;(async () => {
+      window.addEventListener("message", handleMessage)
+      await accountService.initWithPredefinedUsers()
+      window.parent.postMessage("ready", "*")
+      console.debug("useSigner useEffect: The Ready message has been sent.")
+    })()
+
     return () => window.removeEventListener("message", handleMessage)
   }, [handleMessage])
 
