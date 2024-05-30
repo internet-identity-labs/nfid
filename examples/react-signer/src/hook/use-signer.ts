@@ -20,7 +20,10 @@ export const useSigner = (): UseSignerResponse => {
   const [state, setState] = React.useState<State>(State.READY)
 
   const handleMessage = React.useCallback(async (message: MessageEvent<RPCMessage>) => {
-    setState(State.PROCESSING)
+    console.debug("useSigner handleMessage:", message)
+
+    setState(State.LOADING)
+
     const methodService = methodServices.get(message.data.method)
 
     if (!methodService) {
@@ -47,14 +50,15 @@ export const useSigner = (): UseSignerResponse => {
   }, [])
 
   React.useEffect(() => {
-    window.addEventListener("message", handleMessage, false)
-    accountService.initWithPredefinedUsers()
+    ;(async () => {
+      window.addEventListener("message", handleMessage)
+      await accountService.initWithPredefinedUsers()
+      window.parent.postMessage("ready", "*")
+      console.debug("useSigner useEffect: The Ready message has been sent.")
+    })()
+
     return () => window.removeEventListener("message", handleMessage)
   }, [handleMessage])
-
-  React.useEffect(() => {
-    window.parent.postMessage("ready", "*")
-  }, [])
 
   return {
     component,
