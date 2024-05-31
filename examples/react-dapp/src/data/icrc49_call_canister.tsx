@@ -45,7 +45,7 @@ export const icrc49CallCanisterSection: ISection = {
   getCodeSnippet: function (requestJSON: string): string {
     const basicRequest = JSON.parse(requestJSON)
 
-    return `const identityKit = new IdentityKit().init()
-const response = await identityKit.request(ICRC49Methods.${basicRequest.method}, ${JSON.stringify(basicRequest.params, null, 2)})`
+    return `await IdentityKit.init()
+const response = await IdentityKit.request(${JSON.stringify(basicRequest, null, 2)})`
   },
 }

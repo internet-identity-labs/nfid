@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css"
 import { Button } from "../atoms/button"
 import { CodeSection } from "../molecules/code-section"
 import { useIdentityKit } from "@nfid/identity-kit/react"
-import { ICRC25Methods } from "@nfid/identity-kit"
 import { getRequestObject } from "../../utils/requests"
 import { DropdownSelect } from "../molecules/dropdown-select"
 
@@ -46,7 +45,7 @@ export const Section: React.FC<ISection> = ({
       return toast.error("Invalid JSON")
     }
     const requestObject = getRequestObject(requestValue)
-    const res = await request(requestObject.method as ICRC25Methods, requestObject.params)
+    const res = await request({ method: requestObject.method, params: requestObject.params })
     setResponseValue(JSON.stringify(res, null, 2))
     setIsLoading(false)
   }

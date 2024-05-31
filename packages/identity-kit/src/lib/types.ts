@@ -1,10 +1,4 @@
-import {
-  ICRC25Methods,
-  ICRC25RequestTypeMap,
-  ICRC25Requests,
-  ICRC25ResponseTypeMap,
-  ICRC25Responses,
-} from "../standards/icrc-25/types"
+import { ICRC25Methods, ICRC25RequestTypeMap, ICRC25ResponseTypeMap } from "../standards/icrc-25"
 
 export type SignerConfig = {
   id: string
@@ -25,12 +19,11 @@ export type ResponseFailed = {
 
 export type RequestTypeMap = ICRC25RequestTypeMap
 export type ResponseTypeMap = ICRC25ResponseTypeMap
-export type IRequest = ICRC25Requests
-export type IResponse = ICRC25Responses | ResponseFailed
 
 export interface IRequestFunction {
-  <T extends ICRC25Methods>(
-    method: T,
-    params: RequestTypeMap[T]
+  <T extends IdentityKitMethod>(
+    args: RequestTypeMap[T] extends undefined
+      ? { method: T }
+      : { method: T; params: RequestTypeMap[T] }
   ): Promise<ResponseTypeMap[T] | ResponseFailed>
 }

@@ -20,6 +20,7 @@ export const icrc29StatusSection: ISection = {
     },
   ],
   getCodeSnippet: function (): string {
-    return `const identityKit = new IdentityKit().init()`
+    return `await IdentityKit.init()
+const status = await IdentityKit.request(${JSON.stringify(basicRequest, null, 2)})`
   },
 }
