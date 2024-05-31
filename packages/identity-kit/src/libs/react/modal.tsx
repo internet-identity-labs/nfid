@@ -1,15 +1,9 @@
-import React, { HTMLAttributes, useContext, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { IdentityKitContext } from "./context"
 import * as Dialog from "@radix-ui/react-dialog"
 import { useTheme } from "next-themes"
 
-interface IdentityKitModalRequest {
-  onIframeLoad: HTMLAttributes<HTMLIFrameElement>["onLoad"]
-}
-
-export const IdentityKitModal: React.FC<IdentityKitModalRequest> = ({
-  onIframeLoad,
-}: IdentityKitModalRequest) => {
+export const IdentityKitModal = () => {
   const { isModalOpen, selectedSigner, signers, selectSigner, signerIframeRef } =
     useContext(IdentityKitContext)
 
@@ -46,7 +40,6 @@ export const IdentityKitModal: React.FC<IdentityKitModalRequest> = ({
               </div> */}
               <iframe
                 id="signer-iframe"
-                onLoad={onIframeLoad}
                 className="min-h-[640px]"
                 ref={signerIframeRef}
                 src={selectedSigner?.providerUrl + "?theme=" + theme}

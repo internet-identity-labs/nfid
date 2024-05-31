@@ -4,7 +4,7 @@ import { IRequest, IdentityKitMethod, ResponseFailed, ResponseTypeMap } from "./
 export class IdentityKit {
   // TODO: Handle transport selection
 
-  public static init = async (): Promise<IdentityKit> => {
+  public static init = async (): Promise<void> => {
     return await new Promise((resolve, reject) => {
       const removeEventListener = () => {
         window.removeEventListener("message", handleReadyEvent)
@@ -19,7 +19,7 @@ export class IdentityKit {
           removeEventListener()
           console.debug("Signer iframe ready")
           clearTimeout(timeout)
-          resolve(new this())
+          resolve()
         }
       }
 

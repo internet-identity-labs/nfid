@@ -1,4 +1,4 @@
-import React, { useState, useCallback, PropsWithChildren, useRef } from "react"
+import React, { useState, useCallback, PropsWithChildren, useRef, useEffect } from "react"
 
 import { IRequestFunction, IResponse, SignerConfig } from "../../lib/types"
 import { IdentityKitContext } from "./context"
@@ -51,10 +51,10 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
       }
 
       // if signer is selected wait for iframe to be ready
-      if (!Number(signerIframeRef.current?.getAttribute("ready"))) {
+      if (!Number(signerIframeRef.current?.getAttribute("data-ready"))) {
         await new Promise((resolve) => {
           const int = setInterval(() => {
-            if (Number(signerIframeRef.current?.getAttribute("ready"))) {
+            if (Number(signerIframeRef.current?.getAttribute("data-ready"))) {
               clearInterval(int)
               resolve(true)
             }
@@ -72,6 +72,15 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
     [selectedSigner, response, signerIframeRef, response.current, setIsModalOpen]
   )
 
+  useEffect(() => {
+    ;(async function () {
+      if (signerIframeRef.current) {
+        await IdentityKit.init()
+        signerIframeRef.current.setAttribute("data-ready", "1")
+      }
+    })()
+  }, [selectedSigner, signerIframeRef])
+
   return (
     <IdentityKitContext.Provider
       value={{
@@ -84,14 +93,7 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
         request,
       }}
     >
-      <IdentityKitModal
-        onIframeLoad={async function (e) {
-          if (!e.currentTarget.getAttribute("ready")) {
-            await IdentityKit.init()
-            signerIframeRef.current?.setAttribute("ready", "1")
-          }
-        }}
-      />
+      <IdentityKitModal />
       {children}
     </IdentityKitContext.Provider>
   )
