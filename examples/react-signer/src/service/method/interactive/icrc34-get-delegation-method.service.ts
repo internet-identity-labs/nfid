@@ -6,8 +6,9 @@ import { Principal } from "@dfinity/principal"
 import { fromHex } from "@dfinity/agent"
 import { targetService } from "../../target.service"
 
-export interface AccountsComponentData extends ComponentData {
+export interface GetDelegationComponentData extends ComponentData {
   accounts: Account[]
+  isPublicAccountsAllowed: boolean
 }
 
 export interface Icrc34Dto {
@@ -87,8 +88,12 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
     window.parent.postMessage(response, message.origin)
   }
 
-  public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<AccountsComponentData> {
+  public async getСomponentData(
+    message: MessageEvent<RPCMessage>
+  ): Promise<GetDelegationComponentData> {
+    const icrc34Dto = message.data.params as unknown as Icrc34Dto
     const accounts = await accountService.getAccounts()
+    const isPublicAccountsAllowed = !icrc34Dto.targets || icrc34Dto.targets.length === 0
     if (!accounts) {
       window.parent.postMessage(
         {
@@ -110,6 +115,7 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
     return {
       ...baseData,
       accounts,
+      isPublicAccountsAllowed,
     }
   }
 }
