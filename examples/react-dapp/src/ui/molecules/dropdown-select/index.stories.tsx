@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Story, Meta } from "@storybook/react"
+import { StoryFn, Meta } from "@storybook/react"
 import { DropdownSelect, IDropdownSelect } from "./index"
 
 export default {
@@ -25,7 +25,7 @@ export default {
 } as Meta<IDropdownSelect>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Template: Story<IDropdownSelect> = (args: any) => {
+const Template: StoryFn<IDropdownSelect> = (args: any) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([])
 
   return (
