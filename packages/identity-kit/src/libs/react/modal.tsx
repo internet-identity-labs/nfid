@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { IdentityKitContext } from "./context"
 import * as Dialog from "@radix-ui/react-dialog"
 import { useTheme } from "next-themes"
