@@ -6,6 +6,7 @@ import {
   ResponseFailed,
   ResponseTypeMap,
   SignerConfig,
+  WithRpcResponse,
 } from "../../lib/types"
 import { IdentityKitContext } from "./context"
 import { IdentityKitModal } from "./modal"
@@ -46,7 +47,9 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
       ...args
     }: RequestTypeMap[T] extends undefined
       ? { method: T }
-      : { method: T; params: RequestTypeMap[T] }): Promise<ResponseTypeMap[T] | ResponseFailed> => {
+      : { method: T; params: RequestTypeMap[T] }): Promise<
+      WithRpcResponse<ResponseTypeMap[T] | ResponseFailed>
+    > => {
       // check somehow that silent methods request ended
       if (!selectedSigner || !silentMethods.includes(method)) setIsModalOpen(true)
 
@@ -98,7 +101,8 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
           method: ICRC25Methods.icrc25_supported_standards,
         })
 
-        const supportedStandards = (response as GetSupportedStandardResponse).supportedStandards
+        const supportedStandards = (response as WithRpcResponse<GetSupportedStandardResponse>)
+          .result.supportedStandards
 
         if (supportedStandards) {
           setSilentMethods(
