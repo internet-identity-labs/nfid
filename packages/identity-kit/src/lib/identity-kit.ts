@@ -1,5 +1,5 @@
 import { requestFactory } from "@nfid/postmessage-rpc"
-import { IRequest, IdentityKitMethod, ResponseFailed, ResponseTypeMap } from "./types"
+import { IdentityKitMethod, RequestTypeMap, ResponseFailed, ResponseTypeMap } from "./types"
 
 export class IdentityKit {
   // TODO: Handle transport selection
@@ -27,15 +27,16 @@ export class IdentityKit {
     })
   }
 
-  public static request = async <T extends IdentityKitMethod>({
-    iframe,
-    method,
-    params,
-  }: {
-    iframe: HTMLIFrameElement
-    method: T
-    params: IRequest
-  }): Promise<ResponseTypeMap[T] | ResponseFailed> => {
+  public static request = async <T extends IdentityKitMethod>(
+    args: RequestTypeMap[T] extends undefined
+      ? { iframe: HTMLIFrameElement; method: T }
+      : { iframe: HTMLIFrameElement; method: T; params: RequestTypeMap[T] }
+  ): Promise<ResponseTypeMap[T] | ResponseFailed> => {
+    const { iframe, method, params } = args as {
+      iframe: HTMLIFrameElement
+      method: T
+      params: RequestTypeMap[T]
+    }
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const postMessage = (message: any, targetOrigin: string) => {
@@ -50,7 +51,9 @@ export class IdentityKit {
 
       const providerUrl = iframe.src
 
-      return makeRequest(providerUrl, { method, params })
+      const response = await makeRequest(providerUrl, { method, params })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (response as any).result as ResponseTypeMap[T]
     } catch (e) {
       // TODO: Handle error response
       console.error(e)

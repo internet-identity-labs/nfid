@@ -1,22 +1,28 @@
 import React, { useState, useCallback, PropsWithChildren, useRef, useEffect } from "react"
 
-import { IRequestFunction, IResponse, SignerConfig } from "../../lib/types"
+import {
+  IdentityKitMethod,
+  RequestTypeMap,
+  ResponseFailed,
+  ResponseTypeMap,
+  SignerConfig,
+} from "../../lib/types"
 import { IdentityKitContext } from "./context"
 import { IdentityKitModal } from "./modal"
 import { IdentityKit } from "../../lib/identity-kit"
+import { GetSupportedStandardResponse, ICRC25Methods } from "../../standards/icrc-25"
 
 interface IdentityKitProviderProps extends PropsWithChildren {
   signers: SignerConfig[]
 }
 
-// may be better to add silent flag to such methods in constants
-const SILENT_METHODS = ["icrc25_granted_permissions", "icrc25_supported_standards", "icrc29_status"]
-
 export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ children, signers }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedSigner, setSelectedSigner] = useState<SignerConfig | undefined>(undefined)
-  const response = useRef<IResponse | undefined>(undefined)
   const signerIframeRef = useRef<HTMLIFrameElement>(null)
+  const [silentMethods, setSilentMethods] = useState<Array<string>>([
+    ICRC25Methods.icrc25_supported_standards,
+  ])
 
   const toggleModal = useCallback(() => {
     setIsModalOpen((prev) => !prev)
@@ -34,9 +40,15 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
   )
 
   // TODO: Maybe split this into multiple functions
-  const request: IRequestFunction = useCallback(
-    async (method, request) => {
-      if (!selectedSigner || !SILENT_METHODS.includes(method)) setIsModalOpen(true)
+  const request = useCallback(
+    async <T extends IdentityKitMethod>({
+      method,
+      ...args
+    }: RequestTypeMap[T] extends undefined
+      ? { method: T }
+      : { method: T; params: RequestTypeMap[T] }): Promise<ResponseTypeMap[T] | ResponseFailed> => {
+      // check somehow that silent methods request ended
+      if (!selectedSigner || !silentMethods.includes(method)) setIsModalOpen(true)
 
       // If no signer is selected, wait for the user to select one
       if (!signerIframeRef.current) {
@@ -65,18 +77,37 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
       const iframe = signerIframeRef.current
       if (!iframe) throw new Error("Iframe not found")
 
-      const res = await IdentityKit.request({ iframe, method, params: request })
+      const res = await IdentityKit.request({
+        iframe: signerIframeRef.current,
+        method,
+        ...args,
+      } as { iframe: HTMLIFrameElement; method: T; params: RequestTypeMap[T] })
       setIsModalOpen(false)
       return res
     },
-    [selectedSigner, response, signerIframeRef, response.current, setIsModalOpen]
+    [silentMethods, selectedSigner, signerIframeRef, setIsModalOpen]
   )
 
   useEffect(() => {
     ;(async function () {
       if (signerIframeRef.current) {
         await IdentityKit.init()
-        signerIframeRef.current.setAttribute("data-ready", "1")
+
+        const response = await IdentityKit.request({
+          iframe: signerIframeRef.current,
+          method: ICRC25Methods.icrc25_supported_standards,
+        })
+
+        const supportedStandards = (response as GetSupportedStandardResponse).supportedStandards
+
+        if (supportedStandards) {
+          setSilentMethods(
+            supportedStandards.reduce((acc, { methods }) => {
+              return [...acc, ...methods.filter((m) => !m.isInteractive).map((m) => m.name)]
+            }, [] as string[])
+          )
+          signerIframeRef.current.setAttribute("data-ready", "1")
+        }
       }
     })()
   }, [selectedSigner, signerIframeRef])

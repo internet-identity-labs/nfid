@@ -32,11 +32,14 @@ export const icrc34SGetDelegationSection: ISection = {
   getCodeSnippet: function (requestJSON: string): string {
     const basicRequest = JSON.parse(requestJSON)
 
-    return `const identityKit = new IdentityKit().init()
-const delegation = await identityKit.request(ICRC34Methods.${basicRequest.method}, {
-    publicKey: "${basicRequest.params.publicKey}",
-    targets: ${JSON.stringify(basicRequest.params.targets)}, // optional
-    maxTimeToLive: "${basicRequest.params.maxTimeToLive}",
+    return `await IdentityKit.init()
+const delegation = await IdentityKit.request({
+  "method": "${basicRequest.method}",
+  "params": {
+    "publicKey": "${basicRequest.params.publicKey}",
+    "targets": ${JSON.stringify(basicRequest.params.targets)}, // optional
+    "maxTimeToLive": "${basicRequest.params.maxTimeToLive}"
+  }
 })`
   },
 }

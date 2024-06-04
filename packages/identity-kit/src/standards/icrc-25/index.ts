@@ -13,6 +13,10 @@ export type SupportedStandard = {
    * URL providing information about the standard.
    */
   url: string
+  /**
+   * Methods of supported standard.
+   */
+  methods: Array<{ name: ICRC25Methods; isInteractive: boolean }>
 }
 
 /**
@@ -22,7 +26,7 @@ export type GetSupportedStandardResponse = Version & {
   /**
    * List of supported standards and their information.
    */
-  standards: SupportedStandard[]
+  supportedStandards: SupportedStandard[]
 }
 
 /**
@@ -166,4 +170,25 @@ export interface ICRC25Adapter<T> {
    *   - 20101: Version not supported
    */
   revokePermission(request: RevokePermissionRequest): Promise<PermissionResponse>
+}
+
+export type ICRC25RequestTypeMap = {
+  [ICRC25Methods.icrc25_request_permissions]: PermissionRequest
+  [ICRC25Methods.icrc25_revoke_permissions]: PermissionRequest
+  [ICRC25Methods.icrc25_granted_permissions]: undefined
+  [ICRC25Methods.icrc25_supported_standards]: undefined
+}
+
+export type ICRC25ResponseTypeMap = {
+  [ICRC25Methods.icrc25_request_permissions]: PermissionResponse
+  [ICRC25Methods.icrc25_revoke_permissions]: PermissionResponse
+  [ICRC25Methods.icrc25_granted_permissions]: PermissionResponse
+  [ICRC25Methods.icrc25_supported_standards]: GetSupportedStandardResponse
+}
+
+export enum ICRC25Methods {
+  "icrc25_request_permissions" = "icrc25_request_permissions",
+  "icrc25_revoke_permissions" = "icrc25_revoke_permissions",
+  "icrc25_granted_permissions" = "icrc25_granted_permissions",
+  "icrc25_supported_standards" = "icrc25_supported_standards",
 }

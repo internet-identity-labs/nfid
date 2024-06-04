@@ -1,7 +1,8 @@
+import { ICRC25Methods } from "@nfid/identity-kit"
 import { ISection } from "../ui/organisms/section.js"
 
 export const basicRequest = {
-  method: "icrc25_revoke_permissions",
+  method: ICRC25Methods.icrc25_revoke_permissions,
   params: {
     scopes: [
       {
@@ -28,7 +29,7 @@ export const icrc25RevokePermissionsSection: ISection = {
   ],
   getCodeSnippet: function (requestJSON: string): string {
     const basicRequest = JSON.parse(requestJSON)
-    return `const identityKit = new IdentityKit().init()
-const permissions = await identityKit.request(ICRC25Methods.${basicRequest.method}, ${JSON.stringify(basicRequest.params, undefined, 2)}`
+    return `await IdentityKit.init()
+const permissions = await IdentityKit.request(${JSON.stringify(basicRequest, undefined, 2)}`
   },
 }

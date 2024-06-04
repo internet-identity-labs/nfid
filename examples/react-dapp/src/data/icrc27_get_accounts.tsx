@@ -22,7 +22,7 @@ export const icrc27GetAccountsSection: ISection = {
   ],
   getCodeSnippet: function (requestJSON: string): string {
     const basicRequest = JSON.parse(requestJSON)
-    return `const identityKit = new IdentityKit().init()
-const permissions = await identityKit.request(ICRC27Methods.${basicRequest.method})`
+    return `await IdentityKit.init()
+const accounts = await IdentityKit.request(${JSON.stringify(basicRequest, null, 2)})`
   },
 }

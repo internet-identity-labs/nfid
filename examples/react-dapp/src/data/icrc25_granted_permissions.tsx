@@ -1,8 +1,9 @@
+import { ICRC25Methods } from "@nfid/identity-kit"
 import { Method } from "../ui/atoms/method.js"
 import { ISection } from "../ui/organisms/section.js"
 
 export const basicRequest = {
-  method: "icrc25_granted_permissions",
+  method: ICRC25Methods.icrc25_granted_permissions,
 }
 
 export const icrc25GrantedPermissionsSection: ISection = {
@@ -22,7 +23,7 @@ export const icrc25GrantedPermissionsSection: ISection = {
   ],
   getCodeSnippet: function (requestJSON: string): string {
     const basicRequest = JSON.parse(requestJSON)
-    return `const identityKit = new IdentityKit().init()
-const grantedPermsissions = await identityKit.request(ICRC25Methods.${basicRequest.method})`
+    return `await IdentityKit.init()
+const grantedPermsissions = await IdentityKit.request(${JSON.stringify(basicRequest, null, 2)})`
   },
 }
