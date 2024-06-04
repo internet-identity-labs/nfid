@@ -28,13 +28,13 @@ ci_echo_info "Installing packages ..." >&2
 ci_echo_debug "npm install --frozen-lockfile" >&2
 npm install --frozen-lockfile
 
-# ci_echo_info "Runniung the playground ..." >&2
-# popd > /dev/null
-# ci_echo_debug "npm run playground" >&2
-# npm run playground >/dev/null 2>&1 &
+ci_echo_info "Running the playground ..." >&2
+popd > /dev/null
+ci_echo_debug "npm run playground" >&2
+npm run playground >/dev/null 2>&1 &
 
-# ci_echo_debug 'Waiting Until DEV Playground UP ...' >&2
-# wait_until_up "http://127.0.0.1:${BACKGROUND_PORT}" 120 5 '200|301|302|400'
+ci_echo_debug 'Waiting Until DEV Playground UP ...' >&2
+wait_until_up "http://127.0.0.1:${BACKGROUND_PORT}" 120 5 '200|301|302|400'
 
 if ! pushd "examples/react-dapp" >/dev/null; then
     ci_echo_error "Can't switch directory to 'examples/react-dapp'" >&2
@@ -45,7 +45,7 @@ ci_echo_info "Configuring playwright" >&2
 ci_echo_debug "npx playwright install" >&2
 npx playwright install
 
-ci_echo_info "Runniung the tests..." >&2
+ci_echo_info "Running the tests..." >&2
 ci_echo_debug "npm run test:e2e" >&2
 npm run test:e2e || exit_code=$?
 
