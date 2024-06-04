@@ -22,7 +22,7 @@ export default {
     id: { control: "text" },
     showIcon: { control: "boolean" },
   },
-} as Meta<IDropdownSelect>
+} as unknown as Meta<IDropdownSelect>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Template: StoryFn<IDropdownSelect> = (args: any) => {
