@@ -7,6 +7,14 @@ export type SignerConfig = {
   icon?: string
 }
 
+export type WithRpcResponse<T> = {
+  id: string
+  jsonrpc: string
+  origin: string
+} & T extends ResponseFailed
+  ? ResponseFailed
+  : { result: T }
+
 export type IdentityKitMethod = ICRC25Methods
 
 export type ResponseFailed = {
@@ -25,5 +33,5 @@ export interface IRequestFunction {
     args: RequestTypeMap[T] extends undefined
       ? { method: T }
       : { method: T; params: RequestTypeMap[T] }
-  ): Promise<ResponseTypeMap[T] | ResponseFailed>
+  ): Promise<WithRpcResponse<ResponseTypeMap[T] | ResponseFailed>>
 }

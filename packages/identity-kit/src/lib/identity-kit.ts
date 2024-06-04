@@ -1,5 +1,12 @@
 import { requestFactory } from "@nfid/postmessage-rpc"
-import { IdentityKitMethod, RequestTypeMap, ResponseFailed, ResponseTypeMap } from "./types"
+import {
+  IdentityKitMethod,
+  RequestTypeMap,
+  ResponseFailed,
+  ResponseTypeMap,
+  WithRpcResponse,
+} from "./types"
+import { InternalServerError } from "./InternalServerError"
 
 export class IdentityKit {
   // TODO: Handle transport selection
@@ -31,7 +38,7 @@ export class IdentityKit {
     args: RequestTypeMap[T] extends undefined
       ? { iframe: HTMLIFrameElement; method: T }
       : { iframe: HTMLIFrameElement; method: T; params: RequestTypeMap[T] }
-  ): Promise<ResponseTypeMap[T] | ResponseFailed> => {
+  ): Promise<WithRpcResponse<ResponseTypeMap[T] | ResponseFailed>> => {
     const { iframe, method, params } = args as {
       iframe: HTMLIFrameElement
       method: T
@@ -52,12 +59,11 @@ export class IdentityKit {
       const providerUrl = iframe.src
 
       const response = await makeRequest(providerUrl, { method, params })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return (response as any).result as ResponseTypeMap[T]
+      return response as WithRpcResponse<ResponseTypeMap[T] | ResponseFailed>
     } catch (e) {
       // TODO: Handle error response
       console.error(e)
-      return { error: { code: 500, message: "Internal Server Error" } }
+      throw new InternalServerError()
     }
   }
 }
