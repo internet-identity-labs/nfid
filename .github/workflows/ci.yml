@@ -3,13 +3,14 @@ name: CI
 on:
   workflow_dispatch:
   push:
-    # branches:
-    #   - main
-    # paths:
-    #   - 'examples/react-dapp/**'
-    #   - 'examples/react-signer/**'
-    #   - 'packages/identity-kit/**'
-    #   - 'packages/postmessage-rpc/**'
+    branches:
+      - main
+    paths:
+      - 'examples/react-dapp/**'
+      - 'examples/react-signer/**'
+      - 'packages/identity-kit/**'
+      - 'packages/postmessage-rpc/**'
+      - 'docker-for-e2e/**'
   pull_request:
     types: 
       - opened
