@@ -190,7 +190,7 @@ export type TransactionRequest =
   | {
       VaultNamingUpdateTransactionRequestV: VaultNamingUpdateTransactionRequest
     }
-  | { PurgeTransactionRequestV: {} }
+  | { PurgeTransactionRequestV: object }
   | {
       ControllersUpdateTransactionRequestV: ControllersUpdateTransactionRequest
     }
@@ -226,7 +226,7 @@ export type TransactionState =
   | { Pending: null }
 export interface TransferICRC1QuorumTransaction {
   to_principal: Principal
-  block_index: [] | [bigint]
+  block_index: [] | [number]
   to_subaccount: [] | [Uint8Array | number[]]
   ledger_id: Principal
   wallet: string
@@ -361,4 +361,3 @@ export interface _SERVICE {
   request_transaction: ActorMethod<[Array<TransactionRequest>], Array<TransactionCandid>>
   store_icrc1_canister: ActorMethod<[Principal, [] | [Principal]], VaultState>
 }
-export declare const idlFactory: IDL.InterfaceFactory
