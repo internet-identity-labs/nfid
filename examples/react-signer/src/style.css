@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --theme-main-color: #000000;
-}
-
-ul.themed li::before {
-  content: "• ";
-  color: var(--theme-main-color);
+body {
+  background: none transparent !important;
 }

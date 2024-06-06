@@ -13,11 +13,18 @@ import { IdentityKitModal } from "./modal"
 import { IdentityKit } from "../../lib/identity-kit"
 import { GetSupportedStandardResponse, ICRC25Methods } from "../../standards/icrc-25"
 
+export type IdentityKitProviderTheme = "light" | "dark"
+
 interface IdentityKitProviderProps extends PropsWithChildren {
   signers: SignerConfig[]
+  theme?: IdentityKitProviderTheme
 }
 
-export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ children, signers }) => {
+export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
+  children,
+  signers,
+  theme = "light",
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedSigner, setSelectedSigner] = useState<SignerConfig | undefined>(undefined)
   const signerIframeRef = useRef<HTMLIFrameElement>(null)
@@ -128,7 +135,7 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({ childr
         request,
       }}
     >
-      <IdentityKitModal />
+      <IdentityKitModal theme={theme} />
       {children}
     </IdentityKitContext.Provider>
   )
