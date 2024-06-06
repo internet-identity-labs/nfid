@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 
 export default function BlogIndex({ more = "Read more" }) {
   const { locale = "", defaultLocale = "" } = useRouter()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return filterRouteLocale(getPagesUnderRoute("/blog"), locale, defaultLocale).map((page: any) => {
     return (
       <div key={page.route} className="mb-10">
