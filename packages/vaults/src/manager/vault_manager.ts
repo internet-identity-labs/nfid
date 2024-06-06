@@ -192,7 +192,10 @@ export class VaultManager implements VaultManagerI {
    * Used for testing purposes.
    */
   async resetToLocalEnv() {
-    const agent: HttpAgent = new HttpAgent({ host: "http://127.0.0.1:8000", identity: this.identity })
+    const agent: HttpAgent = new HttpAgent({
+      host: "http://127.0.0.1:8000",
+      identity: this.identity,
+    })
     await agent.fetchRootKey()
     this.actor = Agent.Actor.createActor<VaultService>(idlFactory, {
       canisterId: this.canisterId.toString(),
