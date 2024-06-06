@@ -1,8 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const idlFactory = ({ IDL }: any) => {
-  const Conf = IDL.Record({
-    origins: IDL.Vec(IDL.Text),
-    repo_canister: IDL.Text,
-  })
   const TransactionState = IDL.Variant({
     Blocked: IDL.Null,
     Failed: IDL.Null,

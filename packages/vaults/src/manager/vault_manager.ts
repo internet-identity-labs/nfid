@@ -31,7 +31,7 @@ export class VaultManager implements VaultManagerI {
   /**
    * The principal ID of the canister.
    */
-  private canisterId: String
+  private canisterId: string
 
   /**
    * Users identity used for signing requests.
