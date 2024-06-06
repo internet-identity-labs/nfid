@@ -62,39 +62,37 @@ export const GetDelegation = ({
 
   return (
     <>
-      <div className="pt-9">
-        <div className="mb-2 text-xl font-bold text-center">Get Delegation</div>
-        <small className="block text-center">
-          Choose a delegation for{" "}
-          <a className="text-blue-500" target="_blank" href={origin}>
-            {origin}
-          </a>
-        </small>
-        <div className="flex flex-col mt-5 border border-solid rounded-xl border-neutral-200">
-          <div className="px-5 py-5 space-y-4 border-b border-solid border-neutral-200">
-            <small className="font-bold">Global account</small>
-            {globalAccount && (
-              <Radio
-                inputId={`acc_${globalAccount.id}`}
-                displayName={globalAccount.displayName}
-                checked={selectedAccount === globalAccount}
-                onChange={() => setSelectedAccount(globalAccount)}
-                disabled={isPublicAccountsAllowed}
-              />
-            )}
-          </div>
-          <div className="px-5 py-5 space-y-4">
-            <small className="font-bold">Session accounts</small>
-            {sessionAccounts.map((acc) => (
-              <Radio
-                key={`acc_${acc.displayName}`}
-                inputId={`acc_${acc.id}`}
-                displayName={acc.displayName}
-                checked={selectedAccount === acc}
-                onChange={() => setSelectedAccount(acc)}
-              />
-            ))}
-          </div>
+      <div className="mb-2 text-xl font-bold text-center">Get Delegation</div>
+      <small className="block text-center">
+        Choose a delegation for{" "}
+        <a className="text-blue-500" target="_blank" href={origin}>
+          {origin}
+        </a>
+      </small>
+      <div className="flex flex-col mt-5 border border-solid rounded-xl border-neutral-200">
+        <div className="px-5 py-5 space-y-4 border-b border-solid border-neutral-200">
+          <small className="font-bold">Global account</small>
+          {globalAccount && (
+            <Radio
+              inputId={`acc_${globalAccount.id}`}
+              displayName={globalAccount.displayName}
+              checked={selectedAccount === globalAccount}
+              onChange={() => setSelectedAccount(globalAccount)}
+              disabled={isPublicAccountsAllowed}
+            />
+          )}
+        </div>
+        <div className="px-5 py-5 space-y-4">
+          <small className="font-bold">Session accounts</small>
+          {sessionAccounts.map((acc) => (
+            <Radio
+              key={`acc_${acc.displayName}`}
+              inputId={`acc_${acc.id}`}
+              displayName={acc.displayName}
+              checked={selectedAccount === acc}
+              onChange={() => setSelectedAccount(acc)}
+            />
+          ))}
         </div>
       </div>
       <InteractivePanel
