@@ -21,7 +21,7 @@ export interface VaultManagerI {
    * If id is specified, returns the state of the vault at the time of the transaction with the specified id.
    * @param id The ID of the transaction.
    */
-  getState(id?: bigint): Promise<Vault>
+  getState(id?: BigInt): Promise<Vault>
 
   /**
    * Update method. Can be requested by a registered user (admin/member).
@@ -65,8 +65,17 @@ export interface VaultManagerI {
   /**
    * Method for adding a personal list of ICRC-1 canisters by the user.
    * Returns the updated vault state.
-   * Needed for displaying the balance of ICRC-1 tokens.
-   * @param canisters The array of ICRC-1 canisters to be added.
+   * Needed for displaying the balance/history of ICRC-1 tokens.
+   * @param ledger Ledger ICRC-1 canister to be added.
+   * @param index Optional index ICRC-1 canister to be added.
    */
-  addICRC1Canisters(canisters: Array<Principal>): Promise<Vault>
+  addICRC1Canister(ledger: Principal, index?: Principal): Promise<Vault>
+
+  /**
+   * Method for removing from a personal list of ICRC-1 canisters by the user.
+   * Returns the updated vault state.
+   * Needed for displaying the balance/history of ICRC-1 tokens.
+   * @param ledger Ledger ICRC-1 canister to be removed.
+   * */
+  removeICRC1Canister(ledger: Principal): Promise<Vault>
 }

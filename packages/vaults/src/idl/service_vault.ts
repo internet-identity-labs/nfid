@@ -1,5 +1,6 @@
 import type { Principal } from "@dfinity/principal"
 import type { ActorMethod } from "@dfinity/agent"
+import type { IDL } from "@dfinity/candid"
 
 export interface Approve {
   status: TransactionState
@@ -32,6 +33,10 @@ export interface ControllersUpdateTransactionRequest {
   principals: Array<Principal>
 }
 export type Currency = { ICP: null }
+export interface ICRC1 {
+  ledger: Principal
+  index: [] | [Principal]
+}
 export interface Member {
   modified_date: bigint
   name: string
@@ -213,9 +218,9 @@ export type TransactionRequest =
   | { PolicyCreateTransactionRequestV: PolicyCreateTransactionRequest }
 export type TransactionState =
   | { Blocked: null }
+  | { Failed: null }
   | { Approved: null }
   | { Rejected: null }
-  | { Failed: null }
   | { Executed: null }
   | { Purged: null }
   | { Pending: null }
@@ -294,7 +299,7 @@ export interface VaultState {
   members: Array<Member>
   name: [] | [string]
   description: [] | [string]
-  icrc1_canisters: Array<Principal>
+  icrc1_canisters: Array<ICRC1>
   wallets: Array<Wallet>
   quorum: Quorum
   policies: Array<Policy>
@@ -352,6 +357,7 @@ export interface _SERVICE {
     }
   >
   get_version: ActorMethod<[], string>
+  remove_icrc1_canister: ActorMethod<[Principal], VaultState>
   request_transaction: ActorMethod<[Array<TransactionRequest>], Array<TransactionCandid>>
-  store_icrc1_canisters: ActorMethod<[Array<Principal>], VaultState>
+  store_icrc1_canister: ActorMethod<[Principal, [] | [Principal]], VaultState>
 }

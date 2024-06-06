@@ -1,6 +1,7 @@
 import { Currency, Network, VaultRole } from "../enum/enums"
 import {
   Member,
+  ICRC1 as ICRC1Candid,
   Policy as PolicyCandid,
   VaultState,
   Wallet as WalletCandid,
@@ -15,7 +16,12 @@ export interface Vault {
   policies: Array<Policy>
   name?: string
   description?: string
-  icrc1_canisters: Array<Principal>
+  icrc1_canisters: Array<ICRC1>
+}
+
+export interface ICRC1 {
+  ledger: Principal
+  index: Principal | undefined
 }
 
 export interface Quorum {
@@ -50,17 +56,17 @@ export interface Policy {
 }
 
 export function candidToVault(vaultCandid: VaultState): Vault {
-  const members: Array<VaultMember> = vaultCandid.members.map(mapMember)
-  const quorum: Quorum = {
+  let members: Array<VaultMember> = vaultCandid.members.map(mapMember)
+  let quorum: Quorum = {
     modifiedDate: vaultCandid.quorum.modified_date,
     quorum: vaultCandid.quorum.quorum,
   }
-  const wallets: Array<Wallet> = vaultCandid.wallets.map(mapWallet)
-  const policies: Array<Policy> = vaultCandid.policies.map(mapPolicy)
-  const name = vaultCandid.name.length === 0 ? undefined : vaultCandid.name[0]
-  const description = vaultCandid.description.length === 0 ? undefined : vaultCandid.description[0]
-  const vault: Vault = {
-    icrc1_canisters: vaultCandid.icrc1_canisters,
+  let wallets: Array<Wallet> = vaultCandid.wallets.map(mapWallet)
+  let policies: Array<Policy> = vaultCandid.policies.map(mapPolicy)
+  let name = vaultCandid.name.length === 0 ? undefined : vaultCandid.name[0]
+  let description = vaultCandid.description.length === 0 ? undefined : vaultCandid.description[0]
+  let vault: Vault = {
+    icrc1_canisters: vaultCandid.icrc1_canisters.map(mapICRC1),
     members: members,
     quorum: quorum,
     wallets,
@@ -79,6 +85,13 @@ function mapMember(candid: Member): VaultMember {
     name: candid.name,
     role: candidToRole(candid.role),
     userId: candid.member_id,
+  }
+}
+
+function mapICRC1(candid: ICRC1Candid): ICRC1 {
+  return {
+    ledger: candid.ledger,
+    index: candid.index.length === 0 ? undefined : candid.index[0],
   }
 }
 
