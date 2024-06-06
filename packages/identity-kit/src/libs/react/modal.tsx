@@ -64,7 +64,7 @@ export const IdentityKitModal = ({ theme }: { theme: "dark" | "light" }) => {
                   <div
                     id={`signer_${signer.id}`}
                     key={`signer_${signer.id}`}
-                    className="flex items-center w-full p-5 space-x-3 text-xl font-bold border border-black04 dark:bg-signerDarkBg hover:bg-black04 dark:border-white04 dark:hover:bg-signerDarkHoverBg rounded-xl shadow-sm"
+                    className="flex items-center w-full p-5 space-x-3 text-xl font-bold border border-black/[.04] dark:bg-signerDarkBg hover:bg-black/[.04] dark:border-white/[.04] dark:hover:bg-signerDarkHoverBg rounded-xl shadow-sm"
                     onClick={() => selectSigner(signer.id)}
                   >
                     <img
