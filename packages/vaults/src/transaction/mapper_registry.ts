@@ -42,7 +42,7 @@ import {
   TransferICRC1QuorumRequestMapper,
   TransferICRC1QuorumTransactionMapper,
 } from "./transfer/transfer_icrc1_quorum"
-import {TopUpQuorumRequestMapper, TopUpQuorumTransactionMapper} from "./transfer/top_up_quorum";
+import { TopUpQuorumRequestMapper, TopUpQuorumTransactionMapper } from "./transfer/top_up_quorum"
 
 export const TransactionMapperRegistry: Map<PropertyKey, TransactionMapper> = new Map()
 export const RequestMapperRegistry: Map<string, RequestMapper> = new Map()
