@@ -14,6 +14,7 @@ export enum TransactionType {
   TransferQuorum = "TransferQuorum",
   TransferICRC1Quorum = "TransferICRC1Quorum",
   TopUp = "TopUp",
+  TopUpQuorum = "TopUpQuorum",
   VersionUpgrade = "VersionUpgrade",
   Purge = "Purge",
   ControllerUpdate = "ControllerUpdate",
