@@ -59,8 +59,8 @@ export class VaultManager implements VaultManagerI {
    * @param index Optional index ICRC-1 canister to be added.
    */
   async addICRC1Canister(ledger: Principal, index?: Principal): Promise<Vault> {
-    let index_candid: [] | [Principal] = index === undefined ? [] : [index]
-    let vault = await this.actor.store_icrc1_canister(ledger, index_candid)
+    const index_candid: [] | [Principal] = index === undefined ? [] : [index]
+    const vault = await this.actor.store_icrc1_canister(ledger, index_candid)
     return candidToVault(vault)
   }
 
@@ -71,7 +71,7 @@ export class VaultManager implements VaultManagerI {
    * @param ledger Ledger ICRC-1 canister to be removed.
    * */
   async removeICRC1Canister(ledger: Principal): Promise<Vault> {
-    let vault = await this.actor.remove_icrc1_canister(ledger)
+    const vault = await this.actor.remove_icrc1_canister(ledger)
     return candidToVault(vault)
   }
 
@@ -80,7 +80,7 @@ export class VaultManager implements VaultManagerI {
    * In the foreseeable future, optional parameter will be used for filtering/pagination.
    */
   async getTransactions(): Promise<Array<Transaction>> {
-    let transactions: Array<TransactionCandid> = await this.actor.get_transactions_all()
+    const transactions: Array<TransactionCandid> = await this.actor.get_transactions_all()
     return transactions.map(transactionCandidToTransaction)
   }
 
@@ -108,9 +108,9 @@ export class VaultManager implements VaultManagerI {
    * @param requests The array of transaction requests.
    */
   async requestTransaction(request: Array<TransactionRequest>): Promise<Array<Transaction>> {
-    let trRequests: Array<TransactionRequestCandid> = request.map((l) => requestToCandid(l))
-    let response = await this.actor.request_transaction(trRequests)
-    let transactions = response.map(transactionCandidToTransaction)
+    const trRequests: Array<TransactionRequestCandid> = request.map((l) => requestToCandid(l))
+    const response = await this.actor.request_transaction(trRequests)
+    const transactions = response.map(transactionCandidToTransaction)
     if (transactions.find((t) => t.state === TransactionState.Approved) !== undefined) {
       this.execute()
     }
@@ -132,8 +132,8 @@ export class VaultManager implements VaultManagerI {
    * @param id The ID of the transaction.
    */
   async getState(id?: bigint): Promise<Vault> {
-    let param: [bigint] | [] = id === undefined ? [] : [id]
-    let state = await this.actor.get_state(param)
+    const param: [bigint] | [] = id === undefined ? [] : [id]
+    const state = await this.actor.get_state(param)
     return candidToVault(state)
   }
 
@@ -144,9 +144,9 @@ export class VaultManager implements VaultManagerI {
    * @param approve The array of approve requests.
    */
   async approveTransaction(approves: Array<ApproveRequest>): Promise<Array<Transaction>> {
-    let approveRequest: Array<TransactionApproveRequest> = approves.map(approveToCandid)
-    let response = (await this.actor.approve(approveRequest)) as Array<TransactionCandid>
-    let transactions = response.map(transactionCandidToTransaction)
+    const approveRequest: Array<TransactionApproveRequest> = approves.map(approveToCandid)
+    const response = (await this.actor.approve(approveRequest)) as Array<TransactionCandid>
+    const transactions = response.map(transactionCandidToTransaction)
     if (
       transactions.find(
         (t) => t.state === TransactionState.Approved || t.state === TransactionState.Rejected
@@ -169,7 +169,7 @@ export class VaultManager implements VaultManagerI {
     imCanisterId: string,
     identity: Identity
   ): Agent.ActorSubclass<VaultService> => {
-    let agent: HttpAgent = new HttpAgent({ host: "https://ic0.app", identity: identity })
+    const agent: HttpAgent = new HttpAgent({ host: "https://ic0.app", identity: identity })
     return Agent.Actor.createActor<VaultService>(idlFactory, {
       canisterId: imCanisterId,
       agent,
@@ -192,7 +192,7 @@ export class VaultManager implements VaultManagerI {
    * Used for testing purposes.
    */
   async resetToLocalEnv() {
-    let agent: HttpAgent = new HttpAgent({ host: "http://127.0.0.1:8000", identity: this.identity })
+    const agent: HttpAgent = new HttpAgent({ host: "http://127.0.0.1:8000", identity: this.identity })
     await agent.fetchRootKey()
     this.actor = Agent.Actor.createActor<VaultService>(idlFactory, {
       canisterId: this.canisterId.toString(),
