@@ -33,6 +33,10 @@ export interface ControllersUpdateTransactionRequest {
   principals: Array<Principal>
 }
 export type Currency = { ICP: null }
+export interface ICRC1 {
+  ledger: Principal
+  index: [] | [Principal]
+}
 export interface Member {
   modified_date: bigint
   name: string
@@ -199,7 +203,7 @@ export type TransactionRequest =
   | {
       VaultNamingUpdateTransactionRequestV: VaultNamingUpdateTransactionRequest
     }
-  | { PurgeTransactionRequestV: {} }
+  | { PurgeTransactionRequestV: object }
   | {
       ControllersUpdateTransactionRequestV: ControllersUpdateTransactionRequest
     }
@@ -236,7 +240,7 @@ export type TransactionState =
   | { Pending: null }
 export interface TransferICRC1QuorumTransaction {
   to_principal: Principal
-  block_index: [] | [bigint]
+  block_index: [] | [number]
   to_subaccount: [] | [Uint8Array | number[]]
   ledger_id: Principal
   wallet: string
@@ -309,7 +313,7 @@ export interface VaultState {
   members: Array<Member>
   name: [] | [string]
   description: [] | [string]
-  icrc1_canisters: Array<Principal>
+  icrc1_canisters: Array<ICRC1>
   wallets: Array<Wallet>
   quorum: Quorum
   policies: Array<Policy>
@@ -367,7 +371,7 @@ export interface _SERVICE {
     }
   >
   get_version: ActorMethod<[], string>
+  remove_icrc1_canister: ActorMethod<[Principal], VaultState>
   request_transaction: ActorMethod<[Array<TransactionRequest>], Array<TransactionCandid>>
-  store_icrc1_canisters: ActorMethod<[Array<Principal>], VaultState>
+  store_icrc1_canister: ActorMethod<[Principal, [] | [Principal]], VaultState>
 }
-export declare const idlFactory: IDL.InterfaceFactory

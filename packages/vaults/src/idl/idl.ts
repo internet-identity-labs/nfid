@@ -192,6 +192,10 @@ export const idlFactory = ({ IDL }: any) => {
     member_id: IDL.Text,
     created_date: IDL.Nat64,
   })
+  const ICRC1 = IDL.Record({
+    ledger: IDL.Principal,
+    index: IDL.Opt(IDL.Principal),
+  })
   const Wallet = IDL.Record({
     uid: IDL.Text,
     modified_date: IDL.Nat64,
@@ -216,7 +220,7 @@ export const idlFactory = ({ IDL }: any) => {
     members: IDL.Vec(Member),
     name: IDL.Opt(IDL.Text),
     description: IDL.Opt(IDL.Text),
-    icrc1_canisters: IDL.Vec(IDL.Principal),
+    icrc1_canisters: IDL.Vec(ICRC1),
     wallets: IDL.Vec(Wallet),
     quorum: Quorum,
     policies: IDL.Vec(Policy),
@@ -355,8 +359,9 @@ export const idlFactory = ({ IDL }: any) => {
       ["query"]
     ),
     get_version: IDL.Func([], [IDL.Text], ["query"]),
+    remove_icrc1_canister: IDL.Func([IDL.Principal], [VaultState], []),
     request_transaction: IDL.Func([IDL.Vec(TransactionRequest)], [IDL.Vec(TransactionCandid)], []),
-    store_icrc1_canisters: IDL.Func([IDL.Vec(IDL.Principal)], [VaultState], []),
+    store_icrc1_canister: IDL.Func([IDL.Principal, IDL.Opt(IDL.Principal)], [VaultState], []),
   })
 }
 export const init = ({ IDL }: any) => {
