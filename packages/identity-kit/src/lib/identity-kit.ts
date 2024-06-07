@@ -1,4 +1,4 @@
-import { requestFactory } from "@nfid/postmessage-rpc"
+import { requestFactory, RequestTimeoutError } from "@nfid/postmessage-rpc"
 import {
   IdentityKitMethod,
   RequestTypeMap,
@@ -6,7 +6,8 @@ import {
   ResponseTypeMap,
   WithRpcResponse,
 } from "./types"
-import { InternalServerError } from "./InternalServerError"
+
+const MINUTE_MILLIS = 60000
 
 export class IdentityKit {
   // TODO: Handle transport selection
@@ -16,10 +17,11 @@ export class IdentityKit {
       const removeEventListener = () => {
         window.removeEventListener("message", handleReadyEvent)
       }
+
       const timeout = setTimeout(() => {
         removeEventListener()
         reject(new Error("Signer iframe did not respond in time"))
-      }, 30000)
+      }, MINUTE_MILLIS / 2)
 
       const handleReadyEvent = (event: MessageEvent<string>) => {
         if (event.data === "ready") {
@@ -58,12 +60,12 @@ export class IdentityKit {
 
       const providerUrl = iframe.src
 
-      const response = await makeRequest(providerUrl, { method, params })
-      return response as WithRpcResponse<ResponseTypeMap[T] | ResponseFailed>
+      return await makeRequest(providerUrl, { method, params })
     } catch (e) {
       // TODO: Handle error response
       console.error(e)
-      throw new InternalServerError()
+      if (e instanceof RequestTimeoutError) throw e
+      throw new Error("Internal Server Error")
     }
   }
 }

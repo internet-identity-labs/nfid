@@ -5,12 +5,13 @@ import { Text } from "../atoms/text"
 import { useMemo, useState } from "react"
 import { toast } from "react-toastify"
 import { isValidJSON } from "../../utils/json"
-import "react-toastify/dist/ReactToastify.css"
 import { Button } from "../atoms/button"
 import { CodeSection } from "../molecules/code-section"
 import { useIdentityKit } from "@nfid/identity-kit/react"
 import { getRequestObject } from "../../utils/requests"
 import { DropdownSelect } from "../molecules/dropdown-select"
+
+import "react-toastify/dist/ReactToastify.css"
 
 export interface IRequestExample {
   title: string
@@ -45,9 +46,16 @@ export const Section: React.FC<ISection> = ({
       return toast.error("Invalid JSON")
     }
     const requestObject = getRequestObject(requestValue)
-    const res = await request({ method: requestObject.method, params: requestObject.params })
-    setResponseValue(JSON.stringify(res, null, 2))
-    setIsLoading(false)
+    try {
+      const res = await request({ method: requestObject.method, params: requestObject.params })
+      setResponseValue(JSON.stringify(res, null, 2))
+    } catch (e) {
+      if (e instanceof Error) {
+        toast.error(e.message)
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const codeSection = useMemo(() => {

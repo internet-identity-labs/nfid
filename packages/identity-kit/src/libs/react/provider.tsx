@@ -1,4 +1,4 @@
-import React, { useState, useCallback, PropsWithChildren, useRef, useEffect } from "react"
+import React, { useState, useCallback, PropsWithChildren, useRef } from "react"
 
 import {
   IdentityKitMethod,
@@ -67,41 +67,28 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
         })
       }
 
-      // if signer is selected wait for iframe to be ready
-      if (!Number(signerIframeRef.current?.getAttribute("data-ready"))) {
-        await new Promise((resolve) => {
-          const int = setInterval(() => {
-            if (Number(signerIframeRef.current?.getAttribute("data-ready"))) {
-              clearInterval(int)
-              resolve(true)
-            }
-          }, 500)
-        })
-      }
-
       const iframe = signerIframeRef.current
       if (!iframe) throw new Error("Iframe not found")
 
-      const res = await IdentityKit.request({
-        iframe: signerIframeRef.current,
-        method,
-        ...args,
-      } as { iframe: HTMLIFrameElement; method: T; params: RequestTypeMap[T] })
+      // if signer is selected wait for iframe to be ready
+      if (!Number(iframe.getAttribute("data-ready"))) {
+        await IdentityKit.init()
+        iframe.setAttribute("data-ready", "1")
+      }
 
-      setIsModalOpen(false)
-      return res
+      try {
+        const res = await IdentityKit.request({
+          iframe,
+          method,
+          ...args,
+        } as { iframe: HTMLIFrameElement; method: T; params: RequestTypeMap[T] })
+        return res
+      } finally {
+        setIsModalOpen(false)
+      }
     },
     [selectedSigner, signerIframeRef, setIsModalOpen]
   )
-
-  useEffect(() => {
-    ;(async function () {
-      if (signerIframeRef.current) {
-        await IdentityKit.init()
-        signerIframeRef.current.setAttribute("data-ready", "1")
-      }
-    })()
-  }, [selectedSigner, signerIframeRef])
 
   return (
     <IdentityKitContext.Provider
