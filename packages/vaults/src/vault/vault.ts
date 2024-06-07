@@ -56,16 +56,16 @@ export interface Policy {
 }
 
 export function candidToVault(vaultCandid: VaultState): Vault {
-  let members: Array<VaultMember> = vaultCandid.members.map(mapMember)
-  let quorum: Quorum = {
+  const members: Array<VaultMember> = vaultCandid.members.map(mapMember)
+  const quorum: Quorum = {
     modifiedDate: vaultCandid.quorum.modified_date,
     quorum: vaultCandid.quorum.quorum,
   }
-  let wallets: Array<Wallet> = vaultCandid.wallets.map(mapWallet)
-  let policies: Array<Policy> = vaultCandid.policies.map(mapPolicy)
-  let name = vaultCandid.name.length === 0 ? undefined : vaultCandid.name[0]
-  let description = vaultCandid.description.length === 0 ? undefined : vaultCandid.description[0]
-  let vault: Vault = {
+  const wallets: Array<Wallet> = vaultCandid.wallets.map(mapWallet)
+  const policies: Array<Policy> = vaultCandid.policies.map(mapPolicy)
+  const name = vaultCandid.name.length === 0 ? undefined : vaultCandid.name[0]
+  const description = vaultCandid.description.length === 0 ? undefined : vaultCandid.description[0]
+  const vault: Vault = {
     icrc1_canisters: vaultCandid.icrc1_canisters.map(mapICRC1),
     members: members,
     quorum: quorum,

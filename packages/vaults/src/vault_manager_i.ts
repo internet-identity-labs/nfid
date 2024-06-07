@@ -21,7 +21,7 @@ export interface VaultManagerI {
    * If id is specified, returns the state of the vault at the time of the transaction with the specified id.
    * @param id The ID of the transaction.
    */
-  getState(id?: BigInt): Promise<Vault>
+  getState(id?: bigint): Promise<Vault>
 
   /**
    * Update method. Can be requested by a registered user (admin/member).

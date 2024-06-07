@@ -1,8 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const idlFactory = ({ IDL }: any) => {
-  const Conf = IDL.Record({
-    origins: IDL.Vec(IDL.Text),
-    repo_canister: IDL.Text,
-  })
   const TransactionState = IDL.Variant({
     Blocked: IDL.Null,
     Failed: IDL.Null,
@@ -86,6 +83,13 @@ export const idlFactory = ({ IDL }: any) => {
     amount: IDL.Nat64,
     policy: IDL.Opt(IDL.Text),
   })
+  const TopUpQuorumTransaction = IDL.Record({
+    block_index: IDL.Opt(IDL.Nat64),
+    currency: Currency,
+    wallet: IDL.Text,
+    common: BasicTransactionFields,
+    amount: IDL.Nat64,
+  })
   const VaultNamingUpdateTransaction = IDL.Record({
     name: IDL.Opt(IDL.Text),
     description: IDL.Opt(IDL.Text),
@@ -163,6 +167,7 @@ export const idlFactory = ({ IDL }: any) => {
     PolicyCreateTransactionV: PolicyCreateTransaction,
     MemberUpdateRoleTransactionV: MemberUpdateRoleTransaction,
     TopUpTransactionV: TopUpTransaction,
+    TopUpQuorumTransactionV: TopUpQuorumTransaction,
     VaultNamingUpdateTransactionV: VaultNamingUpdateTransaction,
     TransferTransactionV: TransferTransaction,
     PolicyRemoveTransactionV: PolicyRemoveTransaction,
@@ -294,6 +299,11 @@ export const idlFactory = ({ IDL }: any) => {
     batch_uid: IDL.Opt(IDL.Text),
   })
   const VersionUpgradeTransactionRequest = IDL.Record({ version: IDL.Text })
+  const TopUpQuorumTransactionRequest = IDL.Record({
+    currency: Currency,
+    wallet: IDL.Text,
+    amount: IDL.Nat64,
+  })
   const PolicyRemoveTransactionRequest = IDL.Record({
     uid: IDL.Text,
     batch_uid: IDL.Opt(IDL.Text),
@@ -323,6 +333,7 @@ export const idlFactory = ({ IDL }: any) => {
     WalletUpdateNameTransactionRequestV: WalletUpdateNameTransactionRequest,
     PolicyUpdateTransactionRequestV: PolicyUpdateTransactionRequest,
     VersionUpgradeTransactionRequestV: VersionUpgradeTransactionRequest,
+    TopUpQuorumTransactionRequestV: TopUpQuorumTransactionRequest,
     PolicyRemoveTransactionRequestV: PolicyRemoveTransactionRequest,
     PolicyCreateTransactionRequestV: PolicyCreateTransactionRequest,
   })

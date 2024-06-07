@@ -1,6 +1,5 @@
 import type { Principal } from "@dfinity/principal"
 import type { ActorMethod } from "@dfinity/agent"
-import type { IDL } from "@dfinity/candid"
 
 export interface Approve {
   status: TransactionState
@@ -145,6 +144,18 @@ export interface QuorumUpdateTransactionRequest {
   quorum: number
   batch_uid: [] | [string]
 }
+export interface TopUpQuorumTransaction {
+  block_index: [] | [bigint]
+  currency: Currency
+  wallet: string
+  common: BasicTransactionFields
+  amount: bigint
+}
+export interface TopUpQuorumTransactionRequest {
+  currency: Currency
+  wallet: string
+  amount: bigint
+}
 export interface TopUpTransaction {
   block_index: [] | [bigint]
   currency: Currency
@@ -170,6 +181,7 @@ export type TransactionCandid =
   | { PolicyCreateTransactionV: PolicyCreateTransaction }
   | { MemberUpdateRoleTransactionV: MemberUpdateRoleTransaction }
   | { TopUpTransactionV: TopUpTransaction }
+  | { TopUpQuorumTransactionV: TopUpQuorumTransaction }
   | { VaultNamingUpdateTransactionV: VaultNamingUpdateTransaction }
   | { TransferTransactionV: TransferTransaction }
   | { PolicyRemoveTransactionV: PolicyRemoveTransaction }
@@ -214,6 +226,7 @@ export type TransactionRequest =
     }
   | { PolicyUpdateTransactionRequestV: PolicyUpdateTransactionRequest }
   | { VersionUpgradeTransactionRequestV: VersionUpgradeTransactionRequest }
+  | { TopUpQuorumTransactionRequestV: TopUpQuorumTransactionRequest }
   | { PolicyRemoveTransactionRequestV: PolicyRemoveTransactionRequest }
   | { PolicyCreateTransactionRequestV: PolicyCreateTransactionRequest }
 export type TransactionState =
