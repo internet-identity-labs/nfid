@@ -13,10 +13,6 @@ export type SupportedStandard = {
    * URL providing information about the standard.
    */
   url: string
-  /**
-   * Methods of supported standard.
-   */
-  methods: Array<{ name: ICRC25Methods; isInteractive: boolean }>
 }
 
 /**
