@@ -11,7 +11,6 @@ import {
 import { IdentityKitContext } from "./context"
 import { IdentityKitModal } from "./modal"
 import { IdentityKit } from "../../lib/identity-kit"
-import { GetSupportedStandardResponse, ICRC25Methods } from "../../standards/icrc-25"
 
 export type IdentityKitProviderTheme = "light" | "dark"
 
@@ -28,9 +27,6 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedSigner, setSelectedSigner] = useState<SignerConfig | undefined>(undefined)
   const signerIframeRef = useRef<HTMLIFrameElement>(null)
-  const [silentMethods, setSilentMethods] = useState<Array<string>>([
-    ICRC25Methods.icrc25_supported_standards,
-  ])
 
   const toggleModal = useCallback(() => {
     setIsModalOpen((prev) => !prev)
@@ -57,8 +53,7 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
       : { method: T; params: RequestTypeMap[T] }): Promise<
       WithRpcResponse<ResponseTypeMap[T] | ResponseFailed>
     > => {
-      // check somehow that silent methods request ended
-      if (!selectedSigner || !silentMethods.includes(method)) setIsModalOpen(true)
+      setIsModalOpen(true)
 
       // If no signer is selected, wait for the user to select one
       if (!signerIframeRef.current) {
@@ -92,33 +87,18 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
         method,
         ...args,
       } as { iframe: HTMLIFrameElement; method: T; params: RequestTypeMap[T] })
+
       setIsModalOpen(false)
       return res
     },
-    [silentMethods, selectedSigner, signerIframeRef, setIsModalOpen]
+    [selectedSigner, signerIframeRef, setIsModalOpen]
   )
 
   useEffect(() => {
     ;(async function () {
       if (signerIframeRef.current) {
         await IdentityKit.init()
-
-        const response = await IdentityKit.request({
-          iframe: signerIframeRef.current,
-          method: ICRC25Methods.icrc25_supported_standards,
-        })
-
-        const supportedStandards = (response as WithRpcResponse<GetSupportedStandardResponse>)
-          .result.supportedStandards
-
-        if (supportedStandards) {
-          setSilentMethods(
-            supportedStandards.reduce((acc, { methods }) => {
-              return [...acc, ...methods.filter((m) => !m.isInteractive).map((m) => m.name)]
-            }, [] as string[])
-          )
-          signerIframeRef.current.setAttribute("data-ready", "1")
-        }
+        signerIframeRef.current.setAttribute("data-ready", "1")
       }
     })()
   }, [selectedSigner, signerIframeRef])
