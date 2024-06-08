@@ -28,9 +28,9 @@ export interface CallCanisterRequest {
 export interface CallCanisterResponse {
   result: {
     verification: {
-      contentMap: string,
+      contentMap: string
       certificate: string
-    },
+    }
     result: unknown[]
   }
 }
@@ -45,7 +45,11 @@ class CallCanisterService {
         throw Error("Unable to retrieve candid")
       }
       const js = await this.transformDidToJs(result, agent)
-      const actor = await this.createActorDynamically(js, request.canisterId, request.delegation as never)
+      const actor = await this.createActorDynamically(
+        js,
+        request.canisterId,
+        request.delegation as never
+      )
       const evalResult = await this.evaluateMethod(
         actor,
         request.calledMethodName,
@@ -75,7 +79,9 @@ class CallCanisterService {
     try {
       responseCandid = await agent.readState(canister, { paths: [pathCandid] })
     } catch (error) {
-      throw new Error(`Not possible to retrieve candid file from the canister ${canisterId} : ${error}`)
+      throw new Error(
+        `Not possible to retrieve candid file from the canister ${canisterId} : ${error}`
+      )
     }
 
     const certificate = await Certificate.create({
@@ -111,7 +117,9 @@ class CallCanisterService {
     const agent: Agent = new HttpAgent({ host: IC_HOSTNAME, identity })
     const dataUri = "data:text/javascript;charset=utf-8," + encodeURIComponent(js)
     const candid = await eval('import("' + dataUri + '")')
-    return Actor.createCallCanisterActor(candid.idlFactory, { agent, canisterId }) as ActorSubclass<CallCanisterActorMethodMapped<Record<string, ActorMethod>>>
+    return Actor.createCallCanisterActor(candid.idlFactory, { agent, canisterId }) as ActorSubclass<
+      CallCanisterActorMethodMapped<Record<string, ActorMethod>>
+    >
   }
 
   private async evaluateMethod(actor: ActorSubclass, methodName: string, parameters: string) {

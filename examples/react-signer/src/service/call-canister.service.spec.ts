@@ -30,10 +30,10 @@ describe("Call Canister Service", function () {
       parameters: "[10101]",
     }
     const response = await callCanisterService.call(request)
-    const origins = response.result.result[0] as {origin: string[]}
+    const origins = response.result.result[0] as { origin: string[] }
 
-    expect(response.result.verification.contentMap).toMatch(/^d9d9f7a467636f6e74656e74a7636172674f/);
-    expect(response.result.verification.certificate).toMatch(/^d9d9f7a36474726565830183018/);
-    expect(origins.origin[0]).toBe("https://identity.ic0.app");
+    expect(response.result.verification.contentMap).toMatch(/^d9d9f7a467636f6e74656e74a7636172674f/)
+    expect(response.result.verification.certificate).toMatch(/^d9d9f7a36474726565830183018/)
+    expect(origins.origin[0]).toBe("https://identity.ic0.app")
   }, 10000)
 })

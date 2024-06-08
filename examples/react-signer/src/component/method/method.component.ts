@@ -20,6 +20,6 @@ export const methodComponents: Map<string, MethodComponent> = utilsService.mapBy
     icrc25RevokePermissionsMethodComponent,
     icrc27GetAccountsMethodComponent,
     icrc34GetDelegationMethodComponent,
-    icrc49CallCanisterMethodComponent
+    icrc49CallCanisterMethodComponent,
   ]
 )
