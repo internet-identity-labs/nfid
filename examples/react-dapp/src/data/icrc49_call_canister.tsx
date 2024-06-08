@@ -4,20 +4,20 @@ import { ISection } from "../ui/organisms/section.js"
 export const basicRequest = {
   method: "icrc49_call_canister",
   params: {
-    canisterId: "xhy27-fqaaa-aaaao-a2hlq-ca",
-    sender: "b7gqo-ulk5n-2kpo7-oalt7-p2kyl-o4j5l-kiuwo-eeybr-dab4l-ur6up-pqe",
-    method: "transfer",
-    arg: "RElETARte24AbAKzsNrDA2ithsqDBQFsA/vKAQKi3pTrBgHYo4yoDX0BAwEdV+ztKgq7E4l1ffuTuwEmw8AtYSjlrJ+WLO5ofQIAAMgB",
+    canisterId: "do25a-dyaaa-aaaak-qifua-cai",
+    sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
+    method: "get_trusted_origins",
+    arg: "",
   },
 }
 
 export const withConsentMessage = {
   method: "icrc49_call_canister",
   params: {
-    canisterId: "xhy27-fqaaa-aaaao-a2hlq-ca",
-    sender: "b7gqo-ulk5n-2kpo7-oalt7-p2kyl-o4j5l-kiuwo-eeybr-dab4l-ur6up-pqe",
-    method: "transfer",
-    arg: "RElETARte24AbAKzsNrDA2ithsqDBQFsA/vKAQKi3pTrBgHYo4yoDX0BAwEdV+ztKgq7E4l1ffuTuwEmw8AtYSjlrJ+WLO5ofQIAAMgB",
+    canisterId: "do25a-dyaaa-aaaak-qifua-cai",
+    sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
+    method: "get_trusted_origins",
+    arg: "",
     consentMessage: "Please confirm the transfer of 100 ICP to Alice",
   },
 }

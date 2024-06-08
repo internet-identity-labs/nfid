@@ -16,7 +16,6 @@
     "prepare": "husky"
   },
   "devDependencies": {
-
     "@nfid/eslint-config": "*",
     "@nfid/typescript-config": "*",
     "dotenv-cli": "latest",

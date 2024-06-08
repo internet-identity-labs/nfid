@@ -6,6 +6,7 @@ import { ComponentData } from "../../service/method/interactive/interactive-meth
 import { utilsService } from "../../service/utils.service"
 import { icrc34GetDelegationMethodComponent } from "./icrc34-get-delegation-method.component"
 import { State } from "../../hook/use-signer"
+import { icrc49CallCanisterMethodComponent } from "./icrc49-call-canister-method.component"
 
 export interface MethodComponent {
   getMethod(): string
@@ -19,5 +20,6 @@ export const methodComponents: Map<string, MethodComponent> = utilsService.mapBy
     icrc25RevokePermissionsMethodComponent,
     icrc27GetAccountsMethodComponent,
     icrc34GetDelegationMethodComponent,
+    icrc49CallCanisterMethodComponent
   ]
 )
