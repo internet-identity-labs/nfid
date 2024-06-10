@@ -8,7 +8,9 @@
     "build": "tsc && vite build",
     "lint": "eslint . --fix --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "NODE_OPTIONS='--experimental-vm-modules' jest"
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
+    "format:write": "prettier --write '**/*.{ts,tsx,md,mdx,css}'",
+    "lint-staged": "lint-staged --no-stash"
   },
   "dependencies": {
     "@radix-ui/themes": "^3.0.5",
@@ -38,5 +40,13 @@
     "@nfid/agent": "^1.3.1",
     "@dfinity/utils": "^2.3.0",
     "vite-plugin-node-polyfills": "^0.22.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "npm run lint"
+    ],
+    "*.{js,jsx,ts,tsx,md,json}": [
+      "npm run format:write"
+    ]
   }
 }

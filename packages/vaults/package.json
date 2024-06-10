@@ -12,7 +12,9 @@
     "dev": "npm run build -- --watch",
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "test": "jest --passWithNoTests",
-    "lint": "eslint . --fix --max-warnings 0"
+    "lint": "eslint . --fix --max-warnings 0",
+    "format:write": "prettier --write '**/*.{ts,tsx,md,mdx,css}'",
+    "lint-staged": "lint-staged --no-stash"
   },
   "keywords": [
     "vault",
@@ -46,5 +48,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/internet-identity-labs/nfid"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "npm run lint"
+    ],
+    "*.{js,jsx,ts,tsx,md,json}": [
+      "npm run format:write"
+    ]
   }
 }

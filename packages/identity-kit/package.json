@@ -1,6 +1,5 @@
 {
   "name": "@nfid/identity-kit",
-  "author": "Philipp Litzenberger",
   "version": "0.0.0-alpha.0",
   "license": "MIT",
   "main": "dist/index.cjs.js",
@@ -28,12 +27,9 @@
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
+    "build-storybook": "storybook build",
+    "format:write": "prettier --write '**/*.{ts,tsx,md,mdx,css}'",
+    "lint-staged": "lint-staged --no-stash"
   },
   "size-limit": [
     {
@@ -72,5 +68,13 @@
   "peerDependencies": {
     "react": ">=17.0.2",
     "react-dom": ">=17.0.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "npm run lint"
+    ],
+    "*.{js,jsx,ts,tsx,md,json}": [
+      "npm run format:write"
+    ]
   }
 }
