@@ -10,7 +10,7 @@ interface CallCanisterRequest {
   methodName: string
   canisterId: string
   sender: string
-  args: Array<{ key: string; value: string }>
+  args: string
   consentMessage?: string
 }
 
@@ -43,13 +43,12 @@ export const CallCanister = ({
           <small className="block font-bold w-[100px]">Sender</small>
           <small>{sender}</small>
         </div>
-        <small className="font-bold block">Arguments</small>
-        {args.map((a) => (
-          <div className="flex" key={a.key}>
-            <small className="block font-bold w-[100px] ps-4">{a.key}</small>
-            <small>{a.value}</small>
+        <small className="block font-bold">Arguments</small>
+        {args && (
+          <div className="flex" key={args}>
+            <small>{args}</small>
           </div>
-        ))}
+        )}
         {consentMessage && <small className="leading-5">{consentMessage}</small>}
       </div>
       <InteractivePanel onApprove={onApprove} onReject={onReject} setState={setState} />

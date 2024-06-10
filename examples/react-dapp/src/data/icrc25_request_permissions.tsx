@@ -13,6 +13,9 @@ export const basicRequest = {
       {
         method: "icrc34_get_delegation",
       },
+      {
+        method: "icrc49_call_canister",
+      },
     ],
   },
 }

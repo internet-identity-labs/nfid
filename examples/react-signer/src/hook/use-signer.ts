@@ -22,7 +22,9 @@ export const useSigner = (): UseSignerResponse => {
   const handleMessage = React.useCallback(async (message: MessageEvent<RPCMessage>) => {
     console.debug("useSigner handleMessage:", message)
 
-    setState(State.LOADING)
+    if (!message.data.jsonrpc) {
+      return
+    }
 
     const methodService = methodServices.get(message.data.method)
 
@@ -51,7 +53,7 @@ export const useSigner = (): UseSignerResponse => {
 
   React.useEffect(() => {
     ;(async () => {
-      window.addEventListener("message", handleMessage)
+      window.addEventListener("message", handleMessage, false)
       await accountService.initWithPredefinedUsers()
       window.parent.postMessage("ready", "*")
       console.debug("useSigner useEffect: The Ready message has been sent.")
