@@ -1,3 +1,2 @@
-export { IdentityKit } from "./lib/identity-kit"
-export { type SignerConfig } from "./lib/types"
+export * from "./lib"
 export { ICRC25Methods } from "./standards/icrc-25"

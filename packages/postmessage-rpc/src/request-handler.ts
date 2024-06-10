@@ -1,6 +1,7 @@
 import * as uuid from "uuid"
 import { RPCMessage } from "./types"
 import { RPC_BASE } from "./constants"
+import { RequestTimeoutError } from "./errors"
 
 type addEventListener = (type: string, listener: (event: MessageEvent) => void) => void
 type removeEventListener = (type: string, listener: (event: MessageEvent) => void) => void
@@ -33,7 +34,7 @@ export const requestFactory =
       setTimeout(() => {
         const timeout = setTimeout(() => {
           removeEventListener("message", handleEvent)
-          reject(new Error("Request timed out"))
+          reject(new RequestTimeoutError())
           // TODO: improve timeout handling
         }, 60000)
 
