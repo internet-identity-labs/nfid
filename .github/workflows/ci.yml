@@ -49,7 +49,7 @@ jobs:
       - name: Check Formatting
         run: npm run format:check
 
-      - name: Check Build
+      - name: Build
         run: npm run build
 
   docker-for-e2e:
