@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --fix --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:check": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --fix --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "NODE_OPTIONS='--experimental-vm-modules' jest"
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
+    "format:write": "prettier --write '**/*.{ts,tsx,md,mdx,css}'",
+    "lint-staged": "lint-staged --no-stash"
   },
   "dependencies": {
     "@radix-ui/themes": "^3.0.5",
@@ -38,5 +41,13 @@
     "typescript": "^5.4.5",
     "vite": "^5.2.12",
     "vite-plugin-node-polyfills": "^0.22.0"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx} !(**/idl/*.ts)": [
+      "npm run lint:fix"
+    ],
+    "**/*.{js,jsx,ts,tsx,md,json}": [
+      "npm run format:write"
+    ]
   }
 }

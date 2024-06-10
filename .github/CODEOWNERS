@@ -5,7 +5,7 @@
 * @olekid
 
 # documentation owners
-docs/* @dostro @olekid
+docs/* @dostro @olekid @dmitriiIdentityLabs
 
 # @nfid/vaults SDK owner
 packages/vaults/* @olsemeno @dmitriiIdentityLabs

@@ -109,6 +109,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: 🎉 Push tags
+      - name: 🎉 Push tags and commit with version increment
         run: |
+          git push
           git push --tags
