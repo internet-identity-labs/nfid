@@ -38,6 +38,7 @@ module.exports = {
     ".*.js",
     "node_modules/",
     "dist/",
+    "**/idl/*.ts"
   ],
   overrides: [
     {

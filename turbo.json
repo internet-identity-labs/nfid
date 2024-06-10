@@ -9,13 +9,14 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
-    "lint": {
-      "dependsOn": ["^lint"]
+    "lint:check": {
+      "dependsOn": ["^lint:check"]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "test": {}
+    "test": {},
+    "lint-staged": {}
   }
 }
