@@ -33,6 +33,10 @@ class Icrc25SupportedStandardsMethodService extends SilentMethodService {
             name: "ICRC-34",
             url: "https://github.com/dfinity/ICRC/blob/main/ICRCs/ICRC-34/ICRC-34.md",
           },
+          {
+            name: "ICRC-49",
+            url: "https://github.com/dfinity/ICRC/blob/main/ICRCs/ICRC-49/ICRC-49.md",
+          },
         ],
       },
     }

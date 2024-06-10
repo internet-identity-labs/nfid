@@ -5,7 +5,7 @@ export const basicRequest = {
   method: "icrc49_call_canister",
   params: {
     canisterId: "rdmx6-jaaaa-aaaaa-aaadq-cai",
-    sender: "fdx3n-bqfpj-j6de7-vim5h-x36be-n52u6-2o2qs-wlmg3-sdfbb-7jyfz-4ae",
+    sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
     method: "lookup",
     arg: "[10000]",
   },
@@ -15,7 +15,7 @@ export const withConsentMessage = {
   method: "icrc49_call_canister",
   params: {
     canisterId: "rdmx6-jaaaa-aaaaa-aaadq-cai",
-    sender: "fdx3n-bqfpj-j6de7-vim5h-x36be-n52u6-2o2qs-wlmg3-sdfbb-7jyfz-4ae",
+    sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
     method: "lookup",
     arg: "[10000]",
     consentMessage: "Please confirm the transfer of 100 ICP to Alice",

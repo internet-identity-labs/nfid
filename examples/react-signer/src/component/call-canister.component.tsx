@@ -46,7 +46,6 @@ export const CallCanister = ({
         <small className="block font-bold">Arguments</small>
         {args && (
           <div className="flex" key={args}>
-            <small className="block font-bold w-[100px] ps-4">{args}</small>
             <small>{args}</small>
           </div>
         )}
