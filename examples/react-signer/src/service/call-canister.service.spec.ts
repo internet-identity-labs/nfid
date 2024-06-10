@@ -27,7 +27,7 @@ describe("Call Canister Service", function () {
       delegation,
       canisterId: "rdmx6-jaaaa-aaaaa-aaadq-cai",
       calledMethodName: "lookup",
-      parameters: "[10101]",
+      parameters: "[10000]",
     }
     const response = await callCanisterService.call(request)
     const origins = response.result.result[0] as { origin: string[] }
