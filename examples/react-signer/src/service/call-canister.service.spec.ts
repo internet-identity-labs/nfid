@@ -27,10 +27,12 @@ describe("Call Canister Service", function () {
       delegation,
       canisterId: "rdmx6-jaaaa-aaaaa-aaadq-cai",
       calledMethodName: "lookup",
-      parameters: "[10000]",
+      parameters: "[10101]",
     }
     const response = await callCanisterService.call(request)
     const origins = response.result.result[0] as { origin: string[] }
+
+    console.log("result", JSON.stringify(response, null, 2))
 
     expect(response.result.verification.contentMap).toMatch(/^d9d9f7a467636f6e74656e74a7636172674f/)
     expect(response.result.verification.certificate).toMatch(/^d9d9f7a36474726565830183018/)
