@@ -1,0 +1,56 @@
+---
+title: "Installation"
+date: "2024-06-03"
+authors:
+  - name: "Dan Ostrovsky"
+---
+
+# Get up and running with IdentityKit
+
+### Install
+
+Install IdentityKit and its peer dependencies:
+
+- `@nfid/identity-kit` - A library to integrate compatible ICP wallets into your application.
+- `@nfid/identity-kit/react` - A library containing react specific components for integrating
+  compatible ICP wallets into your application.
+
+```sh npm2yarn
+npm i @nfid/identity-kit
+```
+
+> Note: IdentityKit is a React library.
+
+### Import
+
+```typescript
+import { ConnectButton, ConnectModal } from "@nfid/identity-kit"
+```
+
+### Wrap provider
+
+Wrap your application with `IdentityKitProvider`.
+
+```typescript
+const App = () => {
+  return (
+    <IdentityKitProvider>
+      {/* Your App */}
+    </IdentityKitProvider>
+  );
+};
+```
+
+### Add the connect button
+
+Then, in your app, import and render the `ConnectButton` component.
+
+```typescript
+import { ConnectButton } from '@nfid/identity-kit';
+
+export const YourApp = () => {
+  return <ConnectButton />;
+};
+```
+
+IdentityKit will now handle your user's wallet selection, display wallet information, and handle wallet switching.
