@@ -3,35 +3,40 @@ title: "NFID IdentityKit"
 description: "The complete guide to NFID IdentityKit"
 ---
 
-> This package is still a WIP. Please join the standards working group for updates: https://github.com/dfinity/wg-identity-authentication?tab=readme-ov-file#meetings
+> This package is still a WIP. Please join the standards working group for updates:
+> https://github.com/dfinity/wg-identity-authentication?tab=readme-ov-file#meetings
 
 ## The best way to connect an ICP wallet
 
-[NFID IdentityKit](https://identitykit.xyz) is a React library that makes it easy to add 
-wallet connection to your dapp. It's intuitive, responsive and customizable. 
-Developers will be able to easily select which wallets they want to support 
-in their apps for authentication, signatures, and transfers.
+[NFID IdentityKit](https://identitykit.xyz) is a React library that makes it easy to add wallet
+connection to your dapp. It's intuitive, responsive and customizable. Developers will be able to
+easily select which wallets they want to support in their apps for authentication, signatures, and
+transfers.
 
 ## Features
 
 ### Wallet management
 
-Out-of-the-box wallet management for your dapp. Aside from handling the connection and disconnection of wallets,
-IdentityKit supports numerous wallets, allows dapps to request wallet signatures and canister calls, and
-abstracts all the complexity behind an easy-to-use SDK.
+Out-of-the-box wallet management for your dapp. Aside from handling the connection and disconnection
+of wallets, IdentityKit supports numerous wallets, allows dapps to request wallet signatures and
+canister calls, and abstracts all the complexity behind an easy-to-use SDK.
 
 ### Customizable
 
-You can tweak IdentityKit UI to match your style. You can pick from two display modes - Featured and Compact - 
-three color modes - light, dark, and system - and choose the order or display of the wallets you want to support.
+You can tweak IdentityKit UI to match your style. You can pick from two display modes - Featured and
+Compact - three color modes - light, dark, and system - and choose the order or display of the
+wallets you want to support.
 
 ### Industry standard
 
-The NFID team worked with the community and DFINITY to create the standards apps need to interact with users:
+The NFID team worked with the community and DFINITY to create the standards apps need to interact
+with users:
+
 - ICRC-25 to get permissions and the wallet's supported standards
 - ICRC-27 to get wallet addresses
 - ICRC-49 to ask those wallet addresses to execute authenticated canister calls
-- ICRC-34 to get a key (either a key for the wallet address that can make authenticated calls to your canisters, or one to make authenticated calls to any canister)
+- ICRC-34 to get a key (either a key for the wallet address that can make authenticated calls to
+  your canisters, or one to make authenticated calls to any canister)
 
 We've packaged those up into IdentityKit to make working with them easy for developers.
 
@@ -42,9 +47,9 @@ ICP wallets that plan to conform to ICRC standards and add themselves to Identit
 - Plug Wallet
 - Oisy Wallet
 
-We do not plan to offer standalone support for NFID Wallet integration. Use IdentityKit and whitelist only NFID Wallet
-if that's the only wallet you want to support, though we do not recommend excluding wallets 
-unless you know they do not support the standards you need.
+We do not plan to offer standalone support for NFID Wallet integration. Use IdentityKit and
+whitelist only NFID Wallet if that's the only wallet you want to support, though we do not recommend
+excluding wallets unless you know they do not support the standards you need.
 
 Get started with [installation](/getting-started/installation).
 
@@ -53,11 +58,13 @@ Get started with [installation](/getting-started/installation).
 ### NFID Wallet
 
 NFID Wallet is an on-chain ICP crypto wallet with these features for users:
+
 - Instant onboarding with an email address
 - Unified account across the ICP ecosystem
 - Greater security with Passkey authentication
 
 And these for developers:
+
 - User never leaves your app to create an NFID Wallet in seconds
 - Conforms to ICRC standards
 
@@ -65,6 +72,6 @@ Learn more about NFID Wallet in the [knowledge base](https://learn.nfid.one)
 
 ### NFID Vaults
 
-NFID Vaults is the only decentralized multi-chain multi-sig that users
-have a frontend they can use on https://nfidvaults.com, and that developers
-can build on top of with the [NFID Vaults SDK](https://github.com/internet-identity-labs/nfid/tree/main/packages/vaults).
+NFID Vaults is the only decentralized multi-chain multi-sig that users have a frontend they can use
+on https://nfidvaults.com, and that developers can build on top of with the
+[NFID Vaults SDK](https://github.com/internet-identity-labs/nfid/tree/main/packages/vaults).

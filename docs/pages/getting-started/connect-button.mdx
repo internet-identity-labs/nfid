@@ -7,7 +7,8 @@ authors:
 
 # Using and customizing the ConnectButton
 
-This is the main component. It is responsible for rendering the connect/disconnect button, as well as chain-swapping UI.
+This is the main component. It is responsible for rendering the connect/disconnect button, as well
+as chain-swapping UI.
 
 ```typescript
 import { ConnectButton } from '@nfid/identity-kit';
@@ -17,11 +18,13 @@ export const YourApp = () => {
 };
 ```
 
-> Note: Make sure your app is wrapped in the necessary providers. [Read more](installation#wrap-providers).
+> Note: Make sure your app is wrapped in the necessary providers.
+> [Read more](installation#wrap-providers).
 
 ## Status
 
-Use the `isConnected` hook to check if a wallet is connected. The wallet address persists in localStorage until the user disconnects.
+Use the `isConnected` hook to check if a wallet is connected. The wallet address persists in
+localStorage until the user disconnects.
 
 ```typescript
 import { useAccount, useDisconnect } from '@nfid/identity-kit';
@@ -57,7 +60,8 @@ export function Account() {
 
 ## Props
 
-The `ConnectButton` component exposes several props to customize its appearance, including toggling the visibility of different elements.
+The `ConnectButton` component exposes several props to customize its appearance, including toggling
+the visibility of different elements.
 
 ### Label
 
