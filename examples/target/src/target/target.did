@@ -1,3 +1,0 @@
-service : {
-    "get_trusted_origins" : () -> (vec text);
-};

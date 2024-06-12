@@ -1,7 +1,9 @@
 import { DelegationChain, DelegationIdentity, Ed25519KeyIdentity } from "@dfinity/identity"
 import { JsonnableEd25519KeyIdentity } from "@dfinity/identity/lib/cjs/identity/ed25519.js"
 import { callCanisterService, CallCanisterRequest } from "./call-canister.service"
+import { Agent, HttpAgent, Identity } from "@nfid/agent"
 
+const IC_HOSTNAME = "https://ic0.app"
 const HOUR = 3_600_000
 const PUBLIC_IDENTITY: JsonnableEd25519KeyIdentity = [
   "302a300506032b65700321003b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da29",
@@ -23,16 +25,19 @@ describe("Call Canister Service", function () {
       {}
     )
     const delegation = DelegationIdentity.fromDelegation(sessionKey, chain)
+    const agent: Agent = new HttpAgent({
+      host: IC_HOSTNAME,
+      identity: delegation as unknown as Identity,
+    })
     const request: CallCanisterRequest = {
       delegation,
       canisterId: "rdmx6-jaaaa-aaaaa-aaadq-cai",
       calledMethodName: "lookup",
       parameters: "[10101]",
+      agent,
     }
     const response = await callCanisterService.call(request)
     const origins = response.result.result[0] as { origin: string[] }
-
-    console.log("result", JSON.stringify(response, null, 2))
 
     expect(response.result.verification.contentMap).toMatch(/^d9d9f7a467636f6e74656e74a7636172674f/)
     expect(response.result.verification.certificate).toMatch(/^d9d9f7a36474726565830183018/)
