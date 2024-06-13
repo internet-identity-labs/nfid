@@ -39,12 +39,12 @@ class CallCanisterService {
         agent: request.agent,
         canisterId: request.canisterId,
       }) as ActorSubclass<CallCanisterActorMethodMapped<Record<string, ActorMethod>>>
-      const response = await this.evaluateMethod(
+      const response = (await this.evaluateMethod(
         actor,
         request.calledMethodName,
         Buffer.from(request.parameters, "base64")
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ) as any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      )) as any
 
       const certificate: string = Buffer.from(response.meta.certificate).toString("base64")
       const contentMap: string = Buffer.from(
@@ -63,7 +63,6 @@ class CallCanisterService {
     }
   }
 
-   
   private async evaluateMethod(
     actor: ActorSubclass,
     methodName: string,
