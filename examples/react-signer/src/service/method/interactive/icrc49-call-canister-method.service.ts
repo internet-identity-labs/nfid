@@ -133,7 +133,10 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
       agent
     )
 
-    const interfaceFactory = await interfaceFactoryService.getInterfaceFactory(icrc49Dto.canisterId, agent)
+    const interfaceFactory = await interfaceFactoryService.getInterfaceFactory(
+      icrc49Dto.canisterId,
+      agent
+    )
     const idl: IDL.ServiceClass = interfaceFactory({ IDL })
     const func: IDL.FuncClass = idl._fields.find((x: unknown[]) => icrc49Dto.method === x[0])![1]
     const argument = JSON.stringify(IDL.decode(func.argTypes, Buffer.from(icrc49Dto.arg, "base64")))
