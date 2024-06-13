@@ -2,6 +2,7 @@ import { DelegationChain, DelegationIdentity, Ed25519KeyIdentity } from "@dfinit
 import { JsonnableEd25519KeyIdentity } from "@dfinity/identity/lib/cjs/identity/ed25519.js"
 import { callCanisterService, CallCanisterRequest } from "./call-canister.service"
 import { Agent, HttpAgent, Identity } from "@nfid/agent"
+import { IDL } from "@dfinity/candid"
 
 const IC_HOSTNAME = "https://ic0.app"
 const HOUR = 3_600_000
@@ -31,16 +32,15 @@ describe("Call Canister Service", function () {
     })
     const request: CallCanisterRequest = {
       delegation,
-      canisterId: "rdmx6-jaaaa-aaaaa-aaadq-cai",
-      calledMethodName: "lookup",
-      parameters: "[10101]",
+      canisterId: "do25a-dyaaa-aaaak-qifua-cai",
+      calledMethodName: "greet",
+      parameters: Buffer.from(IDL.encode([IDL.Text], ['me'])).toString("base64"),
       agent,
     }
     const response = await callCanisterService.call(request)
-    const origins = response.result.result[0] as { origin: string[] }
 
-    expect(response.result.verification.contentMap).toMatch(/^d9d9f7a467636f6e74656e74a7636172674f/)
-    expect(response.result.verification.certificate).toMatch(/^d9d9f7a36474726565830183018/)
-    expect(origins.origin[0]).toBe("https://identity.ic0.app")
+    expect(response.contentMap).toMatch(/^eyJyZXF1ZXN0X3R5cGUiOiJjYWxsIiwiY2FuaX/)
+    expect(response.certificate).toMatch(/^2dn3o2R0cmVlgwGDAYIEWC/)
+    expect(response.content).toBe("Hello, me!")
   }, 10000)
 })

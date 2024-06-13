@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 export const idlFactory = ({ IDL }: any) => {
   const Icrc21ConsentMessageMetadata = IDL.Record({ language: IDL.Text })
   const Icrc21DeviceSpec = IDL.Variant({
