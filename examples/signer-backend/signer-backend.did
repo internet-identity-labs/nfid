@@ -1,0 +1,39 @@
+type Icrc21ConsentInfo = record {
+  metadata : Icrc21ConsentMessageMetadata;
+  consent_message : Icrc21ConsentMessage;
+};
+type Icrc21ConsentMessage = variant {
+  LineDisplayMessage : record { pages : vec Icrc21LineDisplayPage };
+  GenericDisplayMessage : text;
+};
+type Icrc21ConsentMessageMetadata = record { language : text };
+type Icrc21ConsentMessageRequest = record {
+  arg : blob;
+  method : text;
+  user_preferences : Icrc21ConsentMessageSpec;
+};
+type Icrc21ConsentMessageSpec = record {
+  metadata : Icrc21ConsentMessageMetadata;
+  device_spec : opt Icrc21DeviceSpec;
+};
+type Icrc21DeviceSpec = variant {
+  GenericDisplay;
+  LineDisplay : record { characters_per_line : nat16; lines_per_page : nat16 };
+};
+type Icrc21Error = variant {
+  GenericError : record { description : text; error_code : nat };
+  InsufficientPayment : Icrc21ErrorInfo;
+  UnsupportedCanisterCall : Icrc21ErrorInfo;
+  ConsentMessageUnavailable : Icrc21ErrorInfo;
+};
+type Icrc21ErrorInfo = record { description : text };
+type Icrc21LineDisplayPage = record { lines : vec text };
+type Result = variant { Ok : Icrc21ConsentInfo; Err : Icrc21Error };
+
+service : () -> {
+  get_trusted_origins : () -> (vec text);
+  greet : (text) -> (text) query;
+  icrc21_canister_call_consent_message : (Icrc21ConsentMessageRequest) -> (
+      Result,
+    );
+}

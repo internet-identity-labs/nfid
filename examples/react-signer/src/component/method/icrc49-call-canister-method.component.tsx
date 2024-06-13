@@ -10,7 +10,7 @@ export const icrc49CallCanisterMethodComponent: MethodComponent = {
     return "icrc49_call_canister"
   },
   getComponent(componentData: ComponentData, setState: Dispatch<SetStateAction<State>>) {
-    const { origin, methodName, canisterId, sender, args, onApprove, onReject } =
+    const { origin, methodName, canisterId, sender, args, consentMessage, onApprove, onReject } =
       componentData as CallCanisterComponentData
     return (
       <CallCanister
@@ -22,6 +22,7 @@ export const icrc49CallCanisterMethodComponent: MethodComponent = {
         canisterId={canisterId}
         sender={sender}
         args={args}
+        consentMessage={consentMessage}
       />
     )
   },

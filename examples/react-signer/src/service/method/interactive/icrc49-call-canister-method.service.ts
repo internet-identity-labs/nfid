@@ -3,8 +3,11 @@ import { ComponentData, InteractiveMethodService } from "./interactive-method.se
 import { accountService } from "../../account.service"
 import { callCanisterService } from "../../call-canister.service"
 import { DelegationChain, DelegationIdentity, Ed25519KeyIdentity } from "@dfinity/identity"
+import { consentMessageService } from "../../consent-message.service"
+import { Agent, HttpAgent, Identity } from "@nfid/agent"
 
 const HOUR = 3_600_000
+const IC_HOSTNAME = "https://ic0.app"
 
 export interface CallCanisterComponentData extends ComponentData {
   origin: string
@@ -28,8 +31,8 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
   }
 
   public async onApprove(message: MessageEvent<RPCMessage>): Promise<void> {
-    const icrc34Dto = message.data.params as unknown as Icrc49Dto
-    const key = await accountService.getAccountKeyIdentityByPrincipal(icrc34Dto.sender)
+    const icrc49Dto = message.data.params as unknown as Icrc49Dto
+    const key = await accountService.getAccountKeyIdentityByPrincipal(icrc49Dto.sender)
 
     if (!key) {
       window.parent.postMessage(
@@ -57,11 +60,17 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
     )
     const delegation = DelegationIdentity.fromDelegation(sessionKey, chain)
 
+    const agent: Agent = new HttpAgent({
+      host: IC_HOSTNAME,
+      identity: delegation as unknown as Identity,
+    })
+
     const callResponse = await callCanisterService.call({
-      canisterId: icrc34Dto.canisterId,
-      calledMethodName: icrc34Dto.method,
-      parameters: icrc34Dto.arg,
+      canisterId: icrc49Dto.canisterId,
+      calledMethodName: icrc49Dto.method,
+      parameters: icrc49Dto.arg,
       delegation,
+      agent,
     })
 
     const response: RPCSuccessResponse = {
@@ -79,11 +88,11 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
   public async getСomponentData(
     message: MessageEvent<RPCMessage>
   ): Promise<CallCanisterComponentData> {
-    const icrc34Dto = message.data.params as unknown as Icrc49Dto
+    const icrc49Dto = message.data.params as unknown as Icrc49Dto
 
-    const account = await accountService.getAccountKeyIdentityByPrincipal(icrc34Dto.sender)
+    const key = await accountService.getAccountKeyIdentityByPrincipal(icrc49Dto.sender)
 
-    if (!account) {
+    if (!key) {
       window.parent.postMessage(
         {
           origin: message.data.origin,
@@ -100,14 +109,36 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
       throw Error("User is not found")
     }
 
+    const sessionKey = Ed25519KeyIdentity.generate()
+    const chain = await DelegationChain.create(
+      key,
+      sessionKey.getPublicKey(),
+      new Date(Date.now() + 44 * HOUR),
+      {}
+    )
+    const delegation = DelegationIdentity.fromDelegation(sessionKey, chain)
+
+    const agent: Agent = new HttpAgent({
+      host: IC_HOSTNAME,
+      identity: delegation as unknown as Identity,
+    })
+
     const baseData = await super.getСomponentData(message)
+    const consentMessage = await consentMessageService.getConsentMessage(
+      icrc49Dto.canisterId,
+      icrc49Dto.method,
+      icrc49Dto.arg,
+      agent
+    )
+
     return {
       ...baseData,
       origin: message.origin,
-      methodName: icrc34Dto.method,
-      canisterId: icrc34Dto.canisterId,
-      sender: icrc34Dto.sender,
-      args: icrc34Dto.arg,
+      methodName: icrc49Dto.method,
+      canisterId: icrc49Dto.canisterId,
+      sender: icrc49Dto.sender,
+      args: icrc49Dto.arg,
+      consentMessage,
     }
   }
 }
