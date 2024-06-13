@@ -7,6 +7,7 @@ import {
   submitRequest,
   getPermissions,
   selectRequestTemplate,
+  approveWithDefaultSigner,
 } from "./utils"
 
 const origin = "http://localhost:3001"
@@ -28,14 +29,14 @@ test.describe("icrc49", () => {
       await verifyRequestSection(page, sectionId, basicRequest)
       await verifyResponseSection(page, sectionId, "{}")
 
-      await submitRequest(page, sectionId, true)
-      // TODO: Uncomment when method is implemented
-      // await page.waitForTimeout(250)
-      // await approveWithDefaultSigner(page)
+      await submitRequest(page, sectionId)
+      await approveWithDefaultSigner(page, sectionId)
+      await page.waitForTimeout(1000)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       // TODO: Verify response when method is implemented
-      expect(responseSection).toContainText(`"message": "Not supported"`)
+      expect(responseSection).toContainText(`"contentMap":`)
+      expect(responseSection).toContainText(`"certificate":`)
     })
   })
 
@@ -52,14 +53,14 @@ test.describe("icrc49", () => {
       await verifyRequestSection(page, sectionId, withConsentMessage)
       await verifyResponseSection(page, sectionId, "{}")
 
-      await submitRequest(page, sectionId, true)
-      // TODO: Uncomment when method is implemented
-      // await page.waitForTimeout(250)
-      // await approveWithDefaultSigner(page)
+      await submitRequest(page, sectionId)
+      await approveWithDefaultSigner(page, sectionId)
+      await page.waitForTimeout(1000)
 
       const responseSection = page.locator(`#${sectionId} #response-section-e2e`)
       // TODO: Verify response when method is implemented
-      expect(responseSection).toContainText(`"message": "Not supported"`)
+      expect(responseSection).toContainText(`"contentMap":`)
+      expect(responseSection).toContainText(`"certificate":`)
     })
   })
 })
