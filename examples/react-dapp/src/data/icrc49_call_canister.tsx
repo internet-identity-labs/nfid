@@ -4,9 +4,9 @@ import { ISection } from "../ui/organisms/section.js"
 export const basicRequest = {
   method: "icrc49_call_canister",
   params: {
-    canisterId: "vg4p4-3yaaa-aaaad-aad6q-cai",
+    canisterId: "do25a-dyaaa-aaaak-qifua-cai",
     sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
-    method: "greet",
+    method: "greet_no_consent",
     arg: '["me"]',
   },
 }
@@ -14,11 +14,10 @@ export const basicRequest = {
 export const withConsentMessage = {
   method: "icrc49_call_canister",
   params: {
-    canisterId: "vg4p4-3yaaa-aaaad-aad6q-cai",
+    canisterId: "do25a-dyaaa-aaaak-qifua-cai",
     sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
     method: "greet",
     arg: '["me"]',
-    consentMessage: "Please confirm the transfer of 100 ICP to Alice",
   },
 }
 

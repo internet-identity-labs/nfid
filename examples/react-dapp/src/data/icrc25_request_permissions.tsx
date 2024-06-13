@@ -22,7 +22,7 @@ export const basicRequest = {
 
 export const icrc25RequestPermissionsSection: ISection = {
   id: "icrc25_request_permissions",
-  title: "1.a icrc25_request_permissions",
+  title: "2.a icrc25_request_permissions",
   description: (
     <>
       The purpose of the <Method>icrc25_request_permissions</Method> method is for the relying party

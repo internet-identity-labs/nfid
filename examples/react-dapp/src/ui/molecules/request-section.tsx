@@ -15,7 +15,7 @@ export const RequestSection: React.FC<RequestSectionProps> = ({ value, setValue 
         Request <span className="text-sm opacity-50">(editable)</span>
       </p>
       <div className="relative w-full overflow-hidden !font-mono rounded-xl">
-        <div className="absolute z-50 scale-125 w-[24px] right-3 top-3">
+        <div className="absolute z-40 scale-125 w-[24px] right-3 top-3">
           <Copy value={value} />
         </div>
         <E2ELogger value={value} id="request-section-e2e" />

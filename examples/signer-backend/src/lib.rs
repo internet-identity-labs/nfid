@@ -21,6 +21,11 @@ fn get_trusted_origins() -> Vec<String> {
 }
 
 #[query]
+fn greet_no_consent(name: String) -> String {
+    format!("Hello, {}!", name)
+}
+
+#[query]
 fn greet(name: String) -> String {
     format!("Hello, {}!", name)
 }

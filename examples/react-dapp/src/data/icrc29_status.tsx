@@ -6,7 +6,7 @@ export const basicRequest = {
 
 export const icrc29StatusSection: ISection = {
   id: "icrc29_status",
-  title: "3.a icrc29_status",
+  title: "1.a icrc29_status",
   description: (
     <>
       This standard defines a transport channel to send ICRC-25 messages from a relying party to a

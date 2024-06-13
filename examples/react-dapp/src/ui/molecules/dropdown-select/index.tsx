@@ -5,6 +5,8 @@ import { DropdownOption } from "./option"
 
 import useClickOutside from "../../../hooks/use-click-outside"
 import { IOption } from "../../../types/selectors"
+import { IconSvgChevronDark, IconSvgChevronLight } from "../../atoms/icons"
+import { useTheme } from "next-themes"
 
 export interface IDropdownSelect {
   label?: string
@@ -38,6 +40,7 @@ export const DropdownSelect = ({
   isBig,
 }: IDropdownSelect) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const { theme } = useTheme()
 
   const ref = useClickOutside(() => setIsDropdownOpen(false))
 
@@ -124,12 +127,23 @@ export const DropdownSelect = ({
             ) : null}
           </div>
         </div>
-        {/* <IconCmpDropdownArrow
-          className={clsx(
-            "transition-transform rotate-90 duration-200",
-            isDropdownOpen && "!-rotate-90"
-          )}
-        /> */}
+        {theme === "light" ? (
+          <img
+            src={IconSvgChevronLight}
+            className={clsx(
+              "transition-transform rotate-90 duration-200",
+              isDropdownOpen && "!-rotate-90"
+            )}
+          />
+        ) : (
+          <img
+            src={IconSvgChevronDark}
+            className={clsx(
+              "transition-transform rotate-90 duration-200",
+              isDropdownOpen && "!-rotate-90"
+            )}
+          />
+        )}
       </div>
       <p className={clsx("text-sm text-red-600")}>{errorText}</p>
       {isDropdownOpen && (
