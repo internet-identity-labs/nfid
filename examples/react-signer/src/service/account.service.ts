@@ -39,24 +39,24 @@ const sessionKeyJson: JsonnableEd25519KeyIdentity = [
 
 export const accountService = {
   async initWithPredefinedUsers(): Promise<void> {
-      const accountEntities: AccountEntity[] = [
-        {
-          id: 1,
-          displayName: "Account #1",
-          keyIdentity: JSON.stringify(identityKeyJson),
-          subaccount: 0,
-          type: AccountType.GLOBAL,
-        },
-        {
-          id: 2,
-          displayName: "Account #2",
-          keyIdentity: JSON.stringify(sessionKeyJson),
-          subaccount: 1,
-          type: AccountType.SESSION,
-        }
-      ]
+    const accountEntities: AccountEntity[] = [
+      {
+        id: 1,
+        displayName: "Account #1",
+        keyIdentity: JSON.stringify(identityKeyJson),
+        subaccount: 0,
+        type: AccountType.GLOBAL,
+      },
+      {
+        id: 2,
+        displayName: "Account #2",
+        keyIdentity: JSON.stringify(sessionKeyJson),
+        subaccount: 1,
+        type: AccountType.SESSION,
+      },
+    ]
 
-      await idbRepository.set(key, JSON.stringify(accountEntities))
+    await idbRepository.set(key, JSON.stringify(accountEntities))
   },
 
   async getAccounts(): Promise<Account[]> {
