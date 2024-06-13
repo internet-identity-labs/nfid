@@ -42,7 +42,7 @@ test.describe("icrc34", () => {
       const iframeElement = await page.$("#signer-iframe")
       const frame = await iframeElement!.contentFrame()
       await page.waitForTimeout(250)
-      await frame!.click("#acc_0")
+      await frame!.click("#acc_1")
       await page.waitForTimeout(250)
       await approveWithDefaultSigner(page, sectionId)
 
@@ -79,7 +79,7 @@ test.describe("icrc34", () => {
       const iframeElement = await page.$("#signer-iframe")
       const frame = await iframeElement!.contentFrame()
       await page.waitForTimeout(250)
-      await frame!.click("#acc_0")
+      await frame!.click("#acc_2")
       await page.waitForTimeout(250)
       await approveWithDefaultSigner(page, sectionId)
 

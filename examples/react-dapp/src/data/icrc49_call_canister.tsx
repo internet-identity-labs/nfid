@@ -4,20 +4,20 @@ import { ISection } from "../ui/organisms/section.js"
 export const basicRequest = {
   method: "icrc49_call_canister",
   params: {
-    canisterId: "rdmx6-jaaaa-aaaaa-aaadq-cai",
+    canisterId: "vg4p4-3yaaa-aaaad-aad6q-cai",
     sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
-    method: "lookup",
-    arg: "[10000]",
+    method: "greet",
+    arg: '["me"]',
   },
 }
 
 export const withConsentMessage = {
   method: "icrc49_call_canister",
   params: {
-    canisterId: "rdmx6-jaaaa-aaaaa-aaadq-cai",
+    canisterId: "vg4p4-3yaaa-aaaad-aad6q-cai",
     sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
-    method: "lookup",
-    arg: "[10000]",
+    method: "greet",
+    arg: '["me"]',
     consentMessage: "Please confirm the transfer of 100 ICP to Alice",
   },
 }

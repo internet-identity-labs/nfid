@@ -25,10 +25,11 @@
       "source": ["docs/out"],
       "type": "assets"
     },
-    "target": {
-      "candid": "examples/target/src/target/target.did",
-      "package": "target",
-      "type": "rust"
+    "signer-backend": {
+      "candid": "examples/signer-backend/signer-backend.did",
+      "package": "signer-backend",
+      "type": "rust",
+      "optimize": "cycles"
     }
   },
   "defaults": {
