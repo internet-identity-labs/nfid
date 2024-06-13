@@ -33,18 +33,18 @@ function App() {
         <ToastContainer />
         <Header />
         <div className="flex flex-col space-y-20">
-          <SectionContainer title="1. ICRC-25: Signer Interaction Standard">
+          <SectionContainer title="1. ICRC-29: Status">
+            {icrc29data.map((section, index) => (
+              <Section key={index} {...section} />
+            ))}
+          </SectionContainer>
+          <SectionContainer title="2. ICRC-25: Signer Interaction Standard">
             {icrc25data.map((section, index) => (
               <Section key={index} {...section} />
             ))}
           </SectionContainer>
-          <SectionContainer title="2. ICRC-27: Get Accounts">
+          <SectionContainer title="3. ICRC-27: Get Accounts">
             {icrc27data.map((section, index) => (
-              <Section key={index} {...section} />
-            ))}
-          </SectionContainer>
-          <SectionContainer title="3. ICRC-29: Status">
-            {icrc29data.map((section, index) => (
               <Section key={index} {...section} />
             ))}
           </SectionContainer>

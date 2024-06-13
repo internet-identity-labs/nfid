@@ -32,6 +32,7 @@ type Result = variant { Ok : Icrc21ConsentInfo; Err : Icrc21Error };
 
 service : () -> {
   get_trusted_origins : () -> (vec text);
+  greet_no_consent : (text) -> (text) query;
   greet : (text) -> (text) query;
   icrc21_canister_call_consent_message : (Icrc21ConsentMessageRequest) -> (
       Result,

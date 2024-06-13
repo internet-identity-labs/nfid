@@ -8,7 +8,7 @@ export const basicRequest = {
 
 export const icrc25GrantedPermissionsSection: ISection = {
   id: "icrc25_granted_permissions",
-  title: "1.b icrc25_granted_permissions",
+  title: "2.b icrc25_granted_permissions",
   description: (
     <>
       The purpose of the <Method>icrc25_granted_permissions</Method> method is for the relying party

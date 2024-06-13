@@ -8,13 +8,19 @@ export const basicRequest = {
       {
         method: "icrc27_get_accounts",
       },
+      {
+        method: "icrc34_get_delegation",
+      },
+      {
+        method: "icrc49_call_canister",
+      },
     ],
   },
 }
 
 export const icrc25RevokePermissionsSection: ISection = {
   id: "icrc25_revoke_permissions",
-  title: "1.c icrc25_revoke_permissions",
+  title: "2.c icrc25_revoke_permissions",
   description: (
     <>
       The relying party can request to revoke all or a subset of the previously granted permission
