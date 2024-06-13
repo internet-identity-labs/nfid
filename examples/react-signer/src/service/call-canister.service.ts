@@ -10,9 +10,9 @@ import * as console from "console"
 import { interfaceFactoryService } from "./interface-factory.service"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(BigInt.prototype as any).toJSON = function () {
-  return this.toString();
-};
+;(BigInt.prototype as any).toJSON = function () {
+  return this.toString()
+}
 
 export interface CallCanisterRequest {
   delegation: DelegationIdentity
@@ -43,7 +43,8 @@ class CallCanisterService {
         actor,
         request.calledMethodName,
         Buffer.from(request.parameters, "base64")
-      )
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ) as any
 
       const certificate: string = Buffer.from(response.meta.certificate).toString("base64")
       const contentMap: string = Buffer.from(
@@ -54,7 +55,7 @@ class CallCanisterService {
       return {
         certificate,
         contentMap,
-        content
+        content,
       }
     } catch (error) {
       console.error(`The call cannot be executed`)
@@ -62,8 +63,12 @@ class CallCanisterService {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async evaluateMethod(actor: ActorSubclass, methodName: string, parameters: ArrayBuffer): Promise<any> {
+   
+  private async evaluateMethod(
+    actor: ActorSubclass,
+    methodName: string,
+    parameters: ArrayBuffer
+  ): Promise<unknown> {
     if (parameters === undefined) {
       return actor[methodName]()
     }

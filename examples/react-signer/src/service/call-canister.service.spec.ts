@@ -34,7 +34,7 @@ describe("Call Canister Service", function () {
       delegation,
       canisterId: "do25a-dyaaa-aaaak-qifua-cai",
       calledMethodName: "greet",
-      parameters: Buffer.from(IDL.encode([IDL.Text], ['me'])).toString("base64"),
+      parameters: Buffer.from(IDL.encode([IDL.Text], ["me"])).toString("base64"),
       agent,
     }
     const response = await callCanisterService.call(request)
