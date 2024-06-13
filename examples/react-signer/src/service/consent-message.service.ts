@@ -4,8 +4,6 @@ import {
   type _SERVICE as ConsentMessageCanister,
 } from "../idl/consent"
 import { idlFactory as ConsentMessageCanisterIDL } from "../idl/consent_idl"
-import { IDL } from "@dfinity/candid"
-import { interfaceFactoryService } from "./interface-factory.service"
 import { Agent } from "@nfid/agent"
 
 class ConsentMessageError extends Error {}
@@ -18,11 +16,6 @@ export const consentMessageService = {
     agent: Agent
   ): Promise<string | undefined> {
     try {
-      const interfaceFactory = await interfaceFactoryService.getInterfaceFactory(canisterId, agent)
-      const idl: IDL.ServiceClass = interfaceFactory({ IDL })
-      const func: IDL.FuncClass = idl._fields.find((x: unknown[]) => methodName === x[0])![1]
-      const argument = IDL.encode(func.argTypes, JSON.parse(arg))
-
       const actor = actorService.getActor<ConsentMessageCanister>(
         canisterId,
         ConsentMessageCanisterIDL,
@@ -31,7 +24,7 @@ export const consentMessageService = {
 
       const request: Icrc21ConsentMessageRequest = {
         method: methodName,
-        arg: new Uint8Array(argument),
+        arg: new Uint8Array(Buffer.from(arg, "base64")),
         user_preferences: {
           metadata: { language: "en" },
           device_spec: [],

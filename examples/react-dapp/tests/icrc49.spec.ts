@@ -37,6 +37,7 @@ test.describe("icrc49", () => {
       // TODO: Verify response when method is implemented
       expect(responseSection).toContainText(`"contentMap":`)
       expect(responseSection).toContainText(`"certificate":`)
+      expect(responseSection).toContainText(`"content":`)
     })
   })
 
@@ -61,6 +62,7 @@ test.describe("icrc49", () => {
       // TODO: Verify response when method is implemented
       expect(responseSection).toContainText(`"contentMap":`)
       expect(responseSection).toContainText(`"certificate":`)
+      expect(responseSection).toContainText(`"content":`)
     })
   })
 })

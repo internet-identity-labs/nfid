@@ -5,6 +5,8 @@ import { callCanisterService } from "../../call-canister.service"
 import { DelegationChain, DelegationIdentity, Ed25519KeyIdentity } from "@dfinity/identity"
 import { consentMessageService } from "../../consent-message.service"
 import { Agent, HttpAgent, Identity } from "@nfid/agent"
+import { interfaceFactoryService } from "../../interface-factory.service"
+import { IDL } from "@dfinity/candid"
 
 const HOUR = 3_600_000
 const IC_HOSTNAME = "https://ic0.app"
@@ -78,7 +80,7 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
       jsonrpc: message.data.jsonrpc,
       id: message.data.id,
       result: {
-        ...callResponse.result.verification,
+        ...callResponse,
       },
     }
 
@@ -131,13 +133,18 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
       agent
     )
 
+    const interfaceFactory = await interfaceFactoryService.getInterfaceFactory(icrc49Dto.canisterId, agent)
+    const idl: IDL.ServiceClass = interfaceFactory({ IDL })
+    const func: IDL.FuncClass = idl._fields.find((x: unknown[]) => icrc49Dto.method === x[0])![1]
+    const argument = JSON.stringify(IDL.decode(func.argTypes, Buffer.from(icrc49Dto.arg, "base64")))
+
     return {
       ...baseData,
       origin: message.origin,
       methodName: icrc49Dto.method,
       canisterId: icrc49Dto.canisterId,
       sender: icrc49Dto.sender,
-      args: icrc49Dto.arg,
+      args: argument,
       consentMessage,
     }
   }
