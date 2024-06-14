@@ -7,7 +7,7 @@ export const basicRequest = {
     canisterId: "do25a-dyaaa-aaaak-qifua-cai",
     sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
     method: "greet_no_consent",
-    arg: '["me"]',
+    arg: "RElETAABcQJtZQ==",
   },
 }
 
@@ -17,7 +17,7 @@ export const withConsentMessage = {
     canisterId: "do25a-dyaaa-aaaak-qifua-cai",
     sender: "535yc-uxytb-gfk7h-tny7p-vjkoe-i4krp-3qmcl-uqfgr-cpgej-yqtjq-rqe",
     method: "greet",
-    arg: '["me"]',
+    arg: "RElETAABcQJtZQ==",
   },
 }
 

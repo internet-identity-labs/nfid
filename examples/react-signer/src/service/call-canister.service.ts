@@ -9,6 +9,11 @@ import { DelegationIdentity } from "@dfinity/identity"
 import * as console from "console"
 import { interfaceFactoryService } from "./interface-factory.service"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+;(BigInt.prototype as any).toJSON = function () {
+  return this.toString()
+}
+
 export interface CallCanisterRequest {
   delegation: DelegationIdentity
   canisterId: string
@@ -18,13 +23,9 @@ export interface CallCanisterRequest {
 }
 
 export interface CallCanisterResponse {
-  result: {
-    verification: {
-      contentMap: string
-      certificate: string
-    }
-    result: unknown[]
-  }
+  contentMap: string
+  certificate: string
+  content: unknown[]
 }
 
 class CallCanisterService {
@@ -38,27 +39,39 @@ class CallCanisterService {
         agent: request.agent,
         canisterId: request.canisterId,
       }) as ActorSubclass<CallCanisterActorMethodMapped<Record<string, ActorMethod>>>
-      const evalResult = await this.evaluateMethod(
+      const response = (await this.evaluateMethod(
         actor,
         request.calledMethodName,
-        request.parameters
-      )
+        Buffer.from(request.parameters, "base64")
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      )) as any
 
-      const response = JSON.stringify({ result: evalResult }, (_key, value) =>
-        typeof value === "bigint" ? value.toString() + "n" : value
-      )
-      return JSON.parse(response) as CallCanisterResponse
+      const certificate: string = Buffer.from(response.meta.certificate).toString("base64")
+      const contentMap: string = Buffer.from(
+        new TextEncoder().encode(JSON.stringify(response.meta.contentMap))
+      ).toString("base64")
+      const content = response.result
+
+      return {
+        certificate,
+        contentMap,
+        content,
+      }
     } catch (error) {
       console.error(`The call cannot be executed`)
       throw error
     }
   }
 
-  private async evaluateMethod(actor: ActorSubclass, methodName: string, parameters: string) {
-    if (parameters === undefined || parameters.length === 0 || parameters[0] === undefined) {
+  private async evaluateMethod(
+    actor: ActorSubclass,
+    methodName: string,
+    parameters: ArrayBuffer
+  ): Promise<unknown> {
+    if (parameters === undefined) {
       return actor[methodName]()
     }
-    return actor[methodName](...JSON.parse(parameters))
+    return actor[methodName](parameters)
   }
 }
 
