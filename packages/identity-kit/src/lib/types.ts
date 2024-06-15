@@ -1,4 +1,5 @@
 import { ICRC25Methods, ICRC25RequestTypeMap, ICRC25ResponseTypeMap } from "../standards/icrc-25"
+import { ICRC49Methods, ICRC49RequestTypeMap, ICRC49ResponseTypeMap } from "../standards/icrc-49"
 
 export type SignerConfig = {
   id: string
@@ -15,7 +16,7 @@ export type WithRpcResponse<T> = {
   ? ResponseFailed
   : { result: T }
 
-export type IdentityKitMethod = ICRC25Methods
+export type IdentityKitMethod = ICRC25Methods | ICRC49Methods
 
 export type ResponseFailed = {
   error: {
@@ -25,8 +26,8 @@ export type ResponseFailed = {
   }
 }
 
-export type RequestTypeMap = ICRC25RequestTypeMap
-export type ResponseTypeMap = ICRC25ResponseTypeMap
+export type RequestTypeMap = ICRC25RequestTypeMap & ICRC49RequestTypeMap
+export type ResponseTypeMap = ICRC25ResponseTypeMap & ICRC49ResponseTypeMap
 
 export interface IRequestFunction {
   <T extends IdentityKitMethod>(

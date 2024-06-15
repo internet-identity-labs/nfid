@@ -1,3 +1,4 @@
+import { IdentityKitAgentType } from "../../lib/identity-kit-agent"
 import { IRequestFunction, SignerConfig } from "../../lib/types"
 
 export interface IdentityKitProvider {
@@ -9,4 +10,5 @@ export interface IdentityKitProvider {
   signerIframeRef?: React.RefObject<HTMLIFrameElement>
 
   request: IRequestFunction
+  IdentityKitAgent: IdentityKitAgentType
 }

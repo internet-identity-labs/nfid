@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react"
 import { IdentityKitProvider } from "./types"
 import { IRequestFunction } from "../../lib/types"
+import { IdentityKitAgentType } from "../../lib/identity-kit-agent"
 
 const defaultState: IdentityKitProvider = {
   signers: [],
@@ -16,17 +17,20 @@ const defaultState: IdentityKitProvider = {
   request: async () => {
     throw new Error("request not implemented")
   },
+  IdentityKitAgent: {} as IdentityKitAgentType,
 }
 
 export const IdentityKitContext = createContext<IdentityKitProvider>(defaultState)
 
 export function useIdentityKit(): {
   request: IRequestFunction
+  IdentityKitAgent: IdentityKitAgentType
 } {
-  const { request } = useContext(IdentityKitContext)
+  const { request, IdentityKitAgent } = useContext(IdentityKitContext)
   if (!request) throw new Error("useIdentityKit must be used within an IdentityKitProvider")
 
   return {
     request,
+    IdentityKitAgent,
   }
 }

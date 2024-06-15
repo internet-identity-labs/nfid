@@ -6,11 +6,12 @@ import {
   ResponseTypeMap,
   WithRpcResponse,
 } from "./types"
+import { SignerAgent } from "@slide-computer/signer-agent"
 
 const MINUTE_MILLIS = 60000
 
 export class IdentityKit {
-  // TODO: Handle transport selection
+  static signerAgent: SignerAgent
 
   public static init = async (): Promise<void> => {
     return await new Promise((resolve, reject) => {

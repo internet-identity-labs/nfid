@@ -4,6 +4,7 @@ import {
   ActorSubclass,
   Agent,
   CallCanisterActorMethodMapped,
+  Cbor,
 } from "@nfid/agent"
 import { DelegationIdentity } from "@dfinity/identity"
 import * as console from "console"
@@ -47,9 +48,10 @@ class CallCanisterService {
       )) as any
 
       const certificate: string = Buffer.from(response.meta.certificate).toString("base64")
-      const contentMap: string = Buffer.from(
-        new TextEncoder().encode(JSON.stringify(response.meta.contentMap))
-      ).toString("base64")
+
+      const cborContentMap = Cbor.encode(response.meta.contentMap)
+
+      const contentMap: string = Buffer.from(cborContentMap).toString("base64")
       const content = response.result
 
       return {
