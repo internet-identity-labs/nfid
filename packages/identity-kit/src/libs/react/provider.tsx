@@ -1,4 +1,4 @@
-import React, { useState, useCallback, PropsWithChildren, useRef, useContext } from "react"
+import React, { useState, useCallback, PropsWithChildren, useRef } from "react"
 import {
   IdentityKitMethod,
   RequestTypeMap,

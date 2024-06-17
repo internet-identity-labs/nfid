@@ -15,8 +15,6 @@ import { icrc49CallCanisterSection } from "./data/icrc49_call_canister"
 import { IdentityKitProvider } from "@nfid/identity-kit/react"
 import { MockedSigner, NFID } from "./signers"
 
-import React from "react"
-
 const icrc25data = [
   icrc25RequestPermissionsSection,
   icrc25GrantedPermissionsSection,
