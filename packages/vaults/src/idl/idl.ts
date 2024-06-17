@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const idlFactory = ({ IDL }: any) => {
   const TransactionState = IDL.Variant({
     Blocked: IDL.Null,
