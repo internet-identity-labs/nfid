@@ -43,6 +43,14 @@ import {
   TransferICRC1QuorumTransactionMapper,
 } from "./transfer/transfer_icrc1_quorum"
 import { TopUpQuorumRequestMapper, TopUpQuorumTransactionMapper } from "./transfer/top_up_quorum"
+import {
+  MemberCreateRequestMapperV2,
+  MemberCreateTransactionMapperV2,
+} from "./member/member_createV2"
+import {
+  MemberExtendAccountTransactionMapper,
+  MemberExtendICRC1AccountRequestMapper,
+} from "./member/member_extend_account"
 
 export const TransactionMapperRegistry: Map<PropertyKey, TransactionMapper> = new Map()
 export const RequestMapperRegistry: Map<string, RequestMapper> = new Map()
@@ -62,6 +70,8 @@ function RegisterRequestMapper(target: RequestMapperConstructor) {
 
 export function registerTransactionMappers() {
   RegisterTransactionMapper(MemberCreateTransactionMapper)
+  RegisterTransactionMapper(MemberCreateTransactionMapperV2)
+  RegisterTransactionMapper(MemberExtendAccountTransactionMapper)
   RegisterTransactionMapper(MemberUpdateNameTransactionMapper)
   RegisterTransactionMapper(MemberUpdateRoleTransactionMapper)
   RegisterTransactionMapper(MemberRemoveTransactionMapper)
@@ -86,6 +96,8 @@ export function registerRequestMappers() {
   RegisterRequestMapper(ControllersRequestMapper)
   RegisterRequestMapper(QuorumUpdateRequestMapper)
   RegisterRequestMapper(MemberCreateRequestMapper)
+  RegisterRequestMapper(MemberCreateRequestMapperV2)
+  RegisterRequestMapper(MemberExtendICRC1AccountRequestMapper)
   RegisterRequestMapper(MemberUpdateNameRequestMapper)
   RegisterRequestMapper(MemberUpdateRoleRequestMapper)
   RegisterRequestMapper(MemberRemoveRequestMapper)

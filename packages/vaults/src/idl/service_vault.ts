@@ -1,6 +1,10 @@
 import type { Principal } from "@dfinity/principal"
 import type { ActorMethod } from "@dfinity/agent"
 
+export interface Account {
+  owner: Principal
+  subaccount: [] | [SubAccount]
+}
 export interface Approve {
   status: TransactionState
   signer: string
@@ -40,6 +44,7 @@ export interface Member {
   modified_date: bigint
   name: string
   role: VaultRole
+  account: [] | [Account]
   member_id: string
   created_date: bigint
 }
@@ -54,6 +59,27 @@ export interface MemberCreateTransactionRequest {
   role: VaultRole
   member_id: string
   batch_uid: [] | [string]
+}
+export interface MemberCreateTransactionRequestV2 {
+  name: string
+  role: VaultRole
+  account: Account
+  batch_uid: [] | [string]
+}
+export interface MemberCreateTransactionV2 {
+  name: string
+  role: VaultRole
+  account: Account
+  common: BasicTransactionFields
+}
+export interface MemberExtendICRC1AccountRequest {
+  account: Account
+  batch_uid: [] | [string]
+}
+export interface MemberExtendICRC1AccountTransaction {
+  account: Account
+  batch_uid: [] | [string]
+  common: BasicTransactionFields
 }
 export interface MemberRemoveTransaction {
   member_id: string
@@ -144,6 +170,8 @@ export interface QuorumUpdateTransactionRequest {
   quorum: number
   batch_uid: [] | [string]
 }
+export type SubAccount = Uint8Array | number[]
+export type Subaccount = [] | [Uint8Array | number[]]
 export interface TopUpQuorumTransaction {
   block_index: [] | [bigint]
   currency: Currency
@@ -185,6 +213,9 @@ export type TransactionCandid =
   | { VaultNamingUpdateTransactionV: VaultNamingUpdateTransaction }
   | { TransferTransactionV: TransferTransaction }
   | { PolicyRemoveTransactionV: PolicyRemoveTransaction }
+  | {
+      MemberExtendICRC1AccountTransactionV: MemberExtendICRC1AccountTransaction
+    }
   | { PolicyUpdateTransactionV: PolicyUpdateTransaction }
   | { TransferICRC1QuorumTransactionV: TransferICRC1QuorumTransaction }
   | { MemberCreateTransactionV: MemberCreateTransaction }
@@ -193,6 +224,7 @@ export type TransactionCandid =
   | { PurgeTransactionV: PurgeTransaction }
   | { TransferQuorumTransactionV: TransferQuorumTransaction }
   | { QuorumUpdateTransactionV: QuorumUpdateTransaction }
+  | { MemberCreateTransactionV2: MemberCreateTransactionV2 }
   | { WalletUpdateNameTransactionV: WalletUpdateNameTransaction }
   | { MemberRemoveTransactionV: MemberRemoveTransaction }
 export type TransactionRequest =
@@ -217,6 +249,7 @@ export type TransactionRequest =
   | { MemberRemoveTransactionRequestV: MemberRemoveTransactionRequest }
   | { MemberCreateTransactionRequestV: MemberCreateTransactionRequest }
   | { TransferQuorumTransactionRequestV: TransferQuorumTransactionRequest }
+  | { MemberCreateTransactionRequestV2: MemberCreateTransactionRequestV2 }
   | { TransferTransactionRequestV: TransferTransactionRequest }
   | {
       MemberUpdateRoleTransactionRequestV: MemberUpdateRoleTransactionRequest
@@ -227,6 +260,7 @@ export type TransactionRequest =
   | { PolicyUpdateTransactionRequestV: PolicyUpdateTransactionRequest }
   | { VersionUpgradeTransactionRequestV: VersionUpgradeTransactionRequest }
   | { TopUpQuorumTransactionRequestV: TopUpQuorumTransactionRequest }
+  | { MemberExtendICRC1AccountRequestV: MemberExtendICRC1AccountRequest }
   | { PolicyRemoveTransactionRequestV: PolicyRemoveTransactionRequest }
   | { PolicyCreateTransactionRequestV: PolicyCreateTransactionRequest }
 export type TransactionState =

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const idlFactory = ({ IDL }: any) => {
   const TransactionState = IDL.Variant({
     Blocked: IDL.Null,
@@ -107,6 +108,16 @@ export const idlFactory = ({ IDL }: any) => {
     uid: IDL.Text,
     common: BasicTransactionFields,
   })
+  const SubAccount = IDL.Vec(IDL.Nat8)
+  const Account = IDL.Record({
+    owner: IDL.Principal,
+    subaccount: IDL.Opt(SubAccount),
+  })
+  const MemberExtendICRC1AccountTransaction = IDL.Record({
+    account: Account,
+    batch_uid: IDL.Opt(IDL.Text),
+    common: BasicTransactionFields,
+  })
   const PolicyUpdateTransaction = IDL.Record({
     uid: IDL.Text,
     member_threshold: IDL.Nat8,
@@ -151,6 +162,12 @@ export const idlFactory = ({ IDL }: any) => {
     common: BasicTransactionFields,
     quorum: IDL.Nat8,
   })
+  const MemberCreateTransactionV2 = IDL.Record({
+    name: IDL.Text,
+    role: VaultRole,
+    account: Account,
+    common: BasicTransactionFields,
+  })
   const WalletUpdateNameTransaction = IDL.Record({
     uid: IDL.Text,
     name: IDL.Text,
@@ -170,6 +187,7 @@ export const idlFactory = ({ IDL }: any) => {
     VaultNamingUpdateTransactionV: VaultNamingUpdateTransaction,
     TransferTransactionV: TransferTransaction,
     PolicyRemoveTransactionV: PolicyRemoveTransaction,
+    MemberExtendICRC1AccountTransactionV: MemberExtendICRC1AccountTransaction,
     PolicyUpdateTransactionV: PolicyUpdateTransaction,
     TransferICRC1QuorumTransactionV: TransferICRC1QuorumTransaction,
     MemberCreateTransactionV: MemberCreateTransaction,
@@ -178,6 +196,7 @@ export const idlFactory = ({ IDL }: any) => {
     PurgeTransactionV: PurgeTransaction,
     TransferQuorumTransactionV: TransferQuorumTransaction,
     QuorumUpdateTransactionV: QuorumUpdateTransaction,
+    MemberCreateTransactionV2: MemberCreateTransactionV2,
     WalletUpdateNameTransactionV: WalletUpdateNameTransaction,
     MemberRemoveTransactionV: MemberRemoveTransaction,
   })
@@ -185,6 +204,7 @@ export const idlFactory = ({ IDL }: any) => {
     modified_date: IDL.Nat64,
     name: IDL.Text,
     role: VaultRole,
+    account: IDL.Opt(Account),
     member_id: IDL.Text,
     created_date: IDL.Nat64,
   })
@@ -274,6 +294,12 @@ export const idlFactory = ({ IDL }: any) => {
     wallet: IDL.Text,
     amount: IDL.Nat64,
   })
+  const MemberCreateTransactionRequestV2 = IDL.Record({
+    name: IDL.Text,
+    role: VaultRole,
+    account: Account,
+    batch_uid: IDL.Opt(IDL.Text),
+  })
   const TransferTransactionRequest = IDL.Record({
     memo: IDL.Opt(IDL.Text),
     currency: Currency,
@@ -303,6 +329,10 @@ export const idlFactory = ({ IDL }: any) => {
     wallet: IDL.Text,
     amount: IDL.Nat64,
   })
+  const MemberExtendICRC1AccountRequest = IDL.Record({
+    account: Account,
+    batch_uid: IDL.Opt(IDL.Text),
+  })
   const PolicyRemoveTransactionRequest = IDL.Record({
     uid: IDL.Text,
     batch_uid: IDL.Opt(IDL.Text),
@@ -327,12 +357,14 @@ export const idlFactory = ({ IDL }: any) => {
     MemberRemoveTransactionRequestV: MemberRemoveTransactionRequest,
     MemberCreateTransactionRequestV: MemberCreateTransactionRequest,
     TransferQuorumTransactionRequestV: TransferQuorumTransactionRequest,
+    MemberCreateTransactionRequestV2: MemberCreateTransactionRequestV2,
     TransferTransactionRequestV: TransferTransactionRequest,
     MemberUpdateRoleTransactionRequestV: MemberUpdateRoleTransactionRequest,
     WalletUpdateNameTransactionRequestV: WalletUpdateNameTransactionRequest,
     PolicyUpdateTransactionRequestV: PolicyUpdateTransactionRequest,
     VersionUpgradeTransactionRequestV: VersionUpgradeTransactionRequest,
     TopUpQuorumTransactionRequestV: TopUpQuorumTransactionRequest,
+    MemberExtendICRC1AccountRequestV: MemberExtendICRC1AccountRequest,
     PolicyRemoveTransactionRequestV: PolicyRemoveTransactionRequest,
     PolicyCreateTransactionRequestV: PolicyCreateTransactionRequest,
   })
@@ -359,11 +391,4 @@ export const idlFactory = ({ IDL }: any) => {
     request_transaction: IDL.Func([IDL.Vec(TransactionRequest)], [IDL.Vec(TransactionCandid)], []),
     store_icrc1_canister: IDL.Func([IDL.Principal, IDL.Opt(IDL.Principal)], [VaultState], []),
   })
-}
-export const init = ({ IDL }: any) => {
-  const Conf = IDL.Record({
-    origins: IDL.Vec(IDL.Text),
-    repo_canister: IDL.Text,
-  })
-  return [IDL.Principal, Conf]
 }
