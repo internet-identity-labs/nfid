@@ -25,7 +25,6 @@ describe("Consent Message Service", function () {
     const methodName = "greet"
     const canisterId = "vg4p4-3yaaa-aaaad-aad6q-cai"
     const argument = Buffer.from(IDL.encode([IDL.Text], ["me"])).toString("base64")
-    console.log("res", argument)
     const agent: Agent = new HttpAgent({
       host: IC_HOSTNAME,
     })

@@ -1,5 +1,4 @@
 import React, { useState, useCallback, PropsWithChildren, useRef } from "react"
-
 import {
   IdentityKitMethod,
   RequestTypeMap,
@@ -11,6 +10,9 @@ import {
 import { IdentityKitContext } from "./context"
 import { IdentityKitModal } from "./modal"
 import { IdentityKit } from "../../lib/identity-kit"
+import { ICRC49Methods } from "../../standards/icrc-49"
+import { createIdentityKitAgentClass } from "../../lib/identity-kit-agent"
+import { Buffer } from "buffer"
 
 export type IdentityKitProviderTheme = "light" | "dark"
 
@@ -18,6 +20,8 @@ interface IdentityKitProviderProps extends PropsWithChildren {
   signers: SignerConfig[]
   theme?: IdentityKitProviderTheme
 }
+
+globalThis.global = globalThis
 
 export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
   children,
@@ -90,6 +94,29 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
     [selectedSigner, signerIframeRef, setIsModalOpen]
   )
 
+  const IdentityKitAgent = createIdentityKitAgentClass({
+    callCanister: async (params) => {
+      const response = await request<ICRC49Methods.icrc49_call_canister>({
+        method: ICRC49Methods.icrc49_call_canister,
+        params: {
+          canisterId: params.canisterId.toString(),
+          sender: params.sender.toString(),
+          method: params.method,
+          arg: btoa(new TextDecoder().decode(params.arg)),
+        },
+      })
+      if ("error" in response.result) {
+        console.error(response.result.error)
+        throw new Error(response.result.error.message)
+      } else {
+        return {
+          contentMap: Buffer.from(response.result.contentMap, "base64"),
+          certificate: Buffer.from(response.result.certificate, "base64"),
+        }
+      }
+    },
+  })
+
   return (
     <IdentityKitContext.Provider
       value={{
@@ -100,6 +127,7 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
         toggleModal,
         selectSigner,
         request,
+        IdentityKitAgent,
       }}
     >
       <IdentityKitModal theme={theme} />

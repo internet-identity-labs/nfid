@@ -8,10 +8,14 @@ import { isValidJSON } from "../../utils/json"
 import { Button } from "../atoms/button"
 import { CodeSection } from "../molecules/code-section"
 import { useIdentityKit } from "@nfid/identity-kit/react"
+import { Actor } from "@dfinity/agent"
+import { Principal } from "@dfinity/principal"
 import { getRequestObject } from "../../utils/requests"
 import { DropdownSelect } from "../molecules/dropdown-select"
 
 import "react-toastify/dist/ReactToastify.css"
+import { ICRC49Methods } from "../../../../../packages/identity-kit/src/standards/icrc-49"
+import { idlFactory } from "../../idl/service_idl"
 
 export interface IRequestExample {
   title: string
@@ -37,20 +41,48 @@ export const Section: React.FC<ISection> = ({
   const [selectedRequestIndex, setSelectedRequestIndex] = useState(0)
   const [requestValue, setRequestValue] = useState(requestsExamples[selectedRequestIndex].value)
   const [responseValue, setResponseValue] = useState("{}")
-  const { request } = useIdentityKit()
+  const { request, IdentityKitAgent } = useIdentityKit()
 
   const handleSubmit = async () => {
     setIsLoading(true)
+
     if (!isValidJSON(requestValue)) {
       setIsLoading(false)
       return toast.error("Invalid JSON")
     }
+
     const requestObject = getRequestObject(requestValue)
+    let res
+
     try {
-      const res = await request({ method: requestObject.method, params: requestObject.params })
+      if (requestObject.method === ICRC49Methods.icrc49_call_canister) {
+        const { sender, canisterId } = requestObject.params
+        const agent = new IdentityKitAgent({
+          getPrincipal: () => Principal.fromText(sender),
+        })
+        const actor = Actor.createActor(idlFactory, {
+          agent,
+          canisterId,
+        })
+        res = {
+          origin: "http://localhost:3001",
+          jsonrpc: "2.0",
+          id: "7812362e-29b8-4099-824c-067e8a50f6f3",
+          result: {
+            certificate:
+              "2dn3o2R0cmVlgwGDAYIEWCC3oS1uAAAde1oxlNgE/XcDqnQpjhh/vLABjS4KnpwcIIMBggRYIBizX0clGIjvIkmpISYqYgSh5aJ0zrTCfRapjhQ1SpmwgwJOcmVxdWVzdF9zdGF0dXODAYMBgwGDAYMBggRYIMgomUBJvxkbMXt/JZ426tA3e0d3JgXeTC9463LqKRFGgwGCBFggniOjM+bq+b6Bor7w3jJY10Jq/pvmtoIcq+vO0G4N082DAYMBggRYIDBRtk6v+0Cwz4EePm3LSUTVZ/qKKlBJGSGY+1ZB3HUOgwGDAYMCWCAUiTmErwtVMXs57mJAlXtRlr64Hu2dy+iZyKoFU3HeLoMBgwJFcmVwbHmCA1JESURMAAFxCkhlbGxvLCBtZSGDAkZzdGF0dXOCA0dyZXBsaWVkggRYIGnylJHx5Yk6VjmQCS/Wthdt6mjSahhXZoNdpwi/595vggRYIKmQ7/gHPmZJ9ixwaao/PhW2hDPVjXlA1ajbrYZaybZ/ggRYIBE0Q/auhbxxBaN1xLCRsatxXs1lJcVOPaVOANzoDmAUggRYIN0lfTgWI0O4LYUIH+DfycRVLjfVlBZ0PvvFnD7yb2RKggRYIDnEi42+zFM6BTEmfsFuvsybbQeKX7dYh7acjoM0HNP8ggRYIAMtCGCQsy73ZvIhCGTKqNqrLqGqBzT6q5Ma8yF81LjQggRYIHkOaAnM2ZmM67V/+4eThczbut4gcG4CPhm6gu/wxdR+gwGCBFggidF72mmJrTBVMgkDuYRN9Xn0eFXlEqFje0tuODyGlWGDAkR0aW1lggNJ2bn33KKQzewXaXNpZ25hdHVyZVgwogyKpnExxVvjWNTB2WquqreYTBb3/PNPSy8MGgnJwQG70QSQg0nxwWr2k624ZHG7amRlbGVnYXRpb26iaXN1Ym5ldF9pZFgdEnkOdmH8zT1PyDE43K/9nxiOhntFrhDIg23QuAJrY2VydGlmaWNhdGVZAn3Z2feiZHRyZWWDAYIEWCBmTFY01ee5sG6rkMZz8Ud+mjJS6xrZRKxZdViM3MQ6LYMBgwGCBFggPsEkF7QXpIzMU5DM6PgxzTOK80BeMZG/FHUHUsEEb+CDAkZzdWJuZXSDAYMBgwGDAYMBggRYINHTj/yu/Em2QX729fObS65GKA9V9PXYvmgb1IAIPoiXgwGCBFggBR6Ws1C24rOQY9nXNf2abxOqZy+xQOOm59iglb9a4LCDAlgdEnkOdmH8zT1PyDE43K/9nxiOhntFrhDIg23QuAKDAYMCT2NhbmlzdGVyX3Jhbmdlc4IDWBvZ2feBgkoAAAAAAVAAAAEBSgAAAAABX///AQGDAkpwdWJsaWNfa2V5ggNYhTCBgjAdBg0rBgEEAYLcfAUDAQIBBgwrBgEEAYLcfAUDAgEDYQCG2I670vFmPmXTo/8H6O6fpCDQi5poIpGfIkuLgC1dm+FQ3Ek/hMI+c6DMHSwu4ocJ/xQAABKPzV3717RX7zrzRHZtf/CST+en9Fbe13ym3jsbQGtxDE6u1yh6uaNSdmmCBFgg0qcJSo6VnkdEm1Vvie8c2T4z1Y1BiDi0BV/6zkV+33CCBFggRIIjTw0G4vvI2dl8/khNiyx/UNmJCxlBiUlM4gckBAeCBFggt44aAAEaGwTDUE0UdFPw7auxawNvYQfMt4MwNFJ7C4OCBFggDrlGvHFCwRJDuuPmF62PXZIfBOiLuKcv4Ht4HZBsyByDAkR0aW1lggNJmeyGxLvXtewXaXNpZ25hdHVyZVgwjHeY2VJlUlwk5+7BMfESxjdiANFBVfkfdf4viBqogw/NGiKfzhLwEphvTBytvPKy",
+            contentMap:
+              "2dn3p2NhcmdKRElETAABcQJtZWtjYW5pc3Rlcl9pZEoAAAAAAVBBaAEBbmluZ3Jlc3NfZXhwaXJ5GxfZNLiJQjgAa21ldGhvZF9uYW1lcGdyZWV0X25vX2NvbnNlbnRlbm9uY2VQalJW8/PSIlA2j3q4HG7oomxyZXF1ZXN0X3R5cGVkY2FsbGZzZW5kZXJYHfiYTFV8824++qVOIjiov3Bgl0gU0RPMROITTCMC",
+            content: await actor[requestObject.params.method]("me"),
+          },
+        }
+      } else {
+        res = await request({ method: requestObject.method, params: requestObject.params })
+      }
       setResponseValue(JSON.stringify(res, null, 2))
     } catch (e) {
       if (e instanceof Error) {
+        console.error(e)
         toast.error(e.message)
       }
     } finally {

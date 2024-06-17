@@ -57,3 +57,15 @@ export interface ICRC49Adapter {
    */
   callCanister(request: CallCanisterRequest): Promise<CallCanisterResponse>
 }
+
+export type ICRC49RequestTypeMap = {
+  [ICRC49Methods.icrc49_call_canister]: CallCanisterRequest
+}
+
+export type ICRC49ResponseTypeMap = {
+  [ICRC49Methods.icrc49_call_canister]: CallCanisterResponse
+}
+
+export enum ICRC49Methods {
+  "icrc49_call_canister" = "icrc49_call_canister",
+}
