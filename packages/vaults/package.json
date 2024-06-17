@@ -51,10 +51,10 @@
     "url": "https://github.com/internet-identity-labs/nfid"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "**/*.{js,jsx,ts,tsx}": [
       "npm run lint:fix"
     ],
-    "*.{js,jsx,ts,tsx,md,json}": [
+    "**/*.{js,jsx,ts,tsx,md,json}": [
       "npm run format:write"
     ]
   }

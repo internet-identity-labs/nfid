@@ -76,7 +76,7 @@
     "**/*.{js,jsx,ts,tsx}": [
       "npm run lint:fix"
     ],
-    "*.{js,jsx,ts,tsx,md,json}": [
+    "**/*.{js,jsx,ts,tsx,md,json}": [
       "npm run format:write"
     ]
   }
