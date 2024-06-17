@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --fix --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:check": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --fix --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
     "format:write": "prettier --write '**/*.{ts,tsx,md,mdx,css}'",
@@ -43,7 +44,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "npm run lint"
+      "npm run lint:fix"
     ],
     "*.{js,jsx,ts,tsx,md,json}": [
       "npm run format:write"

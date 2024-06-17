@@ -23,7 +23,8 @@
     "post:build": "node ./scripts/frankBuild.js",
     "rollup": "rollup -c --bundleConfigAsCjs",
     "test": "jest --passWithNoTests",
-    "lint": "eslint . --fix --ext ts,tsx --max-warnings 0",
+    "lint:check": "eslint . --ext ts,tsx --max-warnings 0",
+    "lint:fix": "eslint . --fix --ext ts,tsx --max-warnings 0",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "storybook dev -p 6006",
@@ -73,7 +74,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "npm run lint"
+      "npm run lint:fix"
     ],
     "*.{js,jsx,ts,tsx,md,json}": [
       "npm run format:write"
