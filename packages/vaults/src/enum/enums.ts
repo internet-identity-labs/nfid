@@ -1,6 +1,8 @@
 export enum TransactionType {
   WalletUpdateName = "WalletUpdateName",
   MemberCreate = "MemberCreate",
+  MemberCreateV2 = "MemberCreateV2",
+  MemberExtendICRC1Account = "MemberExtendICRC1Account",
   PolicyRemove = "PolicyRemove",
   WalletCreate = "WalletCreate",
   MemberRemove = "MemberRemove",

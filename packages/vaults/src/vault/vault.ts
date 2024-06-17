@@ -33,6 +33,10 @@ export interface VaultMember {
   userId: string
   name: string | undefined
   role: VaultRole
+  account: undefined | {
+    owner: Principal
+    subaccount: undefined | Uint8Array | number[]
+  }
   modifiedDate: bigint
   createdDate: bigint
 }
@@ -85,6 +89,10 @@ function mapMember(candid: Member): VaultMember {
     name: candid.name,
     role: candidToRole(candid.role),
     userId: candid.member_id,
+    account: candid.account.length === 0 ? undefined : {
+        owner: candid.account[0].owner,
+        subaccount: candid.account[0].subaccount.length === 0 ? undefined : candid.account[0].subaccount[0],
+    },
   }
 }
 
