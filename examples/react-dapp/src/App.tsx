@@ -12,8 +12,9 @@ import { SectionContainer } from "./ui/organisms/section-container"
 import { icrc29StatusSection } from "./data/icrc29_status"
 import { icrc34SGetDelegationSection } from "./data/icrc34_get_delegation"
 import { icrc49CallCanisterSection } from "./data/icrc49_call_canister"
-import { IdentityKitProvider } from "@nfid/identity-kit/react"
+import { IdentityKitProvider, IdentityKitTheme } from "@nfid/identity-kit/react"
 import { MockedSigner, NFID } from "./signers"
+import { useTheme } from "next-themes"
 
 const icrc25data = [
   icrc25RequestPermissionsSection,
@@ -27,8 +28,9 @@ const icrc34data = [icrc34SGetDelegationSection]
 const icrc49data = [icrc49CallCanisterSection]
 
 function App() {
+  const { theme } = useTheme()
   return (
-    <IdentityKitProvider signers={[NFID, MockedSigner]} theme="dark">
+    <IdentityKitProvider signers={[NFID, MockedSigner]} theme={theme as IdentityKitTheme}>
       <div className="h-full min-h-screen bg-white dark:bg-dark px-[30px] pb-20">
         <ToastContainer />
         <Header />
