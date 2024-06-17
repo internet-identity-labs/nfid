@@ -8,7 +8,7 @@
 docs/* @dostro @olekid
 
 # @nfid/vaults SDK owner
-packages/vaults/* @olsemeno
+packages/vaults/* @olsemeno @dmitriiIdentityLabs
 
 # @nfid/postmessage-rpc SDK owners
 packages/postmessage-rpc/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
