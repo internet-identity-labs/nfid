@@ -1,12 +1,10 @@
 import type { Principal } from "@dfinity/principal"
 import type { ActorMethod } from "@dfinity/agent"
-import type { IDL } from "@dfinity/candid"
 
 export interface Account {
   owner: Principal
   subaccount: [] | [SubAccount]
 }
-export type AccountIdentifier = string
 export interface Approve {
   status: TransactionState
   signer: string
@@ -25,16 +23,6 @@ export interface BasicTransactionFields {
   created_date: bigint
   batch_uid: [] | [string]
 }
-export type BlockIndex = bigint
-export interface CanisterSettings {
-  controller: [] | [Principal]
-  freezing_threshold: [] | [bigint]
-  controllers: [] | [Array<Principal>]
-  reserved_cycles_limit: [] | [bigint]
-  log_visibility: [] | [log_visibility]
-  memory_allocation: [] | [bigint]
-  compute_allocation: [] | [bigint]
-}
 export interface Conf {
   origins: Array<string>
   repo_canister: string
@@ -47,40 +35,10 @@ export interface ControllersUpdateTransaction {
 export interface ControllersUpdateTransactionRequest {
   principals: Array<Principal>
 }
-export interface CreateCanisterArg {
-  subnet_selection: [] | [SubnetSelection]
-  settings: [] | [CanisterSettings]
-  subnet_type: [] | [string]
-}
-export type CreateCanisterError =
-  | {
-      Refunded: { create_error: string; refund_amount: bigint }
-    }
-  | { RefundFailed: { create_error: string; refund_error: string } }
-export type CreateCanisterResult = { Ok: Principal } | { Err: CreateCanisterError }
 export type Currency = { ICP: null }
-export type Cycles = bigint
-export interface CyclesCanisterInitPayload {
-  exchange_rate_canister: [] | [ExchangeRateCanister]
-  cycles_ledger_canister_id: [] | [Principal]
-  last_purged_notification: [] | [bigint]
-  governance_canister_id: [] | [Principal]
-  minting_account_id: [] | [AccountIdentifier]
-  ledger_canister_id: [] | [Principal]
-}
-export type ExchangeRateCanister = { Set: Principal } | { Unset: null }
 export interface ICRC1 {
   ledger: Principal
   index: [] | [Principal]
-}
-export interface IcpXdrConversionRate {
-  xdr_permyriad_per_icp: bigint
-  timestamp_seconds: bigint
-}
-export interface IcpXdrConversionRateResponse {
-  certificate: Uint8Array | number[]
-  data: IcpXdrConversionRate
-  hash_tree: Uint8Array | number[]
 }
 export interface Member {
   modified_date: bigint
@@ -151,40 +109,7 @@ export interface MemberUpdateRoleTransactionRequest {
   member_id: string
   batch_uid: [] | [string]
 }
-export type Memo = [] | [Uint8Array | number[]]
 export type Network = { IC: null } | { BTC: null } | { ETH: null }
-export interface NotifyCreateCanisterArg {
-  controller: Principal
-  block_index: BlockIndex
-  subnet_selection: [] | [SubnetSelection]
-  settings: [] | [CanisterSettings]
-  subnet_type: [] | [string]
-}
-export type NotifyCreateCanisterResult = { Ok: Principal } | { Err: NotifyError }
-export type NotifyError =
-  | {
-      Refunded: { block_index: [] | [BlockIndex]; reason: string }
-    }
-  | { InvalidTransaction: string }
-  | { Other: { error_message: string; error_code: bigint } }
-  | { Processing: null }
-  | { TransactionTooOld: BlockIndex }
-export interface NotifyMintCyclesArg {
-  block_index: BlockIndex
-  deposit_memo: Memo
-  to_subaccount: Subaccount
-}
-export type NotifyMintCyclesResult = { Ok: NotifyMintCyclesSuccess } | { Err: NotifyError }
-export interface NotifyMintCyclesSuccess {
-  balance: bigint
-  block_index: bigint
-  minted: bigint
-}
-export interface NotifyTopUpArg {
-  block_index: BlockIndex
-  canister_id: Principal
-}
-export type NotifyTopUpResult = { Ok: Cycles } | { Err: NotifyError }
 export interface Policy {
   uid: string
   member_threshold: number
@@ -230,9 +155,6 @@ export interface PolicyUpdateTransactionRequest {
   amount_threshold: bigint
   batch_uid: [] | [string]
 }
-export interface PrincipalsAuthorizedToCreateCanistersToSubnetsResponse {
-  data: Array<[Principal, Array<Principal>]>
-}
 export interface PurgeTransaction {
   common: BasicTransactionFields
 }
@@ -250,13 +172,6 @@ export interface QuorumUpdateTransactionRequest {
 }
 export type SubAccount = Uint8Array | number[]
 export type Subaccount = [] | [Uint8Array | number[]]
-export interface SubnetFilter {
-  subnet_type: [] | [string]
-}
-export type SubnetSelection = { Filter: SubnetFilter } | { Subnet: { subnet: Principal } }
-export interface SubnetTypesToSubnetsResponse {
-  data: Array<[string, Array<Principal>]>
-}
 export interface TopUpQuorumTransaction {
   block_index: [] | [bigint]
   currency: Currency
@@ -319,7 +234,7 @@ export type TransactionRequest =
   | {
       VaultNamingUpdateTransactionRequestV: VaultNamingUpdateTransactionRequest
     }
-  | { PurgeTransactionRequestV: {} }
+  | { PurgeTransactionRequestV: object }
   | {
       ControllersUpdateTransactionRequestV: ControllersUpdateTransactionRequest
     }
@@ -358,7 +273,7 @@ export type TransactionState =
   | { Pending: null }
 export interface TransferICRC1QuorumTransaction {
   to_principal: Principal
-  block_index: [] | [bigint]
+  block_index: [] | [number]
   to_subaccount: [] | [Uint8Array | number[]]
   ledger_id: Principal
   wallet: string
@@ -473,7 +388,6 @@ export interface WalletUpdateNameTransactionRequest {
   name: string
   batch_uid: [] | [string]
 }
-export type log_visibility = { controllers: null } | { public: null }
 export interface _SERVICE {
   approve: ActorMethod<[Array<TransactionApproveRequest>], Array<TransactionCandid>>
   canister_balance: ActorMethod<[], bigint>
@@ -494,4 +408,3 @@ export interface _SERVICE {
   request_transaction: ActorMethod<[Array<TransactionRequest>], Array<TransactionCandid>>
   store_icrc1_canister: ActorMethod<[Principal, [] | [Principal]], VaultState>
 }
-export declare const idlFactory: IDL.InterfaceFactory
