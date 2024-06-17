@@ -43,11 +43,14 @@ import {
   TransferICRC1QuorumTransactionMapper,
 } from "./transfer/transfer_icrc1_quorum"
 import { TopUpQuorumRequestMapper, TopUpQuorumTransactionMapper } from "./transfer/top_up_quorum"
-import {MemberCreateRequestMapperV2, MemberCreateTransactionMapperV2} from "./member/member_createV2";
 import {
-    MemberExtendAccountTransactionMapper,
-    MemberExtendICRC1AccountRequestMapper
-} from "./member/member_extend_account";
+  MemberCreateRequestMapperV2,
+  MemberCreateTransactionMapperV2,
+} from "./member/member_createV2"
+import {
+  MemberExtendAccountTransactionMapper,
+  MemberExtendICRC1AccountRequestMapper,
+} from "./member/member_extend_account"
 
 export const TransactionMapperRegistry: Map<PropertyKey, TransactionMapper> = new Map()
 export const RequestMapperRegistry: Map<string, RequestMapper> = new Map()
