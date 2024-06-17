@@ -10,6 +10,7 @@ import { TransactionRequest } from "../transaction_request"
 import { RequestMapperAbstract } from "../request_mapper"
 
 /**
+ * @deprecated Since version 0.0.3 of Vault. Use `MemberCreateTransactionV2` instead.
  * Interface for a transaction that creates a new member.
  * The memberId is the principal of the user with the default subaccount.
  * (https://github.com/dfinity/ic-js/blob/86d0fafd012fb3c3b3ef31c8aa4000cb6ff87c28/packages/nns/src/account_identifier.ts#L67)
@@ -33,6 +34,9 @@ export interface MemberCreateTransaction extends Transaction {
   role: VaultRole
 }
 
+/**
+ * @deprecated Since version 0.0.3 of Vault. Use `MemberCreateTransactionRequestV2` instead.
+ */
 export class MemberCreateTransactionRequest implements TransactionRequest {
   member_id: string
   name: string
