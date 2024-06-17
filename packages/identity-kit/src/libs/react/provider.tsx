@@ -13,12 +13,11 @@ import { IdentityKit } from "../../lib/identity-kit"
 import { ICRC49Methods } from "../../standards/icrc-49"
 import { createIdentityKitAgentClass } from "../../lib/identity-kit-agent"
 import { Buffer } from "buffer"
-
-export type IdentityKitProviderTheme = "light" | "dark"
+import { IdentityKitTheme } from "./constants"
 
 interface IdentityKitProviderProps extends PropsWithChildren {
   signers: SignerConfig[]
-  theme?: IdentityKitProviderTheme
+  theme?: IdentityKitTheme
 }
 
 globalThis.global = globalThis
@@ -26,7 +25,7 @@ globalThis.global = globalThis
 export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
   children,
   signers,
-  theme = "light",
+  theme = IdentityKitTheme.SYSTEM,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedSigner, setSelectedSigner] = useState<SignerConfig | undefined>(undefined)
