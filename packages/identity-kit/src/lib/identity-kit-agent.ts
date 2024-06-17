@@ -1,12 +1,16 @@
 import { SignerAgent, SignerAgentOptions } from "@slide-computer/signer-agent"
 
+export type IdentityKitAgentOptions = Omit<SignerAgentOptions, "signer"> & {
+  signer?: SignerAgentOptions["signer"]
+}
+
 export function createIdentityKitAgentClass(signer: SignerAgentOptions["signer"]) {
   class IdentityKitAgent extends SignerAgent {
-    constructor(options: Omit<SignerAgentOptions, "signer">) {
-      super({ ...options, signer })
+    constructor(options: IdentityKitAgentOptions) {
+      super({ signer, ...options })
     }
   }
-  return IdentityKitAgent as new (options: Omit<SignerAgentOptions, "signer">) => {
+  return IdentityKitAgent as new (options: IdentityKitAgentOptions) => {
     [key in keyof IdentityKitAgent]: IdentityKitAgent[key]
   }
 }
