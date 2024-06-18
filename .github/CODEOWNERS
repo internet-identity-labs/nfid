@@ -13,10 +13,10 @@ packages/vaults/* @olsemeno @dmitriiIdentityLabs
 # @nfid/postmessage-rpc SDK owners
 packages/postmessage-rpc/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
 
-# @nfid/identity-kit SDK owners
-packages/identity-kit/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
+# @nfid/identitykit SDK owners
+packages/identitykit/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
 
-# identity-kit examples owners
+# identitykit examples owners
 examples/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
 
 # pipelines owner

@@ -7,14 +7,14 @@ import { toast } from "react-toastify"
 import { isValidJSON } from "../../utils/json"
 import { Button } from "../atoms/button"
 import { CodeSection } from "../molecules/code-section"
-import { useIdentityKit } from "@nfid/identity-kit/react"
+import { useIdentityKit } from "@nfid/identitykit/react"
 import { Actor } from "@dfinity/agent"
 import { Principal } from "@dfinity/principal"
 import { getRequestObject } from "../../utils/requests"
 import { DropdownSelect } from "../molecules/dropdown-select"
 
 import "react-toastify/dist/ReactToastify.css"
-import { ICRC49Methods } from "../../../../../packages/identity-kit/src/standards/icrc-49"
+import { ICRC49Methods } from "../../../../../packages/identitykit/src/standards/icrc-49"
 import { idlFactory } from "../../idl/service_idl"
 
 export interface IRequestExample {

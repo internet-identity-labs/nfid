@@ -8,7 +8,7 @@ on:
     paths:
       - 'examples/react-dapp/**'
       - 'examples/react-signer/**'
-      - 'packages/identity-kit/**'
+      - 'packages/identitykit/**'
       - 'packages/postmessage-rpc/**'
       - 'docker-for-e2e/**'
   pull_request:

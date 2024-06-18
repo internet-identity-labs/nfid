@@ -16,7 +16,7 @@ This repo includes the following packages/apps:
 
 ### Packages
 
-#### `packages/identity-kit`: source code deployed to [@nfid/identity-kit](https://www.npmjs.com/package/@nfid/identity-kit)
+#### `packages/identitykit`: source code deployed to [@nfid/identitykit](https://www.npmjs.com/package/@nfid/identitykit)
 
 ### Config
 

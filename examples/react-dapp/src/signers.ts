@@ -1,4 +1,4 @@
-import { SignerConfig } from "@nfid/identity-kit"
+import { SignerConfig } from "@nfid/identitykit"
 
 const mockedProviderUrl = import.meta.env.VITE_MOCKED_SIGNER_PROVIDER_URL
 

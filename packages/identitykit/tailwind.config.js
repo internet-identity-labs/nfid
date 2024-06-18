@@ -8,7 +8,7 @@ module.exports = {
       colors: {
         ...colors,
         signerDarkBg: "#242427",
-        signerDarkHoverBg: "#34343A"
+        signerDarkHoverBg: "#34343A",
       },
       keyframes: {
         overlayShow: {

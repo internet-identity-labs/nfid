@@ -1,4 +1,4 @@
-import { ICRC25Methods } from "@nfid/identity-kit"
+import { ICRC25Methods } from "@nfid/identitykit"
 import { Link } from "../ui/atoms/link.js"
 import { Method } from "../ui/atoms/method.js"
 import { ISection } from "../ui/organisms/section.js"

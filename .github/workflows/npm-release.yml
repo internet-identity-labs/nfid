@@ -11,7 +11,7 @@ on:
         description: "Package to release"
         required: true
         options:
-          - "identity-kit"
+          - "identitykit"
           - "postmessage-rpc"
           - "vaults"
 

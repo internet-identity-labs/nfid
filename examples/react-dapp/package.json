@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@codemirror/lang-json": "^6.0.1",
-    "@nfid/identity-kit": "*",
+    "@nfid/identitykit": "*",
     "@radix-ui/themes": "^3.0.5",
     "@uiw/codemirror-extensions-langs": "^4.22.1",
     "@uiw/codemirror-theme-basic": "^4.22.1",
@@ -46,7 +46,7 @@
     "vite": "^5.2.12"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx} !(**/idl/*.ts)": [
+    "src/*.{js,jsx,ts,tsx} !(src/idl/*.ts)": [
       "npm run lint:fix"
     ],
     "**/*.{js,jsx,ts,tsx,md,json}": [
