@@ -61,21 +61,4 @@ export interface VaultManagerI {
    * Retrieves the list of vault controllers.
    */
   getControllers(): Promise<Array<Principal>>
-
-  /**
-   * Method for adding a personal list of ICRC-1 canisters by the user.
-   * Returns the updated vault state.
-   * Needed for displaying the balance/history of ICRC-1 tokens.
-   * @param ledger Ledger ICRC-1 canister to be added.
-   * @param index Optional index ICRC-1 canister to be added.
-   */
-  addICRC1Canister(ledger: Principal, index?: Principal): Promise<Vault>
-
-  /**
-   * Method for removing from a personal list of ICRC-1 canisters by the user.
-   * Returns the updated vault state.
-   * Needed for displaying the balance/history of ICRC-1 tokens.
-   * @param ledger Ledger ICRC-1 canister to be removed.
-   * */
-  removeICRC1Canister(ledger: Principal): Promise<Vault>
 }

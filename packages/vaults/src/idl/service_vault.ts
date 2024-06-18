@@ -1,9 +1,10 @@
 import type { Principal } from "@dfinity/principal"
 import type { ActorMethod } from "@dfinity/agent"
+import type { IDL } from "@dfinity/candid"
 
 export interface Account {
   owner: Principal
-  subaccount: [] | [SubAccount]
+  subaccount: [] | [Uint8Array | number[]]
 }
 export interface Approve {
   status: TransactionState
@@ -39,6 +40,24 @@ export type Currency = { ICP: null }
 export interface ICRC1 {
   ledger: Principal
   index: [] | [Principal]
+}
+export interface ICRC1CanistersAddTransaction {
+  index_canister: [] | [Principal]
+  ledger_canister: Principal
+  common: BasicTransactionFields
+}
+export interface ICRC1CanistersAddTransactionRequest {
+  index_canister: [] | [Principal]
+  ledger_canister: Principal
+  batch_uid: [] | [string]
+}
+export interface ICRC1CanistersRemoveTransaction {
+  ledger_canister: Principal
+  common: BasicTransactionFields
+}
+export interface ICRC1CanistersRemoveTransactionRequest {
+  ledger_canister: Principal
+  batch_uid: [] | [string]
 }
 export interface Member {
   modified_date: bigint
@@ -78,7 +97,6 @@ export interface MemberExtendICRC1AccountRequest {
 }
 export interface MemberExtendICRC1AccountTransaction {
   account: Account
-  batch_uid: [] | [string]
   common: BasicTransactionFields
 }
 export interface MemberRemoveTransaction {
@@ -171,17 +189,11 @@ export interface QuorumUpdateTransactionRequest {
   batch_uid: [] | [string]
 }
 export type SubAccount = Uint8Array | number[]
-export type Subaccount = [] | [Uint8Array | number[]]
 export interface TopUpQuorumTransaction {
   block_index: [] | [bigint]
   currency: Currency
   wallet: string
   common: BasicTransactionFields
-  amount: bigint
-}
-export interface TopUpQuorumTransactionRequest {
-  currency: Currency
-  wallet: string
   amount: bigint
 }
 export interface TopUpTransaction {
@@ -208,8 +220,10 @@ export type TransactionCandid =
   | { WalletCreateTransactionV: WalletCreateTransaction }
   | { PolicyCreateTransactionV: PolicyCreateTransaction }
   | { MemberUpdateRoleTransactionV: MemberUpdateRoleTransaction }
+  | { ICRC1CanistersRemoveTransactionV: ICRC1CanistersRemoveTransaction }
   | { TopUpTransactionV: TopUpTransaction }
   | { TopUpQuorumTransactionV: TopUpQuorumTransaction }
+  | { ICRC1CanistersAddTransactionV: ICRC1CanistersAddTransaction }
   | { VaultNamingUpdateTransactionV: VaultNamingUpdateTransaction }
   | { TransferTransactionV: TransferTransaction }
   | { PolicyRemoveTransactionV: PolicyRemoveTransaction }
@@ -229,12 +243,16 @@ export type TransactionCandid =
   | { MemberRemoveTransactionV: MemberRemoveTransaction }
 export type TransactionRequest =
   | {
-      QuorumUpdateTransactionRequestV: QuorumUpdateTransactionRequest
+      ICRC1CanistersRemoveTransactionRequestV: ICRC1CanistersRemoveTransactionRequest
     }
+  | { QuorumUpdateTransactionRequestV: QuorumUpdateTransactionRequest }
   | {
       VaultNamingUpdateTransactionRequestV: VaultNamingUpdateTransactionRequest
     }
-  | { PurgeTransactionRequestV: object }
+  | { PurgeTransactionRequestV: {} }
+  | {
+      ICRC1CanistersAddTransactionRequestV: ICRC1CanistersAddTransactionRequest
+    }
   | {
       ControllersUpdateTransactionRequestV: ControllersUpdateTransactionRequest
     }
@@ -248,7 +266,7 @@ export type TransactionRequest =
   | { WalletCreateTransactionRequestV: WalletCreateTransactionRequest }
   | { MemberRemoveTransactionRequestV: MemberRemoveTransactionRequest }
   | { MemberCreateTransactionRequestV: MemberCreateTransactionRequest }
-  | { TransferQuorumTransactionRequestV: TransferQuorumTransactionRequest }
+  | { TransferQuorumTransactionRequestV: TransferTransactionRequest }
   | { MemberCreateTransactionRequestV2: MemberCreateTransactionRequestV2 }
   | { TransferTransactionRequestV: TransferTransactionRequest }
   | {
@@ -259,7 +277,7 @@ export type TransactionRequest =
     }
   | { PolicyUpdateTransactionRequestV: PolicyUpdateTransactionRequest }
   | { VersionUpgradeTransactionRequestV: VersionUpgradeTransactionRequest }
-  | { TopUpQuorumTransactionRequestV: TopUpQuorumTransactionRequest }
+  | { TopUpQuorumTransactionRequestV: TopUpTransactionRequest }
   | { MemberExtendICRC1AccountRequestV: MemberExtendICRC1AccountRequest }
   | { PolicyRemoveTransactionRequestV: PolicyRemoveTransactionRequest }
   | { PolicyCreateTransactionRequestV: PolicyCreateTransactionRequest }
@@ -273,7 +291,7 @@ export type TransactionState =
   | { Pending: null }
 export interface TransferICRC1QuorumTransaction {
   to_principal: Principal
-  block_index: [] | [number]
+  block_index: [] | [bigint]
   to_subaccount: [] | [Uint8Array | number[]]
   ledger_id: Principal
   wallet: string
@@ -294,13 +312,6 @@ export interface TransferQuorumTransaction {
   address: string
   wallet: string
   common: BasicTransactionFields
-  amount: bigint
-}
-export interface TransferQuorumTransactionRequest {
-  memo: [] | [string]
-  currency: Currency
-  address: string
-  wallet: string
   amount: bigint
 }
 export interface TransferTransaction {
@@ -404,7 +415,6 @@ export interface _SERVICE {
     }
   >
   get_version: ActorMethod<[], string>
-  remove_icrc1_canister: ActorMethod<[Principal], VaultState>
   request_transaction: ActorMethod<[Array<TransactionRequest>], Array<TransactionCandid>>
-  store_icrc1_canister: ActorMethod<[Principal, [] | [Principal]], VaultState>
 }
+export declare const idlFactory: IDL.InterfaceFactory
