@@ -51,6 +51,11 @@ import {
   MemberExtendAccountTransactionMapper,
   MemberExtendICRC1AccountRequestMapper,
 } from "./member/member_extend_account"
+import {ICRC1CanistersAddTransactionMapper, ICRC1CanistersAddTransactionRequestMapper} from "./config/icrc1_add";
+import {
+    ICRC1CanistersRemoveTransactionMapper,
+    ICRC1CanistersRemoveTransactionRequestMapper
+} from "./config/icrc1_remove";
 
 export const TransactionMapperRegistry: Map<PropertyKey, TransactionMapper> = new Map()
 export const RequestMapperRegistry: Map<string, RequestMapper> = new Map()
@@ -90,6 +95,8 @@ export function registerTransactionMappers() {
   RegisterTransactionMapper(TransferQuorumTransactionMapper)
   RegisterTransactionMapper(ControllersUpdateTransactionMapper)
   RegisterTransactionMapper(TransferICRC1QuorumTransactionMapper)
+  RegisterTransactionMapper(ICRC1CanistersAddTransactionMapper)
+  RegisterTransactionMapper(ICRC1CanistersRemoveTransactionMapper)
 }
 
 export function registerRequestMappers() {
@@ -114,4 +121,6 @@ export function registerRequestMappers() {
   RegisterRequestMapper(TopUpQuorumRequestMapper)
   RegisterRequestMapper(TransferQuorumRequestMapper)
   RegisterRequestMapper(TransferICRC1QuorumRequestMapper)
+  RegisterRequestMapper(ICRC1CanistersAddTransactionRequestMapper)
+  RegisterRequestMapper(ICRC1CanistersRemoveTransactionRequestMapper)
 }

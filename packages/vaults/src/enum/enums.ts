@@ -20,6 +20,8 @@ export enum TransactionType {
   VersionUpgrade = "VersionUpgrade",
   Purge = "Purge",
   ControllerUpdate = "ControllerUpdate",
+  ICRC1AddCanisters = "ICRC1AddCanisters",
+  ICRC1RemoveCanisters = "ICRC1RemoveCanisters",
 }
 
 export enum Currency {
