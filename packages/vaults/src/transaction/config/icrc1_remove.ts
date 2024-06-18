@@ -7,7 +7,7 @@ import {
 import { TransactionMapperAbstract } from "../transaction_mapper"
 import { TransactionRequest } from "../transaction_request"
 import { RequestMapperAbstract } from "../request_mapper"
-import {Principal} from "@dfinity/principal";
+import { Principal } from "@dfinity/principal"
 
 /**
  * Transaction for removing ICRC1 canisters from vault.
@@ -28,7 +28,7 @@ export class ICRC1CanistersRemoveTransactionRequest implements TransactionReques
   ledger_canister: Principal
   batch_uid: string | undefined
 
-  constructor(ledger_canister: Principal,batch_uid?: string) {
+  constructor(ledger_canister: Principal, batch_uid?: string) {
     this.ledger_canister = ledger_canister
     this.batch_uid = batch_uid
   }
@@ -58,7 +58,7 @@ export class ICRC1CanistersRemoveTransactionMapper extends TransactionMapperAbst
 export class ICRC1CanistersRemoveTransactionRequestMapper extends RequestMapperAbstract {
   toCandid(request: ICRC1CanistersRemoveTransactionRequest): TransactionRequestCandid {
     return {
-        ICRC1CanistersRemoveTransactionRequestV: {
+      ICRC1CanistersRemoveTransactionRequestV: {
         ledger_canister: request.ledger_canister,
         batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : [],
       },

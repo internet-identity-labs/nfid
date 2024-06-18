@@ -7,7 +7,7 @@ import {
 import { TransactionMapperAbstract } from "../transaction_mapper"
 import { TransactionRequest } from "../transaction_request"
 import { RequestMapperAbstract } from "../request_mapper"
-import {Principal} from "@dfinity/principal";
+import { Principal } from "@dfinity/principal"
 
 /**
  * Transaction for adding ICRC1 canisters to vault.
@@ -66,7 +66,7 @@ export class ICRC1CanistersAddTransactionMapper extends TransactionMapperAbstrac
 export class ICRC1CanistersAddTransactionRequestMapper extends RequestMapperAbstract {
   toCandid(request: ICRC1CanistersAddTransactionRequest): TransactionRequestCandid {
     return {
-        ICRC1CanistersAddTransactionRequestV: {
+      ICRC1CanistersAddTransactionRequestV: {
         ledger_canister: request.ledger_canister,
         index_canister: request.index_canister !== undefined ? [request.index_canister] : [],
         batch_uid: request.batch_uid !== undefined ? [request.batch_uid] : [],
