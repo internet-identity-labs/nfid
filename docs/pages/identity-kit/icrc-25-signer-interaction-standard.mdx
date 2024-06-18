@@ -23,14 +23,14 @@ and signers. It specifies a set of messages to facilitate this interaction, ensu
 secure exchange of information. ICRC-25 aims to create a uniform language for dApps and signers,
 enhancing interoperability and simplifying the development process.
 
-We invite the community to contribute adapters for other signers to `@nfid/identity-kit`, but you
-can also use custom adapters from your own or other external packages.
+We invite the community to contribute adapters for other signers to `@nfid/identitykit`, but you can
+also use custom adapters from your own or other external packages.
 
 ```typescript filename="Import and configure Signer"
-import * as IdentityKit from "@nfid/identity-kit"
+import * as IdentityKit from "@nfid/identitykit"
 
 // adapter contributed to this open source package
-import { NFID, II } from "@nfid/identity-kit/adapter"
+import { NFID, II } from "@nfid/identitykit/adapter"
 
 // bring your own adapter
 import { CUSTOM } from "@your-package/icrc-25-compatible-signer"

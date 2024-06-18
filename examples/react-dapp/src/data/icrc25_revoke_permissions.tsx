@@ -1,4 +1,4 @@
-import { ICRC25Methods } from "@nfid/identity-kit"
+import { ICRC25Methods } from "@nfid/identitykit"
 import { ISection } from "../ui/organisms/section.js"
 
 export const basicRequest = {

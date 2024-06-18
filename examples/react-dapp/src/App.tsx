@@ -12,7 +12,7 @@ import { SectionContainer } from "./ui/organisms/section-container"
 import { icrc29StatusSection } from "./data/icrc29_status"
 import { icrc34SGetDelegationSection } from "./data/icrc34_get_delegation"
 import { icrc49CallCanisterSection } from "./data/icrc49_call_canister"
-import { IdentityKitProvider, IdentityKitTheme } from "@nfid/identity-kit/react"
+import { IdentityKitProvider, IdentityKitTheme } from "@nfid/identitykit/react"
 import { MockedSigner, NFID } from "./signers"
 import { useTheme } from "next-themes"
 

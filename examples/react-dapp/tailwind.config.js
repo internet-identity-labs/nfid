@@ -1,7 +1,7 @@
 import defaultTheme from "tailwindcss/defaultTheme"
 import colors from "tailwindcss/colors"
 import merge from "lodash.merge"
-import identityKitConfig from "../../packages/identity-kit/tailwind.config"
+import identityKitConfig from "../../packages/identitykit/tailwind.config"
 
 const configExtension = {
   colors: {
@@ -27,7 +27,7 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
     // TODO: check that this is only required for development
     // The package exports the compiled style sheet
-    "../../packages/identity-kit/src/libs/**/*.{js,ts,jsx,tsx}",
+    "../../packages/identitykit/src/libs/**/*.{js,ts,jsx,tsx}",
   ],
   plugins: [],
 }
