@@ -1,5 +1,10 @@
 import { RPCMessage, RPCErrorResponse } from "../../../type"
 import { authService } from "../../auth.service"
+import {
+  GenericError,
+  NotSupportedError,
+  exceptionHandlerService,
+} from "../../exception-handler.service"
 import { MethodService } from "../method.servcie"
 
 export interface ComponentData {
@@ -16,35 +21,12 @@ export abstract class InteractiveMethodService implements MethodService {
     const authorized = await this.isAuthorized()
 
     if (!authorized) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 3000,
-            message: "Permission not granted",
-          },
-        },
-        message.origin
-      )
-      return undefined
+      throw new GenericError("Permission not granted")
     }
 
     const componentData = this.getСomponentData(message)
     if (!componentData) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 2000,
-            message: "Not supported",
-          },
-        },
-        message.origin
-      )
+      throw new NotSupportedError()
     }
 
     return componentData
@@ -61,7 +43,13 @@ export abstract class InteractiveMethodService implements MethodService {
     return {
       method: message.data.method,
       origin: message.origin,
-      onApprove: (data?: unknown) => this.onApprove(message, data),
+      onApprove: async (data?: unknown) => {
+        try {
+          await this.onApprove(message, data)
+        } catch (error) {
+          exceptionHandlerService.handle(error, message)
+        }
+      },
       onReject: () => this.onReject(message),
     }
   }

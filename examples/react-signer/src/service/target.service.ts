@@ -1,6 +1,7 @@
 import { IDL } from "@dfinity/candid"
 import { ActorMethod, Agent, HttpAgent } from "@dfinity/agent"
 import { actorService } from "./actor.service"
+import { GenericError } from "./exception-handler.service"
 
 interface Target {
   get_trusted_origins: ActorMethod<[], Array<string>>
@@ -19,7 +20,9 @@ export const targetService = {
       const actor = actorService.getActor<Target>(canisterId, idl, agent)
       const origins = await actor.get_trusted_origins()
       if (!origins.includes(origin)) {
-        throw new Error(`The target canister ${canisterId} has no the trusted origin: ${origin}`)
+        throw new GenericError(
+          `The target canister ${canisterId} has no the trusted origin: ${origin}`
+        )
       }
     })
 

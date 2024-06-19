@@ -7,6 +7,7 @@ import { consentMessageService } from "../../consent-message.service"
 import { Agent, HttpAgent, Identity } from "@nfid/agent"
 import { interfaceFactoryService } from "../../interface-factory.service"
 import { IDL } from "@dfinity/candid"
+import { GenericError } from "../../exception-handler.service"
 
 const HOUR = 3_600_000
 const IC_HOSTNAME = "https://ic0.app"
@@ -37,20 +38,7 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
     const key = await accountService.getAccountKeyIdentityByPrincipal(icrc49Dto.sender)
 
     if (!key) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 1000,
-            message: "Generic error",
-            text: "User data has not been found",
-          },
-        },
-        message.origin
-      )
-      throw Error("No key found")
+      throw new GenericError("User data has not been found")
     }
 
     const sessionKey = Ed25519KeyIdentity.generate()
@@ -95,20 +83,7 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
     const key = await accountService.getAccountKeyIdentityByPrincipal(icrc49Dto.sender)
 
     if (!key) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 1000,
-            message: "Generic error",
-            text: "User data has not been found",
-          },
-        },
-        message.origin
-      )
-      throw Error("User is not found")
+      throw new GenericError("User data has not been found")
     }
 
     const sessionKey = Ed25519KeyIdentity.generate()

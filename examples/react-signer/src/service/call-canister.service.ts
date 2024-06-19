@@ -7,10 +7,10 @@ import {
   Cbor,
 } from "@nfid/agent"
 import { DelegationIdentity } from "@dfinity/identity"
-import * as console from "console"
 import { interfaceFactoryService } from "./interface-factory.service"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+import { GenericError } from "./exception-handler.service"
 ;(BigInt.prototype as any).toJSON = function () {
   return this.toString()
 }
@@ -60,8 +60,7 @@ class CallCanisterService {
         content,
       }
     } catch (error) {
-      console.error(`The call cannot be executed`)
-      throw error
+      throw new GenericError("The call cannot be executed")
     }
   }
 

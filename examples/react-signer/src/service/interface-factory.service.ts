@@ -9,6 +9,7 @@ import {
   LookupResultFound,
   ReadStateResponse,
 } from "@nfid/agent"
+import { GenericError } from "./exception-handler.service"
 
 const CANDID_UI_CANISTER = "a4gq6-oaaaa-aaaab-qaa4q-cai"
 
@@ -19,8 +20,7 @@ class InterfaceFactoryService {
   ): Promise<IDL.InterfaceFactory> {
     const candidFile: string | undefined = await this.getCandidFile(canisterId, agent as never)
     if (!candidFile) {
-      console.error(`Unable to retrieve candid from the canister ${canisterId}`)
-      throw Error("Unable to retrieve candid")
+      throw new GenericError(`Unable to retrieve candid file for the canister ${canisterId}`)
     }
     const candidJs = await this.transformDidToJs(candidFile, agent as never)
     const dataUri = "data:text/javascript;charset=utf-8," + encodeURIComponent(candidJs)
@@ -41,7 +41,7 @@ class InterfaceFactoryService {
     try {
       responseCandid = await agent.readState(canister, { paths: [pathCandid] })
     } catch (error) {
-      throw new Error(
+      throw new GenericError(
         `Not possible to retrieve candid file from the canister ${canisterId} : ${error}`
       )
     }
@@ -66,7 +66,7 @@ class InterfaceFactoryService {
     })
     const result = await didJs["did_to_js"](candid)
     if (!result) {
-      throw Error("DidtoJs transformation Error")
+      throw new GenericError("The didtoJs transformation error")
     }
     return (result as string[])[0]
   }

@@ -5,8 +5,7 @@ import {
 } from "../idl/consent"
 import { idlFactory as ConsentMessageCanisterIDL } from "../idl/consent_idl"
 import { Agent } from "@nfid/agent"
-
-class ConsentMessageError extends Error {}
+import { GenericError } from "./exception-handler.service"
 
 export const consentMessageService = {
   async getConsentMessage(
@@ -35,11 +34,11 @@ export const consentMessageService = {
 
       if ("Err" in consentMessageResult) {
         const description = Object.values(consentMessageResult.Err)[0].description
-        throw new ConsentMessageError(description)
+        throw new GenericError(description)
       }
 
       if ("LineDisplayMessage" in consentMessageResult.Ok.consent_message) {
-        throw new ConsentMessageError("LineDisplayMessage is not supported")
+        throw new GenericError("LineDisplayMessage is not supported")
       }
 
       return consentMessageResult.Ok.consent_message.GenericDisplayMessage
