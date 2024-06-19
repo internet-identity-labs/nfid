@@ -8,9 +8,9 @@ import {
 } from "@nfid/agent"
 import { DelegationIdentity } from "@dfinity/identity"
 import { interfaceFactoryService } from "./interface-factory.service"
+import { GenericError } from "./exception-handler.service"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-import { GenericError } from "./exception-handler.service"
 ;(BigInt.prototype as any).toJSON = function () {
   return this.toString()
 }
