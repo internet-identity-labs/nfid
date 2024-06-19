@@ -3,6 +3,7 @@ import { methodServices } from "../service/method/method.servcie"
 import { RPCMessage } from "../type"
 import { methodComponents } from "../component/method/method.component"
 import { accountService } from "../service/account.service"
+import { NotSupportedError, exceptionHandlerService } from "../service/exception-handler.service"
 
 export type UseSignerResponse = {
   component?: ReactNode
@@ -20,35 +21,28 @@ export const useSigner = (): UseSignerResponse => {
   const [state, setState] = React.useState<State>(State.READY)
 
   const handleMessage = React.useCallback(async (message: MessageEvent<RPCMessage>) => {
-    console.debug("useSigner handleMessage:", message)
+    try {
+      console.debug("useSigner handleMessage:", message)
 
-    if (!message.data.jsonrpc) {
-      return
+      if (!message.data.jsonrpc) {
+        return
+      }
+
+      const methodService = methodServices.get(message.data.method)
+
+      if (!methodService) {
+        throw new NotSupportedError()
+      }
+
+      const componentData = await methodService.invokeAndGetComponentData(message)
+      const methodComponent = componentData && methodComponents.get(componentData.method)
+      const component = methodComponent && methodComponent.getComponent(componentData, setState)
+      setComponent(component)
+      setState(State.PROCESSING)
+    } catch (error) {
+      setState(State.LOADING)
+      exceptionHandlerService.handle(error, message)
     }
-
-    const methodService = methodServices.get(message.data.method)
-
-    if (!methodService) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 2000,
-            message: "Not supported",
-          },
-        },
-        message.origin
-      )
-      return
-    }
-
-    const componentData = await methodService.invokeAndGetComponentData(message)
-    const methodComponent = componentData && methodComponents.get(componentData.method)
-    const component = methodComponent && methodComponent.getComponent(componentData, setState)
-    setComponent(component)
-    setState(State.PROCESSING)
   }, [])
 
   React.useEffect(() => {

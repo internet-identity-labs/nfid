@@ -5,6 +5,7 @@ import { DelegationChain, Ed25519PublicKey } from "@dfinity/identity"
 import { Principal } from "@dfinity/principal"
 import { fromHex } from "@dfinity/agent"
 import { targetService } from "../../target.service"
+import { GenericError } from "../../exception-handler.service"
 
 export interface GetDelegationComponentData extends ComponentData {
   accounts: Account[]
@@ -29,20 +30,7 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
     let targets
 
     if (!key) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 1000,
-            message: "Generic error",
-            text: "User data has not been found",
-          },
-        },
-        message.origin
-      )
-      throw Error("No key found")
+      throw new GenericError("User data has not been found")
     }
 
     const sessionPublicKey = Ed25519PublicKey.fromDer(fromHex(icrc34Dto.publicKey))
@@ -51,20 +39,8 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
       try {
         await targetService.validateTargets(icrc34Dto.targets, message.origin)
       } catch (e: unknown) {
-        window.parent.postMessage(
-          {
-            origin: message.data.origin,
-            jsonrpc: message.data.jsonrpc,
-            id: message.data.id,
-            error: {
-              code: 1000,
-              message: "Generic error",
-              text: (e as Error).message,
-            },
-          },
-          message.origin
-        )
-        throw e
+        const text = e instanceof Error ? e.message : "Unknown error"
+        throw new GenericError(text)
       }
       targets = icrc34Dto.targets.map((x) => Principal.fromText(x))
     }
@@ -95,20 +71,7 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
     const accounts = await accountService.getAccounts()
     const isPublicAccountsAllowed = !icrc34Dto.targets || icrc34Dto.targets.length === 0
     if (!accounts) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 1000,
-            message: "Generic error",
-            text: "User data has not been found",
-          },
-        },
-        message.origin
-      )
-      throw Error("User is not found")
+      throw new GenericError("User data has not been found")
     }
 
     const baseData = await super.getСomponentData(message)

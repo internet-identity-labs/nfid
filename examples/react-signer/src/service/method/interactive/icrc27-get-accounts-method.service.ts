@@ -1,6 +1,7 @@
 import { RPCMessage, RPCSuccessResponse } from "../../../type"
 import { ComponentData, InteractiveMethodService } from "./interactive-method.service"
 import { Account, accountService } from "../../account.service"
+import { GenericError } from "../../exception-handler.service"
 
 export interface AccountsComponentData extends ComponentData {
   accounts: Account[]
@@ -36,20 +37,7 @@ class Icrc27GetAccountsMethodService extends InteractiveMethodService {
   public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<AccountsComponentData> {
     const accounts = await accountService.getAccounts()
     if (!accounts) {
-      window.parent.postMessage(
-        {
-          origin: message.data.origin,
-          jsonrpc: message.data.jsonrpc,
-          id: message.data.id,
-          error: {
-            code: 1000,
-            message: "Generic error",
-            text: "User data has not been found",
-          },
-        },
-        message.origin
-      )
-      throw Error("User is not found")
+      throw new GenericError("User data has not been found")
     }
 
     const baseData = await super.getСomponentData(message)
