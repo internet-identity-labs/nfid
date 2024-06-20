@@ -9,7 +9,11 @@ export const icrc25RequestPermissionsMethodComponent: MethodComponent = {
   getMethod(): string {
     return "icrc25_request_permissions"
   },
-  getComponent(componentData: ComponentData, setState: Dispatch<SetStateAction<State>>) {
+  getComponent(
+    componentData: ComponentData,
+    setState: Dispatch<SetStateAction<State>>,
+    timeout: ReturnType<typeof setTimeout>
+  ) {
     const { origin, permissions, onApprove, onReject } = componentData as PermissionsComponentData
     return (
       <RequestPermissions
@@ -18,6 +22,7 @@ export const icrc25RequestPermissionsMethodComponent: MethodComponent = {
         onApprove={onApprove}
         onReject={onReject}
         setState={setState}
+        timeout={timeout}
       />
     )
   },

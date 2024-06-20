@@ -8,6 +8,7 @@ interface GetDelegationRequest {
   origin: string
   accounts: Account[]
   isPublicAccountsAllowed: boolean
+  timeout: ReturnType<typeof setTimeout>
   onReject: () => Promise<void>
   onApprove: (accounts: Account[]) => Promise<void>
   setState: Dispatch<SetStateAction<State>>
@@ -51,6 +52,7 @@ export const GetDelegation = ({
   origin,
   accounts,
   isPublicAccountsAllowed,
+  timeout,
   onApprove,
   onReject,
   setState,
@@ -102,6 +104,7 @@ export const GetDelegation = ({
         onReject={onReject}
         setState={setState}
         approveDisabled={!selectedAccount}
+        timeout={timeout}
       />
     </>
   )

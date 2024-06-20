@@ -12,6 +12,7 @@ interface CallCanisterRequest {
   sender: string
   args: string
   consentMessage?: string
+  timeout: ReturnType<typeof setTimeout>
 }
 
 export const CallCanister = ({
@@ -24,6 +25,7 @@ export const CallCanister = ({
   sender,
   args,
   consentMessage,
+  timeout,
 }: CallCanisterRequest) => {
   return (
     <>
@@ -51,7 +53,12 @@ export const CallCanister = ({
         )}
         {consentMessage && <small className="leading-5">{consentMessage}</small>}
       </div>
-      <InteractivePanel onApprove={onApprove} onReject={onReject} setState={setState} />
+      <InteractivePanel
+        onApprove={onApprove}
+        onReject={onReject}
+        setState={setState}
+        timeout={timeout}
+      />
     </>
   )
 }

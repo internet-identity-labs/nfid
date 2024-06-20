@@ -9,7 +9,11 @@ export const icrc27GetAccountsMethodComponent: MethodComponent = {
   getMethod(): string {
     return "icrc27_get_accounts"
   },
-  getComponent(componentData: ComponentData, setState: Dispatch<SetStateAction<State>>) {
+  getComponent(
+    componentData: ComponentData,
+    setState: Dispatch<SetStateAction<State>>,
+    timeout: ReturnType<typeof setTimeout>
+  ) {
     const { origin, accounts, onApprove, onReject } = componentData as AccountsComponentData
     return (
       <GetAccounts
@@ -18,6 +22,7 @@ export const icrc27GetAccountsMethodComponent: MethodComponent = {
         onApprove={onApprove}
         onReject={onReject}
         setState={setState}
+        timeout={timeout}
       />
     )
   },

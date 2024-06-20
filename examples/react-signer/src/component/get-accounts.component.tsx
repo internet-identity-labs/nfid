@@ -6,6 +6,7 @@ import { State } from "../hook/use-signer"
 interface GetAccountsRequest {
   origin: string
   accounts: Account[]
+  timeout: ReturnType<typeof setTimeout>
   onReject: () => Promise<void>
   onApprove: (accounts: Account[]) => Promise<void>
   setState: Dispatch<SetStateAction<State>>
@@ -14,6 +15,7 @@ interface GetAccountsRequest {
 export const GetAccounts = ({
   origin,
   accounts,
+  timeout,
   onApprove,
   onReject,
   setState,
@@ -61,6 +63,7 @@ export const GetAccounts = ({
         onReject={onReject}
         setState={setState}
         approveDisabled={!selectedAccounts.length}
+        timeout={timeout}
       />
     </>
   )
