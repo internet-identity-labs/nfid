@@ -10,7 +10,11 @@ import { icrc49CallCanisterMethodComponent } from "./icrc49-call-canister-method
 
 export interface MethodComponent {
   getMethod(): string
-  getComponent(componentData: ComponentData, setState: Dispatch<SetStateAction<State>>): ReactNode
+  getComponent(
+    componentData: ComponentData,
+    setState: Dispatch<SetStateAction<State>>,
+    timeout: ReturnType<typeof setTimeout>
+  ): ReactNode
 }
 
 export const methodComponents: Map<string, MethodComponent> = utilsService.mapByKey(

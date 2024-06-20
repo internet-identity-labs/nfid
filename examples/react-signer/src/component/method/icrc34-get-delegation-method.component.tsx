@@ -9,7 +9,11 @@ export const icrc34GetDelegationMethodComponent: MethodComponent = {
   getMethod(): string {
     return "icrc34_get_delegation"
   },
-  getComponent(componentData: ComponentData, setState: Dispatch<SetStateAction<State>>) {
+  getComponent(
+    componentData: ComponentData,
+    setState: Dispatch<SetStateAction<State>>,
+    timeout: ReturnType<typeof setTimeout>
+  ) {
     const { origin, accounts, isPublicAccountsAllowed, onApprove, onReject } =
       componentData as GetDelegationComponentData
     return (
@@ -20,6 +24,7 @@ export const icrc34GetDelegationMethodComponent: MethodComponent = {
         onReject={onReject}
         setState={setState}
         isPublicAccountsAllowed={isPublicAccountsAllowed}
+        timeout={timeout}
       />
     )
   },

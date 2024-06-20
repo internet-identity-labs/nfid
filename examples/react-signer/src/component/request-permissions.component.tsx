@@ -6,6 +6,7 @@ interface RequestPermissionsRequest {
   origin: string
   permissions: string[]
   revoke?: boolean
+  timeout: ReturnType<typeof setTimeout>
   onReject: () => Promise<void>
   onApprove: () => Promise<void>
   setState: Dispatch<SetStateAction<State>>
@@ -15,6 +16,7 @@ export const RequestPermissions = ({
   origin,
   permissions,
   revoke,
+  timeout,
   onApprove,
   onReject,
   setState,
@@ -38,7 +40,12 @@ export const RequestPermissions = ({
           ))}
         </ul>
       </div>
-      <InteractivePanel onApprove={onApprove} onReject={onReject} setState={setState} />
+      <InteractivePanel
+        onApprove={onApprove}
+        onReject={onReject}
+        setState={setState}
+        timeout={timeout}
+      />
     </>
   )
 }
