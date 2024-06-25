@@ -1,9 +1,8 @@
 use crate::types::{
     Icrc21ConsentInfo, Icrc21ConsentMessage, Icrc21ConsentMessageMetadata,
     Icrc21ConsentMessageRequest, Icrc21DeviceSpec, Icrc21Error, Icrc21ErrorInfo,
-    Icrc21LineDisplayPage,
+    Icrc21LineDisplayPage, Icrc21SupportedStandard,
 };
-use candid::decode_one;
 use ic_cdk::{query, update};
 use itertools::Itertools;
 use Icrc21DeviceSpec::GenericDisplay;
@@ -30,6 +29,24 @@ fn greet(name: String) -> String {
     format!("Hello, {}!", name)
 }
 
+#[query]
+fn icrc10_supported_standards() -> Vec<Icrc21SupportedStandard> {
+    vec![
+        Icrc21SupportedStandard {
+            url: "https://github.com/dfinity/ICRC/blob/main/ICRCs/ICRC-10/ICRC-10.md".to_string(),
+            name: "ICRC-10".to_string(),
+        },
+        Icrc21SupportedStandard {
+            url: "https://github.com/dfinity/ICRC/blob/main/ICRCs/ICRC-21/ICRC-21.md".to_string(),
+            name: "ICRC-21".to_string(),
+        },
+        Icrc21SupportedStandard {
+            url: "https://github.com/dfinity/wg-identity-authentication/blob/main/topics/icrc_28_trusted_origins.md".to_string(),
+            name: "ICRC-28".to_string(),
+        },
+    ]
+}
+
 #[update]
 fn icrc21_canister_call_consent_message(
     consent_msg_request: Icrc21ConsentMessageRequest,
@@ -40,7 +57,7 @@ fn icrc21_canister_call_consent_message(
         }));
     }
 
-    let Ok(name) = decode_one::<String>(&consent_msg_request.arg) else {
+    let Ok(name) = candid::decode_one::<String>(&consent_msg_request.arg) else {
         return Err(UnsupportedCanisterCall(Icrc21ErrorInfo {
             description: "Failed to decode the argument".to_string(),
         }));
@@ -48,6 +65,7 @@ fn icrc21_canister_call_consent_message(
 
     let metadata = Icrc21ConsentMessageMetadata {
         language: "en".to_string(),
+        utc_offset_minutes: None,
     };
 
     match consent_msg_request.user_preferences.device_spec {
