@@ -1,6 +1,6 @@
 import { actorService } from "./actor.service"
 import {
-  Icrc21ConsentMessageRequest,
+  icrc21_consent_message_request,
   type _SERVICE as ConsentMessageCanister,
 } from "../idl/consent"
 import { idlFactory as ConsentMessageCanisterIDL } from "../idl/consent_idl"
@@ -21,11 +21,11 @@ export const consentMessageService = {
         agent as never
       )
 
-      const request: Icrc21ConsentMessageRequest = {
+      const request: icrc21_consent_message_request = {
         method: methodName,
         arg: new Uint8Array(Buffer.from(arg, "base64")),
         user_preferences: {
-          metadata: { language: "en" },
+          metadata: { language: "en", utc_offset_minutes: [] },
           device_spec: [],
         },
       }

@@ -3,6 +3,7 @@ use candid::{self, CandidType, Deserialize};
 #[derive(CandidType, Deserialize, Eq, PartialEq, Debug)]
 pub struct Icrc21ConsentMessageMetadata {
     pub language: String,
+    pub utc_offset_minutes: Option<i16>,
 }
 
 #[derive(CandidType, Deserialize)]
@@ -58,4 +59,10 @@ pub enum Icrc21Error {
     InsufficientPayment(Icrc21ErrorInfo),
     UnsupportedCanisterCall(Icrc21ErrorInfo),
     ConsentMessageUnavailable(Icrc21ErrorInfo),
+}
+
+#[derive(CandidType, Deserialize, Eq, PartialEq, Debug)]
+pub struct Icrc21SupportedStandard {
+    pub url: String,
+    pub name: String,
 }
