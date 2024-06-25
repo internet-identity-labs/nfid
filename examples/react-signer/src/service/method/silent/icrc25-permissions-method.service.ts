@@ -2,9 +2,9 @@ import { Icrc25Dto, RPCMessage, RPCSuccessResponse, Scope } from "../../../type"
 import { SilentMethodService } from "./silent-method.service"
 import { authService } from "../../auth.service"
 
-class Icrc25GrantedPermissionsMethodService extends SilentMethodService {
+class Icrc25PermissionsMethodService extends SilentMethodService {
   public getMethod(): string {
-    return "icrc25_granted_permissions"
+    return "icrc25_permissions"
   }
 
   public async sendResponse(message: MessageEvent<RPCMessage>): Promise<void> {
@@ -23,8 +23,8 @@ class Icrc25GrantedPermissionsMethodService extends SilentMethodService {
       result: icrc25,
     }
 
-    window.parent.postMessage(response, message.origin)
+    window.opener.postMessage(response, "*")
   }
 }
 
-export const icrc25GrantedPermissionsMethodService = new Icrc25GrantedPermissionsMethodService()
+export const icrc25PermissionsMethodService = new Icrc25PermissionsMethodService()

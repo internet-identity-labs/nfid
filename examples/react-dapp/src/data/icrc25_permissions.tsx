@@ -3,16 +3,16 @@ import { Method } from "../ui/atoms/method.js"
 import { ISection } from "../ui/organisms/section.js"
 
 export const basicRequest = {
-  method: ICRC25Methods.icrc25_granted_permissions,
+  method: ICRC25Methods.icrc25_permissions,
 }
 
-export const icrc25GrantedPermissionsSection: ISection = {
-  id: "icrc25_granted_permissions",
-  title: "2.b icrc25_granted_permissions",
+export const icrc25PermissionsSection: ISection = {
+  id: "icrc25_permissions",
+  title: "1.b icrc25_permissions",
   description: (
     <>
-      The purpose of the <Method>icrc25_granted_permissions</Method> method is for the relying party
-      to query the granted permission scopes on the active session.
+      The purpose of the <Method>icrc25_permissions</Method> method is for the relying party to
+      query the granted permission scopes on the active session.
     </>
   ),
   requestsExamples: [

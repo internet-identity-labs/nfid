@@ -1,13 +1,13 @@
-import { AccountsComponentData } from "../../service/method/interactive/icrc27-get-accounts-method.service"
+import { AccountsComponentData } from "../../service/method/interactive/icrc27-accounts-method.service"
 import { ComponentData } from "../../service/method/interactive/interactive-method.service"
 import { GetAccounts } from "../get-accounts.component"
 import { MethodComponent } from "./method.component"
 import { Dispatch, SetStateAction } from "react"
 import { State } from "../../hook/use-signer"
 
-export const icrc27GetAccountsMethodComponent: MethodComponent = {
+export const icrc27AccountsMethodComponent: MethodComponent = {
   getMethod(): string {
-    return "icrc27_get_accounts"
+    return "icrc27_accounts"
   },
   getComponent(
     componentData: ComponentData,

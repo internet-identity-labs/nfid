@@ -1,5 +1,6 @@
 import { useTheme } from "next-themes"
 import { IconSvgMoon, IconSvgNFID, IconSvgNFIDWhite, IconSvgSun } from "../atoms/icons"
+import { ConnectWalletButton } from "@nfid/identitykit/react"
 
 export const Header = () => {
   const { theme, setTheme } = useTheme()
@@ -25,6 +26,7 @@ export const Header = () => {
             onClick={() => setTheme("light")}
           />
         )}
+        <ConnectWalletButton />
       </div>
     </div>
   )

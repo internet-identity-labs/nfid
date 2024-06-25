@@ -5,8 +5,7 @@ import clsx from "clsx"
 import { IdentityKitTheme } from "./constants"
 
 export const IdentityKitModal = (props: { theme: IdentityKitTheme }) => {
-  const { isModalOpen, selectedSigner, signers, selectSigner, signerIframeRef } =
-    useContext(IdentityKitContext)
+  const { isModalOpen, selectedSigner, signers, selectSigner } = useContext(IdentityKitContext)
 
   useEffect(() => {
     setTimeout(() => {
@@ -19,6 +18,7 @@ export const IdentityKitModal = (props: { theme: IdentityKitTheme }) => {
     }, 0)
   }, [isModalOpen])
 
+  // theme inherits from system by default
   const theme =
     props.theme === IdentityKitTheme.SYSTEM
       ? window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -46,45 +46,34 @@ export const IdentityKitModal = (props: { theme: IdentityKitTheme }) => {
           )}
         >
           <div className="h-full">
-            {selectedSigner ? (
-              <>
-                {/* <div
-                className="transition-opacity cursor-pointer hover:opacity-50"
-                onClick={() => selectSigner(undefined)}
-              >
-                Back
-              </div> */}
-                <iframe
+            <div className="p-[25px] pt-[30px] bg-white dark:bg-black gap-2.5 flex flex-col rounded-xl">
+              <div className="px-2 mb-2.5 text-xl font-bold text-black dark:text-white">
+                Connect your wallet
+              </div>
+              {signers.map((signer) => (
+                <div
+                  id={`signer_${signer.id}`}
+                  key={`signer_${signer.id}`}
+                  className="flex items-center w-full p-5 space-x-3 text-xl font-bold border border-black/[.04] dark:bg-signerDarkBg hover:bg-black/[.04] dark:border-white/[.04] dark:hover:bg-signerDarkHoverBg rounded-xl shadow-sm"
+                  onClick={() => selectSigner(signer.id)}
+                >
+                  <img
+                    src={signer.icon}
+                    alt={signer.label}
+                    className="w-8 h-8 bg-gray-100 rounded-full"
+                  />
+                  <p className="text-sm text-black dark:text-white">{signer.label}</p>
+                </div>
+              ))}
+            </div>
+            {/* <iframe
                   style={{ colorScheme: "normal" }}
                   allowTransparency={true}
                   id="signer-iframe"
                   className="h-full w-full"
                   ref={signerIframeRef}
                   src={selectedSigner?.providerUrl + "?theme=" + theme}
-                />
-              </>
-            ) : (
-              <div className="p-[25px] pt-[30px] bg-white dark:bg-black gap-2.5 flex flex-col rounded-xl">
-                <div className="px-2 mb-2.5 text-xl font-bold text-black dark:text-white">
-                  Connect your wallet
-                </div>
-                {signers.map((signer) => (
-                  <div
-                    id={`signer_${signer.id}`}
-                    key={`signer_${signer.id}`}
-                    className="flex items-center w-full p-5 space-x-3 text-xl font-bold border border-black/[.04] dark:bg-signerDarkBg hover:bg-black/[.04] dark:border-white/[.04] dark:hover:bg-signerDarkHoverBg rounded-xl shadow-sm"
-                    onClick={() => selectSigner(signer.id)}
-                  >
-                    <img
-                      src={signer.icon}
-                      alt={signer.label}
-                      className="w-8 h-8 bg-gray-100 rounded-full"
-                    />
-                    <p className="text-sm text-black dark:text-white">{signer.label}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+                /> */}
           </div>
         </Dialog.Content>
       </Dialog.Portal>

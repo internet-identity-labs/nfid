@@ -14,7 +14,8 @@ class Icrc29GetStatusMethodService extends SilentMethodService {
       result: "ready",
     }
 
-    window.parent.postMessage(response, message.origin)
+    // TODO only for new window we use window opener, should respond according to transport
+    window.opener.postMessage(response, "*")
   }
 }
 

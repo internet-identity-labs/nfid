@@ -28,7 +28,7 @@ export interface Icrc49Dto {
   arg: string
 }
 
-class Icrc49GetDelegationMethodService extends InteractiveMethodService {
+class Icrc49CallCanisterMethodService extends InteractiveMethodService {
   public getMethod(): string {
     return "icrc49_call_canister"
   }
@@ -128,4 +128,4 @@ class Icrc49GetDelegationMethodService extends InteractiveMethodService {
   }
 }
 
-export const icrc49GetDelegationMethodService = new Icrc49GetDelegationMethodService()
+export const icrc49CallCanisterMethodService = new Icrc49CallCanisterMethodService()
