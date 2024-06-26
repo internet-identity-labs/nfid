@@ -89,18 +89,14 @@ class Icrc34DelegationMethodService extends InteractiveMethodService {
   }
 
   private async isPublicAccountsAllowed(targets: string[], origin: string) {
-    console.log("isPublicAccountsAllowed")
     if (!targets || targets.length === 0) return false
 
-    console.log("isPublicAccountsAllowed")
     try {
       await targetService.validateTargets(targets, origin)
-      console.log("isPublicAccountsAllowed true")
       return true
     } catch (e: unknown) {
       const text = e instanceof Error ? e.message : "Unknown error"
       console.error("The targets cannot be validated:", text)
-      console.log("isPublicAccountsAllowed false")
       return false
     }
   }
