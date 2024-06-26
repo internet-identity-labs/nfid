@@ -41,7 +41,7 @@ class Icrc25SupportedStandardsMethodService extends SilentMethodService {
       },
     }
 
-    window.opener.postMessage(response, "*")
+    window.opener.postMessage(response, message.origin)
   }
 }
 

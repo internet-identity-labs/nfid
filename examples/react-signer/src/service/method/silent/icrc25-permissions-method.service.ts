@@ -23,7 +23,7 @@ class Icrc25PermissionsMethodService extends SilentMethodService {
       result: icrc25,
     }
 
-    window.opener.postMessage(response, "*")
+    window.opener.postMessage(response, message.origin)
   }
 }
 

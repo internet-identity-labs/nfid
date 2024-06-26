@@ -28,7 +28,7 @@ class Icrc25RequestPermissionsMethodService extends InteractiveMethodService {
       result: icrc25Message,
     }
 
-    window.opener.postMessage(response, "*")
+    window.opener.postMessage(response, message.origin)
   }
 
   public async getСomponentData(

@@ -31,7 +31,7 @@ class Icrc27AccountsMethodService extends InteractiveMethodService {
       },
     }
 
-    window.opener.postMessage(response, "*")
+    window.opener.postMessage(response, message.origin)
   }
 
   public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<AccountsComponentData> {

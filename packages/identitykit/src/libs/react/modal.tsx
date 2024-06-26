@@ -66,14 +66,6 @@ export const IdentityKitModal = (props: { theme: IdentityKitTheme }) => {
                 </div>
               ))}
             </div>
-            {/* <iframe
-                  style={{ colorScheme: "normal" }}
-                  allowTransparency={true}
-                  id="signer-iframe"
-                  className="h-full w-full"
-                  ref={signerIframeRef}
-                  src={selectedSigner?.providerUrl + "?theme=" + theme}
-                /> */}
           </div>
         </Dialog.Content>
       </Dialog.Portal>

@@ -81,7 +81,7 @@ class Icrc34DelegationMethodService extends InteractiveMethodService {
       result: this.formatDelegationChain(chain),
     }
 
-    window.opener.postMessage(response, "*")
+    window.opener.postMessage(response, message.origin)
   }
 
   public async getСomponentData(
