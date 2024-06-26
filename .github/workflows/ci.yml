@@ -59,7 +59,7 @@ jobs:
         run: npm run test
 
   docker-for-e2e:
-    name: Docker Image Build
+    name: Docker Image for E2E Test
     runs-on: ubuntu-latest
     needs: test
     permissions:
@@ -131,7 +131,7 @@ jobs:
           fi
 
   e2e-tests:
-    name: Tests
+    name: E2E Test
     needs: docker-for-e2e
     runs-on: ubuntu-latest
     steps:
