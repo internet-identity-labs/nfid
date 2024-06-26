@@ -6,13 +6,13 @@ on:
     branches:
       - main
     paths:
-      - 'examples/react-dapp/**'
-      - 'examples/react-signer/**'
-      - 'packages/identitykit/**'
-      - 'packages/postmessage-rpc/**'
-      - 'docker-for-e2e/**'
+      - "examples/react-dapp/**"
+      - "examples/react-signer/**"
+      - "packages/identitykit/**"
+      - "packages/postmessage-rpc/**"
+      - "docker-for-e2e/**"
   pull_request:
-    types: 
+    types:
       - opened
       - synchronize
 
@@ -20,8 +20,8 @@ env:
   IMAGE_NAME: nfid-public-test
 
 jobs:
-  check-formatting: 
-    name: Check Formatting
+  test:
+    name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -42,7 +42,7 @@ jobs:
             **/.eslintcache
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: npm
-      
+
       - name: Install dependencies
         run: npm install --frozen-lockfile
 
@@ -55,10 +55,13 @@ jobs:
       - name: Build
         run: npm run build-ci
 
+      - name: Test
+        run: npm run test
+
   docker-for-e2e:
-    name: Docker Image Build
+    name: Docker Image for E2E Test
     runs-on: ubuntu-latest
-    needs: check-formatting
+    needs: test
     permissions:
       packages: write
       contents: read
@@ -126,9 +129,9 @@ jobs:
             docker tag ${IMAGE_NAME} ${IMAGE_ID}:${VERSION}
             docker push ${IMAGE_ID}:${VERSION}
           fi
-      
+
   e2e-tests:
-    name: Tests
+    name: E2E Test
     needs: docker-for-e2e
     runs-on: ubuntu-latest
     steps:
