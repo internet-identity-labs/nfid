@@ -61,7 +61,7 @@ jobs:
   docker-for-e2e:
     name: Docker Image Build
     runs-on: ubuntu-latest
-    needs: check-formatting
+    needs: test
     permissions:
       packages: write
       contents: read
