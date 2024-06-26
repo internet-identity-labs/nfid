@@ -13,6 +13,12 @@ export interface Account {
   type: AccountType
 }
 
+export interface AccountKeyIdentity {
+  id: number
+  keyIdentity: Ed25519KeyIdentity
+  type: AccountType
+}
+
 export enum AccountType {
   GLOBAL = "GLOBAL",
   SESSION = "SESSION",
@@ -83,7 +89,7 @@ export const accountService = {
     return accounts
   },
 
-  async getAccountKeyIdentityById(id: number): Promise<Ed25519KeyIdentity | undefined> {
+  async getAccountKeyIdentityById(id: number): Promise<AccountKeyIdentity | undefined> {
     const accountsJson = await idbRepository.get(key)
 
     if (!accountsJson) {
@@ -97,7 +103,11 @@ export const accountService = {
       return undefined
     }
 
-    return Ed25519KeyIdentity.fromJSON(accountEntity.keyIdentity)
+    return {
+      id: accountEntity.id,
+      keyIdentity: Ed25519KeyIdentity.fromJSON(accountEntity.keyIdentity),
+      type: accountEntity.type,
+    }
   },
 
   async getAccountKeyIdentityByPrincipal(

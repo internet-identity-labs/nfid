@@ -22,7 +22,7 @@ class ExceptionHandlerService {
     title: string,
     text?: string
   ) {
-    window.parent.postMessage(
+    window.opener.postMessage(
       {
         origin: message.data.origin,
         jsonrpc: message.data.jsonrpc,

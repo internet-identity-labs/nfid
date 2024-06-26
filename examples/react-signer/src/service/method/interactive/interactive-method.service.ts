@@ -65,6 +65,6 @@ export abstract class InteractiveMethodService implements MethodService {
       },
     }
 
-    window.parent.postMessage(response, message.origin)
+    window.opener.postMessage(response, message.origin)
   }
 }
