@@ -72,7 +72,7 @@ class Icrc49CallCanisterMethodService extends InteractiveMethodService {
       },
     }
 
-    window.parent.postMessage(response, message.origin)
+    window.opener.postMessage(response, message.origin)
   }
 
   public async getСomponentData(
