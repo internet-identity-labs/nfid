@@ -1,6 +1,6 @@
 import { RPCMessage, RPCSuccessResponse } from "../../../type"
 import { ComponentData, InteractiveMethodService } from "./interactive-method.service"
-import { Account, accountService } from "../../account.service"
+import { Account, AccountKeyIdentity, AccountType, accountService } from "../../account.service"
 import { DelegationChain, Ed25519PublicKey } from "@dfinity/identity"
 import { Principal } from "@dfinity/principal"
 import { targetService } from "../../target.service"
@@ -48,30 +48,19 @@ class Icrc34DelegationMethodService extends InteractiveMethodService {
   public async onApprove(message: MessageEvent<RPCMessage>, data?: unknown): Promise<void> {
     const icrc34Dto = message.data.params as unknown as Icrc34Dto
     const account = (data as Account[])[0]
-    const key = await accountService.getAccountKeyIdentityById(account.id)
-    let targets
+    const accountKeyIdentity = await accountService.getAccountKeyIdentityById(account.id)
 
-    if (!key) {
+    if (!accountKeyIdentity) {
       throw new GenericError("User data has not been found")
     }
 
     const sessionPublicKey = Ed25519PublicKey.fromDer(fromBase64(icrc34Dto.publicKey))
 
-    if (icrc34Dto.targets && icrc34Dto.targets.length != 0) {
-      try {
-        await targetService.validateTargets(icrc34Dto.targets, message.origin)
-      } catch (e: unknown) {
-        const text = e instanceof Error ? e.message : "Unknown error"
-        throw new GenericError(text)
-      }
-      targets = icrc34Dto.targets.map((x) => Principal.fromText(x))
-    }
-
-    const chain = await DelegationChain.create(
-      key,
+    const chain = await this.getChain(
+      accountKeyIdentity,
+      icrc34Dto,
       sessionPublicKey,
-      new Date(Date.now() + Number(icrc34Dto.maxTimeToLive)),
-      { targets }
+      message.origin
     )
 
     const response: RPCSuccessResponse = {
@@ -100,6 +89,41 @@ class Icrc34DelegationMethodService extends InteractiveMethodService {
       accounts,
       isPublicAccountsAllowed,
     }
+  }
+
+  private async getChain(
+    accountKeyIdentity: AccountKeyIdentity,
+    icrc34Dto: Icrc34Dto,
+    sessionPublicKey: Ed25519PublicKey,
+    origin: string
+  ): Promise<DelegationChain> {
+    if (accountKeyIdentity.type === AccountType.GLOBAL) {
+      if (!icrc34Dto.targets || icrc34Dto.targets.length === 0) {
+        throw new GenericError("The targets cannot be empty for a public account")
+      }
+
+      try {
+        await targetService.validateTargets(icrc34Dto.targets, origin)
+      } catch (e: unknown) {
+        const text = e instanceof Error ? e.message : "Unknown error"
+        throw new GenericError(text)
+      }
+
+      const targets = icrc34Dto.targets.map((x) => Principal.fromText(x))
+
+      return await DelegationChain.create(
+        accountKeyIdentity.keyIdentity,
+        sessionPublicKey,
+        new Date(Date.now() + Number(icrc34Dto.maxTimeToLive)),
+        { targets }
+      )
+    }
+
+    return await DelegationChain.create(
+      accountKeyIdentity.keyIdentity,
+      sessionPublicKey,
+      new Date(Date.now() + Number(icrc34Dto.maxTimeToLive))
+    )
   }
 }
 
