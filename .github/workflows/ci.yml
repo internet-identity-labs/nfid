@@ -20,7 +20,7 @@ env:
   IMAGE_NAME: nfid-public-test
 
 jobs:
-  test:
+  check-formatting:
     name: Check Formatting
     runs-on: ubuntu-latest
     timeout-minutes: 15
