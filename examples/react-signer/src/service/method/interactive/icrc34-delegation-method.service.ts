@@ -23,6 +23,49 @@ class Icrc34DelegationMethodService extends InteractiveMethodService {
     return "icrc34_delegation"
   }
 
+  public async onApprove(message: MessageEvent<RPCMessage>, data?: unknown): Promise<void> {
+    const icrc34Dto = message.data.params as unknown as Icrc34Dto
+    const account = (data as Account[])[0]
+    const accountKeyIdentity = await accountService.getAccountKeyIdentityById(account.id)
+
+    if (!accountKeyIdentity) {
+      throw new GenericError("User data has not been found")
+    }
+
+    const sessionPublicKey = Ed25519PublicKey.fromDer(fromBase64(icrc34Dto.publicKey))
+    const chain = await this.getChain(accountKeyIdentity, icrc34Dto, sessionPublicKey)
+
+    const response: RPCSuccessResponse = {
+      origin: message.origin,
+      jsonrpc: message.data.jsonrpc,
+      id: message.data.id,
+      result: this.formatDelegationChain(chain),
+    }
+
+    window.opener.postMessage(response, message.origin)
+  }
+
+  public async getСomponentData(
+    message: MessageEvent<RPCMessage>
+  ): Promise<DelegationComponentData> {
+    const icrc34Dto = message.data.params as unknown as Icrc34Dto
+    const accounts = await accountService.getAccounts()
+    const isPublicAccountsAllowed = await this.isPublicAccountsAllowed(
+      icrc34Dto.targets,
+      message.origin
+    )
+
+    if (!accounts) {
+      throw new GenericError("User data has not been found")
+    }
+
+    const baseData = await super.getСomponentData(message)
+    return {
+      ...baseData,
+      accounts,
+      isPublicAccountsAllowed,
+    }
+  }
   private formatDelegationChain(chain: DelegationChain) {
     return {
       signerDelegation: chain.delegations.map((signedDelegation) => {
@@ -45,70 +88,29 @@ class Icrc34DelegationMethodService extends InteractiveMethodService {
     }
   }
 
-  public async onApprove(message: MessageEvent<RPCMessage>, data?: unknown): Promise<void> {
-    const icrc34Dto = message.data.params as unknown as Icrc34Dto
-    const account = (data as Account[])[0]
-    const accountKeyIdentity = await accountService.getAccountKeyIdentityById(account.id)
+  private async isPublicAccountsAllowed(targets: string[], origin: string) {
+    console.log("isPublicAccountsAllowed")
+    if (!targets || targets.length === 0) return false
 
-    if (!accountKeyIdentity) {
-      throw new GenericError("User data has not been found")
-    }
-
-    const sessionPublicKey = Ed25519PublicKey.fromDer(fromBase64(icrc34Dto.publicKey))
-
-    const chain = await this.getChain(
-      accountKeyIdentity,
-      icrc34Dto,
-      sessionPublicKey,
-      message.origin
-    )
-
-    const response: RPCSuccessResponse = {
-      origin: message.origin,
-      jsonrpc: message.data.jsonrpc,
-      id: message.data.id,
-      result: this.formatDelegationChain(chain),
-    }
-
-    window.opener.postMessage(response, message.origin)
-  }
-
-  public async getСomponentData(
-    message: MessageEvent<RPCMessage>
-  ): Promise<DelegationComponentData> {
-    const icrc34Dto = message.data.params as unknown as Icrc34Dto
-    const accounts = await accountService.getAccounts()
-    const isPublicAccountsAllowed = !icrc34Dto.targets || icrc34Dto.targets.length === 0
-    if (!accounts) {
-      throw new GenericError("User data has not been found")
-    }
-
-    const baseData = await super.getСomponentData(message)
-    return {
-      ...baseData,
-      accounts,
-      isPublicAccountsAllowed,
+    console.log("isPublicAccountsAllowed")
+    try {
+      await targetService.validateTargets(targets, origin)
+      console.log("isPublicAccountsAllowed true")
+      return true
+    } catch (e: unknown) {
+      const text = e instanceof Error ? e.message : "Unknown error"
+      console.error("The targets cannot be validated:", text)
+      console.log("isPublicAccountsAllowed false")
+      return false
     }
   }
 
   private async getChain(
     accountKeyIdentity: AccountKeyIdentity,
     icrc34Dto: Icrc34Dto,
-    sessionPublicKey: Ed25519PublicKey,
-    origin: string
+    sessionPublicKey: Ed25519PublicKey
   ): Promise<DelegationChain> {
     if (accountKeyIdentity.type === AccountType.GLOBAL) {
-      if (!icrc34Dto.targets || icrc34Dto.targets.length === 0) {
-        throw new GenericError("The targets cannot be empty for a public account")
-      }
-
-      try {
-        await targetService.validateTargets(icrc34Dto.targets, origin)
-      } catch (e: unknown) {
-        const text = e instanceof Error ? e.message : "Unknown error"
-        throw new GenericError(text)
-      }
-
       const targets = icrc34Dto.targets.map((x) => Principal.fromText(x))
 
       return await DelegationChain.create(

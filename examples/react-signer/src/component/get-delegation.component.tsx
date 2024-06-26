@@ -80,7 +80,7 @@ export const GetDelegation = ({
               displayName={globalAccount.displayName}
               checked={selectedAccount === globalAccount}
               onChange={() => setSelectedAccount(globalAccount)}
-              disabled={isPublicAccountsAllowed}
+              disabled={!isPublicAccountsAllowed}
             />
           )}
         </div>
