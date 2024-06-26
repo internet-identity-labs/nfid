@@ -3,11 +3,11 @@ import { ComponentData, InteractiveMethodService } from "./interactive-method.se
 import { Account, accountService } from "../../account.service"
 import { DelegationChain, Ed25519PublicKey } from "@dfinity/identity"
 import { Principal } from "@dfinity/principal"
-import { fromHex } from "@dfinity/agent"
 import { targetService } from "../../target.service"
 import { GenericError } from "../../exception-handler.service"
+import { fromBase64, toBase64 } from "@slide-computer/signer"
 
-export interface GetDelegationComponentData extends ComponentData {
+export interface DelegationComponentData extends ComponentData {
   accounts: Account[]
   isPublicAccountsAllowed: boolean
 }
@@ -18,9 +18,31 @@ export interface Icrc34Dto {
   maxTimeToLive: string
 }
 
-class Icrc34GetDelegationMethodService extends InteractiveMethodService {
+class Icrc34DelegationMethodService extends InteractiveMethodService {
   public getMethod(): string {
-    return "icrc34_get_delegation"
+    return "icrc34_delegation"
+  }
+
+  private formatDelegationChain(chain: DelegationChain) {
+    return {
+      signerDelegation: chain.delegations.map((signedDelegation) => {
+        const { delegation, signature } = signedDelegation
+        const { targets } = delegation
+        return {
+          delegation: Object.assign(
+            {
+              expiration: delegation.expiration,
+              pubkey: toBase64(delegation.pubkey),
+            },
+            targets && {
+              targets: targets.map((t) => t.toText()),
+            }
+          ),
+          signature: toBase64(signature),
+        }
+      }),
+      publicKey: toBase64(chain.publicKey),
+    }
   }
 
   public async onApprove(message: MessageEvent<RPCMessage>, data?: unknown): Promise<void> {
@@ -33,7 +55,7 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
       throw new GenericError("User data has not been found")
     }
 
-    const sessionPublicKey = Ed25519PublicKey.fromDer(fromHex(icrc34Dto.publicKey))
+    const sessionPublicKey = Ed25519PublicKey.fromDer(fromBase64(icrc34Dto.publicKey))
 
     if (icrc34Dto.targets && icrc34Dto.targets.length != 0) {
       try {
@@ -56,17 +78,15 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
       origin: message.origin,
       jsonrpc: message.data.jsonrpc,
       id: message.data.id,
-      result: {
-        ...chain.toJSON(),
-      },
+      result: this.formatDelegationChain(chain),
     }
 
-    window.parent.postMessage(response, message.origin)
+    window.opener.postMessage(response, message.origin)
   }
 
   public async getСomponentData(
     message: MessageEvent<RPCMessage>
-  ): Promise<GetDelegationComponentData> {
+  ): Promise<DelegationComponentData> {
     const icrc34Dto = message.data.params as unknown as Icrc34Dto
     const accounts = await accountService.getAccounts()
     const isPublicAccountsAllowed = !icrc34Dto.targets || icrc34Dto.targets.length === 0
@@ -83,4 +103,4 @@ class Icrc34GetDelegationMethodService extends InteractiveMethodService {
   }
 }
 
-export const icrc34GetDelegationMethodService = new Icrc34GetDelegationMethodService()
+export const icrc34DelegationMethodService = new Icrc34DelegationMethodService()

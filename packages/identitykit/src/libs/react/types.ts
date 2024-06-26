@@ -1,14 +1,14 @@
 import { IdentityKitAgentType } from "../../lib/identity-kit-agent"
-import { IRequestFunction, SignerConfig } from "../../lib/types"
+import { SignerConfig } from "../../lib/types"
+import { Signer } from "@slide-computer/signer"
 
 export interface IdentityKitProvider {
   signers: SignerConfig[]
-  selectedSigner?: SignerConfig
+  selectedSigner?: Signer
   isModalOpen: boolean
   toggleModal: () => void
   selectSigner: (signerId?: string) => SignerConfig | void
   signerIframeRef?: React.RefObject<HTMLIFrameElement>
 
-  request: IRequestFunction
   IdentityKitAgent: IdentityKitAgentType
 }

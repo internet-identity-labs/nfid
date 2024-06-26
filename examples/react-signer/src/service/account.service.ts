@@ -1,7 +1,6 @@
 import { Ed25519KeyIdentity } from "@dfinity/identity"
 import { SubAccount } from "@dfinity/ledger-icp"
 import { idbRepository } from "./storage.service"
-import { uint8ArrayToHexString } from "@dfinity/utils"
 import { JsonnableEd25519KeyIdentity } from "@dfinity/identity/lib/cjs/identity/ed25519"
 
 const key = "accounts"
@@ -76,7 +75,7 @@ export const accountService = {
         id: account.id,
         displayName: principal,
         principal,
-        subaccount: uint8ArrayToHexString(subAccount.toUint8Array()),
+        subaccount: Buffer.from(subAccount.toUint8Array()).toString("base64"),
         type: account.type,
       }
     })

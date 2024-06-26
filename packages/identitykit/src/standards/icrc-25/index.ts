@@ -171,20 +171,20 @@ export interface ICRC25Adapter<T> {
 export type ICRC25RequestTypeMap = {
   [ICRC25Methods.icrc25_request_permissions]: PermissionRequest
   [ICRC25Methods.icrc25_revoke_permissions]: PermissionRequest
-  [ICRC25Methods.icrc25_granted_permissions]: undefined
+  [ICRC25Methods.icrc25_permissions]: undefined
   [ICRC25Methods.icrc25_supported_standards]: undefined
 }
 
 export type ICRC25ResponseTypeMap = {
   [ICRC25Methods.icrc25_request_permissions]: PermissionResponse
   [ICRC25Methods.icrc25_revoke_permissions]: PermissionResponse
-  [ICRC25Methods.icrc25_granted_permissions]: PermissionResponse
+  [ICRC25Methods.icrc25_permissions]: PermissionResponse
   [ICRC25Methods.icrc25_supported_standards]: GetSupportedStandardResponse
 }
 
 export enum ICRC25Methods {
   "icrc25_request_permissions" = "icrc25_request_permissions",
   "icrc25_revoke_permissions" = "icrc25_revoke_permissions",
-  "icrc25_granted_permissions" = "icrc25_granted_permissions",
+  "icrc25_permissions" = "icrc25_permissions",
   "icrc25_supported_standards" = "icrc25_supported_standards",
 }

@@ -23,7 +23,7 @@ export const withConsentMessage = {
 
 export const icrc49CallCanisterSection: ISection = {
   id: "icrc49_call_canister",
-  title: "5.a icrc49_call_canister",
+  title: "4.a icrc49_call_canister",
   description: (
     <>
       This Method can be used by the relying party to request calls to 3rd party canister executed

@@ -7,9 +7,9 @@ export interface AccountsComponentData extends ComponentData {
   accounts: Account[]
 }
 
-class Icrc27GetAccountsMethodService extends InteractiveMethodService {
+class Icrc27AccountsMethodService extends InteractiveMethodService {
   public getMethod(): string {
-    return "icrc27_get_accounts"
+    return "icrc27_accounts"
   }
 
   public async onApprove(message: MessageEvent<RPCMessage>, data?: unknown): Promise<void> {
@@ -17,7 +17,7 @@ class Icrc27GetAccountsMethodService extends InteractiveMethodService {
 
     const accountsResponse = accounts.map((x) => {
       return {
-        principal: x.principal,
+        owner: x.principal,
         subaccount: x.subaccount,
       }
     })
@@ -31,7 +31,7 @@ class Icrc27GetAccountsMethodService extends InteractiveMethodService {
       },
     }
 
-    window.parent.postMessage(response, message.origin)
+    window.opener.postMessage(response, message.origin)
   }
 
   public async getСomponentData(message: MessageEvent<RPCMessage>): Promise<AccountsComponentData> {
@@ -48,4 +48,4 @@ class Icrc27GetAccountsMethodService extends InteractiveMethodService {
   }
 }
 
-export const icrc27GetAccountsMethodService = new Icrc27GetAccountsMethodService()
+export const icrc27AccountsMethodService = new Icrc27AccountsMethodService()

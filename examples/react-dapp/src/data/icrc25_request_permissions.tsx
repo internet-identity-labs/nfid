@@ -8,10 +8,10 @@ export const basicRequest = {
   params: {
     scopes: [
       {
-        method: "icrc27_get_accounts",
+        method: "icrc27_accounts",
       },
       {
-        method: "icrc34_get_delegation",
+        method: "icrc34_delegation",
       },
       {
         method: "icrc49_call_canister",
@@ -22,7 +22,7 @@ export const basicRequest = {
 
 export const icrc25RequestPermissionsSection: ISection = {
   id: "icrc25_request_permissions",
-  title: "2.a icrc25_request_permissions",
+  title: "1.a icrc25_request_permissions",
   description: (
     <>
       The purpose of the <Method>icrc25_request_permissions</Method> method is for the relying party

@@ -55,7 +55,6 @@ export const useSigner = (): UseSignerResponse => {
     ;(async () => {
       window.addEventListener("message", handleMessage, false)
       await accountService.initWithPredefinedUsers()
-      window.parent.postMessage("ready", "*")
       console.debug("useSigner useEffect: The Ready message has been sent.")
     })()
 

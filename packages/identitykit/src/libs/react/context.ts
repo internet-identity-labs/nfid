@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react"
 import { IdentityKitProvider } from "./types"
-import { IRequestFunction } from "../../lib/types"
 import { IdentityKitAgentType } from "../../lib/identity-kit-agent"
+import { Signer } from "@slide-computer/signer"
 
 const defaultState: IdentityKitProvider = {
   signers: [],
@@ -14,23 +14,19 @@ const defaultState: IdentityKitProvider = {
   selectSigner: () => {
     throw new Error("selectSigner not implemented")
   },
-  request: async () => {
-    throw new Error("request not implemented")
-  },
   IdentityKitAgent: {} as IdentityKitAgentType,
 }
 
 export const IdentityKitContext = createContext<IdentityKitProvider>(defaultState)
 
 export function useIdentityKit(): {
-  request: IRequestFunction
   IdentityKitAgent: IdentityKitAgentType
+  selectedSigner?: Signer
 } {
-  const { request, IdentityKitAgent } = useContext(IdentityKitContext)
-  if (!request) throw new Error("useIdentityKit must be used within an IdentityKitProvider")
+  const { IdentityKitAgent, selectedSigner } = useContext(IdentityKitContext)
 
   return {
-    request,
+    selectedSigner,
     IdentityKitAgent,
   }
 }

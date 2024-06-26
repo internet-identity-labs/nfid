@@ -8,7 +8,7 @@ export const basicRequest = {
 
 export const icrc25SupportedStandardsSection: ISection = {
   id: "icrc25_supported_standards",
-  title: "2.d icrc25_supported_standards",
+  title: "1.c icrc25_supported_standards",
   description: (
     <>
       To understand what standards are supported on a user selected signer, you will be able to call{" "}
