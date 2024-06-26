@@ -5,6 +5,7 @@ import {
   icrc25SupportedStandardsSection,
   icrc27AccountsSection,
   icrc34DelegationSection,
+  icrc49CallCanisterSection,
 } from "./data"
 import { Section } from "./ui/organisms/section"
 import { ToastContainer } from "react-toastify"
@@ -20,7 +21,7 @@ const icrc25data = [
 ]
 const icrc27data = [icrc27AccountsSection]
 const icrc34data = [icrc34DelegationSection]
-// const icrc49data = [icrc49CallCanisterSection]
+const icrc49data = [icrc49CallCanisterSection]
 
 function App() {
   const { theme } = useTheme()
@@ -45,11 +46,11 @@ function App() {
               <Section key={index} {...section} />
             ))}
           </SectionContainer>
-          {/* <SectionContainer title="4. ICRC-49: Call canister">
+          <SectionContainer title="4. ICRC-49: Call canister">
             {icrc49data.map((section, index) => (
               <Section key={index} {...section} />
             ))}
-          </SectionContainer> */}
+          </SectionContainer>
         </div>
       </div>
     </IdentityKitProvider>

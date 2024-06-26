@@ -1,10 +1,9 @@
-import { ICRC25Methods } from "@nfid/identitykit"
 import { Link } from "../ui/atoms/link.js"
 import { Method } from "../ui/atoms/method.js"
 import { ISection } from "../ui/organisms/section.js"
 
 export const basicRequest = {
-  method: ICRC25Methods.icrc25_request_permissions,
+  method: "icrc25_request_permissions",
   params: {
     scopes: [
       {

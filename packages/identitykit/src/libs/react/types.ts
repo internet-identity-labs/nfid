@@ -1,4 +1,3 @@
-import { IdentityKitAgentType } from "../../lib/identity-kit-agent"
 import { SignerConfig } from "../../lib/types"
 import { Signer } from "@slide-computer/signer"
 
@@ -9,6 +8,4 @@ export interface IdentityKitProvider {
   toggleModal: () => void
   selectSigner: (signerId?: string) => SignerConfig | void
   signerIframeRef?: React.RefObject<HTMLIFrameElement>
-
-  IdentityKitAgent: IdentityKitAgentType
 }
