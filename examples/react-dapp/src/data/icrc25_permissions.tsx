@@ -1,9 +1,8 @@
-import { ICRC25Methods } from "@nfid/identitykit"
 import { Method } from "../ui/atoms/method.js"
 import { ISection } from "../ui/organisms/section.js"
 
 export const basicRequest = {
-  method: ICRC25Methods.icrc25_permissions,
+  method: "icrc25_permissions",
 }
 
 export const icrc25PermissionsSection: ISection = {

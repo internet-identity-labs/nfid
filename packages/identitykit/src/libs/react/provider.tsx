@@ -2,7 +2,6 @@ import React, { useState, useCallback, PropsWithChildren } from "react"
 import { SignerConfig } from "../../lib/types"
 import { IdentityKitContext } from "./context"
 import { IdentityKitModal } from "./modal"
-import { createIdentityKitAgentClass } from "../../lib/identity-kit-agent"
 import { IdentityKitTheme } from "./constants"
 import { PostMessageTransport } from "@slide-computer/signer-web"
 import { Signer } from "@slide-computer/signer"
@@ -12,7 +11,7 @@ interface IdentityKitProviderProps extends PropsWithChildren {
   theme?: IdentityKitTheme
 }
 
-// globalThis.global = globalThis
+globalThis.global = globalThis
 
 const openPopup = (url: string, windowName: string, width: number, height: number) => {
   const y = window.top!.outerHeight / 2 + window.top!.screenY - height / 2
@@ -55,18 +54,6 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
     [signers, selectedSigner, setIsModalOpen]
   )
 
-  const IdentityKitAgent = createIdentityKitAgentClass({
-    callCanister: async (params) => {
-      if (!selectedSigner) throw new Error("signer not selected")
-      return await selectedSigner.callCanister({
-        canisterId: params.canisterId,
-        sender: params.sender,
-        method: params.method,
-        arg: params.arg,
-      })
-    },
-  })
-
   return (
     <IdentityKitContext.Provider
       value={{
@@ -75,7 +62,6 @@ export const IdentityKitProvider: React.FC<IdentityKitProviderProps> = ({
         isModalOpen,
         toggleModal,
         selectSigner,
-        IdentityKitAgent,
       }}
     >
       <IdentityKitModal theme={theme} />
