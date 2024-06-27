@@ -11,7 +11,20 @@ authors:
 # Before you begin
 
 The main consideration when building a dApp on ICP is whether or not you want it to work with user
-assets/data across the ecosystem.
+assets/data across the network.
+
+ICP and fungible/NFT token standards (ICRC-1 and ICRC-7 respectively) require the following user identifiers
+to lookup balances:
+- Principal identifier
+- (Optional) Subaccount
+
+There are two standard endpoints to request these identifiers from a user's ICP wallet:
+- get_accounts
+- get_delegation
+
+Accounts are simple string representations that any Web3 developer will be familiar with.
+
+Delegations are objects with the authority to sign transactions on behalf of the user.
 
 If you do, you should request a user's wallet address.
 

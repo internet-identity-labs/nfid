@@ -8,11 +8,11 @@
   "getting-started": {
     "title": "Getting Started"
   },
-  "wallet-interactions": {
-    "title": "Wallet Interactions"
+  "guides": {
+    "title": "Guides"
   },
-  "advanced": {
-    "title": "Advanced"
+  "configuration": {
+    "title": "Configuration"
   },
   "blog": {
     "title": "Blog",

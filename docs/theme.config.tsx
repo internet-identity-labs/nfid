@@ -17,10 +17,10 @@ const theme = {
   logo: (
     <div>
       <div className="flex items-center dark:hidden">
-        <Image src={LogoLight} alt="logo" width={67} height={32} />
+        <Image src={LogoLight} alt="logo" width={159} height={30} />
       </div>
       <div className="items-center hidden dark:flex">
-        <Image src={LogoDark} alt="logo" width={67} height={32} />
+        <Image src={LogoDark} alt="logo" width={159} height={30} />
       </div>
     </div>
   ),

@@ -11,12 +11,12 @@ authors:
 
 Install IdentityKit and its peer dependencies:
 
-- `@nfid/identity-kit` - A library to integrate compatible ICP wallets into your application.
-- `@nfid/identity-kit/react` - A library containing react specific components for integrating
+- `@nfid/identitykit` - A library to integrate compatible ICP wallets into your application.
+- `@nfid/identitykit/react` - A library containing react specific components for integrating
   compatible ICP wallets into your application.
 
 ```sh npm2yarn
-npm i @nfid/identity-kit
+npm i @nfid/identitykit
 ```
 
 > Note: IdentityKit is a React library.
@@ -24,7 +24,7 @@ npm i @nfid/identity-kit
 ### Import
 
 ```typescript
-import { ConnectButton, ConnectModal } from "@nfid/identity-kit"
+import { ConnectButton, ConnectModal } from "@nfid/identitykit"
 ```
 
 ### Wrap provider
@@ -34,7 +34,7 @@ Wrap your application with `IdentityKitProvider`.
 ```typescript
 const App = () => {
   return (
-    <IdentityKitProvider>
+    <IdentityKitProvider authOption="account">
       {/* Your App */}
     </IdentityKitProvider>
   );
@@ -46,7 +46,7 @@ const App = () => {
 Then, in your app, import and render the `ConnectButton` component.
 
 ```typescript
-import { ConnectButton } from '@nfid/identity-kit';
+import { ConnectButton } from '@nfid/identitykit';
 
 export const YourApp = () => {
   return <ConnectButton />;
@@ -55,3 +55,5 @@ export const YourApp = () => {
 
 IdentityKit will now handle your user's wallet selection, display wallet information, and handle
 wallet switching.
+
+Next, change how your users [authenticate](./auth-options) with your dApp.
