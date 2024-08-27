@@ -50,12 +50,27 @@ to implement when using the NFID SDK). Each of your canisters that the delegatio
 call without a wallet prompt should have this method implemented:
 
 ```rust
+use candid::{self, CandidType, Deserialize};
+ 
+#[derive(Clone, Debug, CandidType, Deserialize)]
+pub struct Icrc28TrustedOriginsResponse {
+    pub trusted_origins: Vec<String>
+}
+ 
 #[update]
-async fn get_trusted_origins() -> Vec<String> {
-    vec![
-        // Origins should be in the format defined by the Window.postMessage method (https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#the_dispatched_event)
-        String::from("https://yoururl.com") // to be replaced with your frontend origin(s)
-    ]
+fn icrc28_trusted_origins() -> Icrc28TrustedOriginsResponse {
+    let trusted_origins = vec![
+        String::from("https://your-canister-id.icp0.io"),
+        String::from("https://your-canister-id.raw.icp0.io"),
+        String::from("https://your-canister-id.ic0.app"),
+        String::from("https://your-canister-id.raw.ic0.app"),
+        String::from("https://your-canister-id.icp0.icp-api.io"),
+        String::from("https://your-canister-id.icp-api.io"),
+        String::from("https://yourcustomdomain.com"),
+        String::from("https://yourothercustomdomain.com")
+    ];
+ 
+    return Icrc28TrustedOriginsResponse { trusted_origins }
 }
 ```
 
