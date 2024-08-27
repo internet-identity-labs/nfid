@@ -51,12 +51,12 @@ call without a wallet prompt should have this method implemented:
 
 ```rust
 use candid::{self, CandidType, Deserialize};
- 
+
 #[derive(Clone, Debug, CandidType, Deserialize)]
 pub struct Icrc28TrustedOriginsResponse {
     pub trusted_origins: Vec<String>
 }
- 
+
 #[update]
 fn icrc28_trusted_origins() -> Icrc28TrustedOriginsResponse {
     let trusted_origins = vec![
@@ -69,7 +69,7 @@ fn icrc28_trusted_origins() -> Icrc28TrustedOriginsResponse {
         String::from("https://yourcustomdomain.com"),
         String::from("https://yourothercustomdomain.com")
     ];
- 
+
     return Icrc28TrustedOriginsResponse { trusted_origins }
 }
 ```
