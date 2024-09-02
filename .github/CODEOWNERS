@@ -11,14 +11,10 @@ docs/* @dostro @olekid @dmitriiIdentityLabs
 packages/vaults/* @olsemeno @dmitriiIdentityLabs
 
 # @nfid/postmessage-rpc SDK owners
-packages/postmessage-rpc/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
+packages/postmessage-rpc/* @olekid @dmitriiIdentityLabs
 
-# @nfid/identitykit SDK owners
-packages/identitykit/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
+# GitHub workflows and configurations owner
+.github/* @DaniilIdentity
 
-# identitykit examples owners
-examples/* @olekid @dmitriiIdentityLabs @chorniy8pavlo
-
-# pipelines owner
-.github/* @DaniilIdentity @dmitriiIdentityLabs
+# Docker for E2E tests owner
 docker-for-e2e/* @DaniilIdentity
