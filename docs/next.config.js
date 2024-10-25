@@ -7,12 +7,19 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  output: 'export'
+  output: "export",
+  redirects: () => [
+    {
+      source: "/",
+      destination: "https://docs.identitykit.xyz/",
+      permanent: true,
+    },
+  ],
 }
 
-const withNextra = require('nextra')({
-  theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.tsx',
+const withNextra = require("nextra")({
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.tsx",
 })
 
 module.exports = withNextra(nextConfig)
