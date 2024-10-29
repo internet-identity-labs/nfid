@@ -8,13 +8,6 @@ const nextConfig = {
     unoptimized: true,
   },
   output: "export",
-  redirects: () => [
-    {
-      source: "/",
-      destination: "https://docs.identitykit.xyz/",
-      permanent: true,
-    },
-  ],
 }
 
 const withNextra = require("nextra")({
