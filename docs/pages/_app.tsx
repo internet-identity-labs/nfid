@@ -8,10 +8,10 @@ export default function MyApp() {
 
   useEffect(() => {
     // Redirect all pages to the external URL
-    const externalUrl = "https://docs.identitykit.xyz/"
+    const externalUrl = "https://identitykit.xyz/docs"
     if (router.pathname !== "/_error") {
       // Avoid infinite loop if there's an error
-      window.location.href = externalUrl
+      window.location.href = externalUrl + router.pathname
     }
   }, [router])
 
